@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <!-- Logging Properties -->
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="APP_LOG_ROOT">logs</Property>
+    </Properties>
+
+    <Appenders>
+
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- File Appenders on need basis -->
+        <RollingFile name="debugLog" fileName="${APP_LOG_ROOT}/app-debug.log"
+            filePattern="${APP_LOG_ROOT}/app-debug-%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="INFO" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="infoLog" fileName="${APP_LOG_ROOT}/app-info.log"
+            filePattern="${APP_LOG_ROOT}/app-info-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <RollingFile name="notificationLog" fileName="${APP_LOG_ROOT}/notification-info.log"
+            filePattern="${APP_LOG_ROOT}/notification-info-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="storageLog" fileName="${APP_LOG_ROOT}/storage-info.log"
+            filePattern="${APP_LOG_ROOT}/storage-info-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="INFO" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="it.cnr.isti.labsedc.concern.storage" additivity="false" level="debug">
+            <AppenderRef ref="storageLog" />
+            <AppenderRef ref="Console"  />
+        </Logger>
+
+        <Logger name="it.cnr.isti.labsedc.concern.cep" additivity="false" level="debug">
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="infoLog"  />
+        </Logger>
+
+       <Logger name="it.cnr.isti.labsedc.concern.broker" additivity="false" level="trace">
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="infoLog"  />
+        </Logger>
+
+        <Logger name="it.cnr.isti.labsedc.concern" additivity="false" level="debug">
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="infoLog"  />
+        </Logger>
+
+        <Logger name="it.cnr.isti.labsedc.concern.notification" additivity="false" level="debug">
+            <AppenderRef ref="notificationLog" />
+        </Logger>        
+
+        <Root level="warn">
+            <AppenderRef ref="storageLog" />
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="infoLog"  />
+            <AppenderRef ref="Console"  />
+        </Root>
+
+    </Loggers>
+
+</Configuration>
