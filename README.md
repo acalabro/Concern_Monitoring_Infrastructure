@@ -1,4 +1,3 @@
-# Concern
-Monitoring infrastructure 
+# Concern Monitoring infrastructure 
 
 CONCERN	COmplex eveNt proCEssing monitoR iNfrastructure
