@@ -1,0 +1,30 @@
+//created on: Nov 11, 2021
+package it.cnr.isti.labsedc.concern.event;
+
+import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernDTForecast;
+import it.cnr.isti.labsedc.concern.utils.KieLauncher;
+import it.cnr.isti.labsedc.concern.rules.RulesGenerator;
+
+dialect "java"
+
+declare ConcernDTForecast
+    @role( event )
+    @timestamp( timestamp )
+end
+            
+		rule "digitalTwin-META-rule"
+		no-loop
+		salience 10
+		dialect "java"
+		when
+			$aEvent : ConcernDTForecast(
+			this.getName == "DTForecasting",
+			this.getSenderID == "DT_probe",
+			this.getDestinationID == "Monitoring");
+			
+		then
+			RulesGenerator.generateRuleFromDTForecast($aEvent);
+			retract($aEvent);
+		end
