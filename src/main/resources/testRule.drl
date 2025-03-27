@@ -1,0 +1,18 @@
+
+package it.cnr.isti.labsedc.concern;
+import it.cnr.isti.labsedc.concern.WordCounterDrools;
+import it.cnr.isti.labsedc.concern.WordOccurrence;
+import it.cnr.isti.labsedc.concern.TesterWordCounter;
+
+dialect "java"
+
+rule "Print Word Count"
+no-loop
+	salience 10
+	dialect "java"
+	
+when
+    $w : WordOccurrence()
+then
+    System.out.println($w);
+end
