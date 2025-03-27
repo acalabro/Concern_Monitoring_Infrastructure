@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -27,6 +28,20 @@ public class Main {
         // in it.cnr.isti.labsedc.concern.rest package
         final ResourceConfig rc = new ResourceConfig().packages("it.cnr.isti.labsedc.concern.rest");
 
+        //TODO
+//      	 String currentPath="";
+// 		try {
+// 			currentPath = new java.io.File(".").getCanonicalPath();
+// 		} catch (IOException e) {
+// 			e.printStackTrace();
+// 		}
+// 		
+//    	StaticHttpHandler staticHttpHandler = new StaticHttpHandler(currentPath);
+//        server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/images");
+
+        
+        
+        
     	System.out.println("Current IP: " + BASE_URI );
 
     	/*CLEAN logs*/
@@ -46,6 +61,7 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
+        
     	try {
     		if (args.length>0) {
         		setServer(startServer(args[0]));
@@ -60,6 +76,10 @@ public class Main {
         }
     	System.out.println(String.format("Jersey app started with endpoints available at "
                 + "%s%nHit Ctrl-C to stop it...", BASE_URI));
+    	
+
+ 		
+
     }
 
 	public static HttpServer getServer() {
