@@ -35,6 +35,9 @@ public class SUAProbe extends ConcernAbstractProbe {
 			Thread.sleep(1000);
 			sendScoreMessage(aGenericProbe, "0.1");
 			sendVelocityMessage(aGenericProbe, "0.1");
+			Thread.sleep(5000);
+			sendConnectionEventMessage(aGenericProbe);
+			
 
 
 		} catch (IndexOutOfBoundsException | JMSException | NamingException e) {}
