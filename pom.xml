@@ -45,6 +45,60 @@
     		<version>8.44.0.Final</version>
 		</dependency>
 		<!-- END DROOLS -->
+		
+		<!--- START ESPER-->
+		
+		<!-- https://mvnrepository.com/artifact/com.espertech/esper -->
+<dependency>
+    <groupId>com.espertech</groupId>
+    <artifactId>esper-common</artifactId>
+    <version>9.0.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.espertech/esper-runtime -->
+<dependency>
+    <groupId>com.espertech</groupId>
+    <artifactId>esper-runtime</artifactId>
+    <version>9.0.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.espertech/esper-compiler -->
+<dependency>
+    <groupId>com.espertech</groupId>
+    <artifactId>esper-compiler</artifactId>
+    <version>9.0.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.espertech/esper-common-xmlxsd -->
+<dependency>
+    <groupId>com.espertech</groupId>
+    <artifactId>esper-common-xmlxsd</artifactId>
+    <version>9.0.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.espertech/esper-common-avro -->
+<dependency>
+    <groupId>com.espertech</groupId>
+    <artifactId>esper-common-avro</artifactId>
+    <version>9.0.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.espertech/esperio-csv -->
+<dependency>
+    <groupId>com.espertech</groupId>
+    <artifactId>esperio-csv</artifactId>
+    <version>9.0.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.espertech/esperio-http -->
+<dependency>
+    <groupId>com.espertech</groupId>
+    <artifactId>esperio-http</artifactId>
+    <version>9.0.0</version>
+</dependency>
+		
+		<!--- END ESPER-->
+		
 		<!-- BROKER/JMS -->
 		<dependency>
     		<groupId>jakarta.jms</groupId>
