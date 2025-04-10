@@ -28,9 +28,22 @@ import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
 
+import com.espertech.esper.common.client.configuration.Configuration;
+import com.espertech.esper.compiler.client.CompilerArguments;
+import com.espertech.esper.runtime.client.EPDeploymentService;
+import com.espertech.esper.runtime.client.EPRuntime;
+import com.espertech.esper.runtime.client.EPRuntimeProvider;
+import com.espertech.esper.runtime.client.EPStatement;
+
 import it.cnr.isti.labsedc.concern.ConcernApp;
+import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernCANbusEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernCmdVelEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernDTForecast;
 import it.cnr.isti.labsedc.concern.event.ConcernEvaluationRequestEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernICTGatewayEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernNetworkEvent;
 import it.cnr.isti.labsedc.concern.eventListener.ChannelProperties;
 import it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry;
 
@@ -46,21 +59,23 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 	private boolean started = false;
 	private String username;
 	private String password;
-
-	private static KnowledgeBuilder kbuilder;
-    private static Collection<KiePackage> pkgs;
-    private static InternalKnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
-    private static KieSession ksession;
 	private EntryPoint eventStream;
+	private Configuration config;
+	private EPRuntime runtime;
+	private EPDeploymentService deploymentService;
+	private CompilerArguments arguments;
 
-	public EsperComplexEventProcessorManager(String instanceName, String staticRuleToLoadAtStartup, String connectionUsername, String connectionPassword, CepType type) {
+	public EsperComplexEventProcessorManager(String instanceName, String staticRuleToLoadAtStartup, String connectionUsername, String connectionPassword, CepType type, boolean runningInJMS) {
 		super();
-		try{
-			kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+		try{		
+			config = new Configuration();
+	        config.getCommon().addEventType(ConcernAbstractEvent.class);
+		
 		}catch(Exception e) {
 			System.out.println(e.getCause() + "\n"+
 			e.getMessage());
 		}
+		
 		logger = LogManager.getLogger(EsperComplexEventProcessorManager.class);
 		logger.info("CEP creation ");
 		this.cep = type;
@@ -82,30 +97,20 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 	public void run() {
 		try {
 			communicationSetup();
-			droolsEngineSetup();
+			esperEngineSetup();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void droolsEngineSetup() {
-		Resource drlToLoad = ResourceFactory.newFileResource(staticRuleToLoadAtStartup);
-        kbuilder.add(drlToLoad, ResourceType.DRL);
+	private void esperEngineSetup() {
 
-        if(kbuilder.hasErrors()) {
-            System.out.println(kbuilder.getErrors().toString());
-            throw new RuntimeException("unable to compile dlr");
-        }
-
-        pkgs = kbuilder.getKnowledgePackages();
-        kbase.addPackages(pkgs);
-        ksession = kbase.newKieSession();
-		logger.info("...CEP named " + this.getInstanceName() + " created Session and fires rules " + staticRuleToLoadAtStartup + " with errors: " + kbuilder.getKnowledgePackages());
-		started  = true;
-		ksession.setGlobal("EVENTS EntryPoint", eventStream);
-		eventStream = ksession.getEntryPoint("DEFAULT");
+		runtime = EPRuntimeProvider.getDefaultRuntime(config);
+		deploymentService = runtime.getDeploymentService();
+        arguments = new CompilerArguments(config);
+        
 		ConcernApp.componentStarted.put(this.getClass().getSimpleName() + instanceName, true);
-		ksession.fireUntilHalt();
+		
 	}
 
 	private void communicationSetup() throws JMSException {
@@ -122,16 +127,45 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 	public void onMessage(Message message) {
 		if (message instanceof ObjectMessage) {
 			try {
-					ObjectMessage msg = (ObjectMessage) message;
-					if (msg.getObject() instanceof ConcernCANbusEvent<?>) {
-						ConcernCANbusEvent<?> receivedEvent = (ConcernCANbusEvent<?>) msg.getObject();
-						insertEvent(receivedEvent);
+				ObjectMessage msg = (ObjectMessage) message;
+				if (msg.getObject() instanceof ConcernBaseEvent<?>) {
+					ConcernBaseEvent<?> receivedEvent = (ConcernBaseEvent<?>) msg.getObject();
+					runtime.getEventService().sendEventBean(receivedEvent, "ConcernBaseEvent");
+				} else {
+					if (msg.getObject() instanceof ConcernDTForecast<?>) {
+						ConcernDTForecast<?> receivedEvent = (ConcernDTForecast<?>) msg.getObject();
+						runtime.getEventService().sendEventBean(receivedEvent, "ConcernDTForecast");
+					} else {
+						if (msg.getObject() instanceof ConcernCmdVelEvent<?>) {
+							ConcernCmdVelEvent<?> receivedEvent = (ConcernCmdVelEvent<?>) msg.getObject();
+							runtime.getEventService().sendEventBean(receivedEvent, "ConcernCmdVelEvent");
+						} else {
+							if (msg.getObject() instanceof ConcernNetworkEvent<?>) {
+								ConcernNetworkEvent<?> receivedEvent = (ConcernNetworkEvent<?>) msg.getObject();
+								runtime.getEventService().sendEventBean(receivedEvent, "ConcernNetworkEvent");
+							} else {
+								if (msg.getObject() instanceof ConcernICTGatewayEvent<?>) {
+									ConcernICTGatewayEvent<?> receivedEvent = (ConcernICTGatewayEvent<?>) msg.getObject();
+									runtime.getEventService().sendEventBean(receivedEvent, "ConcernICTGatewayEvent");
+								} else {
+//									if(msg.getObject() instanceof ConcernAnemometerEvent<?>) {
+//										ConcernAnemometerEvent<?> receivedEvent = (ConcernAnemometerEvent<?>) msg.getObject();
+//										insertEvent(receivedEvent);
+//									} else {
+										if (msg.getObject() instanceof ConcernEvaluationRequestEvent<?>) {
+											ConcernEvaluationRequestEvent<?> receivedEvent = (ConcernEvaluationRequestEvent<?>) msg.getObject();
+											if (receivedEvent.getCepType() == CepType.DROOLS) {
+												logger.info("...CEP named " + this.getInstanceName() + " receives rules "  + receivedEvent.getData() );
+												loadRule(receivedEvent);
+											}
+										}
+									//}
+								}
+							}
+						}
 					}
-					if (msg.getObject() instanceof ConcernEvaluationRequestEvent<?>) {
-						ConcernEvaluationRequestEvent<?> receivedEvent = (ConcernEvaluationRequestEvent<?>) msg.getObject();
-						loadRule(receivedEvent);
-					}
-				}catch(ClassCastException | JMSException asd) {
+				}
+			}catch(ClassCastException | JMSException asd) {
 					logger.error("error on casting or getting ObjectMessage to GlimpseEvaluationRequestEvent");
 				}
 		}

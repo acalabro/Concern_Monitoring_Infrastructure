@@ -19,6 +19,7 @@ import it.cnr.isti.labsedc.concern.broker.BrokerManager;
 import it.cnr.isti.labsedc.concern.cep.CepType;
 import it.cnr.isti.labsedc.concern.cep.ComplexEventProcessorManager;
 import it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager;
+import it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager;
 import it.cnr.isti.labsedc.concern.notification.NotificationManager;
 import it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry;
 import it.cnr.isti.labsedc.concern.requestListener.ServiceListenerManager;
@@ -28,7 +29,8 @@ import it.cnr.isti.labsedc.concern.utils.Sub;
 public class ConcernApp extends Thread
 {
 	private static BrokerManager broker;
-	private static ComplexEventProcessorManager cepMan;
+	private static ComplexEventProcessorManager cepManOne;
+	private static ComplexEventProcessorManager cepManTwo;
 	public static NotificationManager notificationManager;
 	private static ChannelsManagementRegistry channelRegistry;
 	public static MySQLStorageController storageManager;
@@ -133,15 +135,25 @@ public class ConcernApp extends Thread
 	    	notificationManager.start();
 
 	    	//STARTING CEP ONE
-	    	cepMan = new DroolsComplexEventProcessorManager(
+	    	cepManOne = new DroolsComplexEventProcessorManager(
 	    			CEPInstanceName,
 	    			System.getProperty("user.dir")+ "/src/main/resources/startupRule.drl",
 	    			username,
 	    			password, CepType.DROOLS,
 	    			runningInJMS);
-	    	cepMan.start();
+	    	cepManOne.start();
+	    	
+	    	
+	    	cepManTwo = new EsperComplexEventProcessorManager(
+	    			CEPInstanceName,
+	    			System.getProperty("user.dir")+ "/src/main/resources/startupRule.drl",
+	    			username,
+	    			password, CepType.ESPER,
+	    			runningInJMS);
+	    	cepManTwo.start();
+	    	
 
-	    	while (!cepMan.cepHasCompletedStartup()) {
+	    	while (!cepManOne.cepHasCompletedStartup()) {
 	    		System.out.println("wait for First CEP start");
 	    		Thread.sleep(100);
 	    	}
@@ -185,15 +197,25 @@ public class ConcernApp extends Thread
     	notificationManager.start();
 
     	//STARTING CEP ONE
-    	cepMan = new DroolsComplexEventProcessorManager(
+    	cepManOne = new DroolsComplexEventProcessorManager(
     			"InstanceOne",
     			System.getProperty("user.dir")+ "/src/main/resources/startupRule.drl",
     			username,
     			password, CepType.DROOLS,
     			runningInJMS);
-    	cepMan.start();
+    	cepManOne.start();
+    	
 
-    	while (!cepMan.cepHasCompletedStartup()) {
+    	//STARTING CEP TWO
+    	cepManTwo = new EsperComplexEventProcessorManager(
+    			"InstanceTwo",
+    			System.getProperty("user.dir")+ "/src/main/resources/startupRule.drl",
+    			username,
+    			password, CepType.ESPER,
+    			runningInJMS);
+    	cepManTwo.start();
+
+    	while (!cepManOne.cepHasCompletedStartup()) {
     		System.out.println("wait for First CEP start");
     		Thread.sleep(100);
     	}
@@ -222,20 +244,20 @@ public class ConcernApp extends Thread
 	}
 
 	public static int getAmountOfLoadedRules() {
-		if (cepMan != null) {
-			return cepMan.getAmountOfLoadedRules();
+		if (cepManOne != null) {
+			return cepManOne.getAmountOfLoadedRules();
 		}
 		return 0;
 	}
 
 	public static boolean deleteRule(String ruleName) {
-		return cepMan.deleteRule(ruleName);
+		return cepManOne.deleteRule(ruleName);
 	}
 
 	public static String getRulesList() {
-		if (cepMan != null) {
-			if (cepMan.getRulesList() != null) {
-			ArrayList<String> localArray = cepMan.getRulesList();
+		if (cepManOne != null) {
+			if (cepManOne.getRulesList() != null) {
+			ArrayList<String> localArray = cepManOne.getRulesList();
 			String compositeStart = "<select name=\"Rules\" id=\"ruleslist\" size=\""+ localArray.size() + "\">";
 			String compositeEnd = "</select>";
 			String content ="";
