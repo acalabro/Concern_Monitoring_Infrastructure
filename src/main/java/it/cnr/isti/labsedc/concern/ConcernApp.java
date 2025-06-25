@@ -42,8 +42,8 @@ public class ConcernApp extends Thread
     public static Logger logger = null;
 	private static final boolean SHUTDOWN = false;
 	public static HashMap<String, Boolean> componentStarted = new HashMap<>();
-	private static String username;
-	private static String password;
+	static String username;
+	static String password;
 
 	private static boolean LOCALBROKER = true; //where amq is running
 
