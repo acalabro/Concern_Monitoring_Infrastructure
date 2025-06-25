@@ -1,1 +1,2 @@
-2025-04-10T19:26:21.503+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.storage.MySQLStorageController - Setting up storage with default parameters
+2025-06-20T19:57:05.294+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.storage.MySQLStorageController - Setting up storage with default parameters
+2025-06-20T19:57:44.826+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.storage.MySQLStorageController - Setting up storage with default parameters
