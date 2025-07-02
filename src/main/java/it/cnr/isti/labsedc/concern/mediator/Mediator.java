@@ -11,10 +11,10 @@ import it.cnr.isti.labsedc.concern.utils.ConcernMQTTCallBack;
 
 public class Mediator extends Thread {
 
-	static MqttClient sender;
-	static MqttClient listener;
+	public static MqttClient sender;
+	public static MqttClient listener;
 	static String MQTTEntrypoint;
-	static MqttMessage message;
+	public static MqttMessage message;
 	static String MQTTListenerChannel;
 
 	public Mediator(String MQTTEntrypoint, String MQTTListenerChannel) {
@@ -68,5 +68,10 @@ public class Mediator extends Thread {
 		genericEventInMQTT.setPayload(converted.toString().getBytes());
 
 		Mediator.send("monitorChannel", genericEventInMQTT);
+	}
+
+	public String getSenderClientId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

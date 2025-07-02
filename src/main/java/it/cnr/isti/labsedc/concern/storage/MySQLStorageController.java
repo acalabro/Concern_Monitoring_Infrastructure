@@ -98,7 +98,7 @@ public class MySQLStorageController implements StorageController {
 		}
 		return false;
 	}
-
+	
 	public boolean saveViolation(String eventTriggeredBy, String violationMessage, String ruleViolated,
 			long currentTimeMillis, Map<String, Object> metaData) {
 
@@ -166,5 +166,15 @@ public class MySQLStorageController implements StorageController {
 			return null;
 		}
 		return null;
+	}
+
+	public boolean deleteEventsBySenderID(String string) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isConnected() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
