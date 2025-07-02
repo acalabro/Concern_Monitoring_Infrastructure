@@ -29,7 +29,7 @@ import it.cnr.isti.labsedc.concern.utils.Sub;
 public class ConcernApp extends Thread
 {
 	private static BrokerManager broker;
-	private static ComplexEventProcessorManager cepManOne;
+	static ComplexEventProcessorManager cepManOne;
 	private static ComplexEventProcessorManager cepManTwo;
 	public static NotificationManager notificationManager;
 	private static ChannelsManagementRegistry channelRegistry;
@@ -74,12 +74,15 @@ public class ConcernApp extends Thread
     }
 
 	public static void killInstance() {
-    	if (LOCALBROKER) {
-    			ConcernApp.broker.stopActiveMQBroker();
-    	}
-    	INSTANCE.interrupt();
-    	INSTANCE = null;
-    }
+	    if (broker != null) {
+	        broker.stopActiveMQBroker();
+	        broker = null;
+	    }
+	    // Possibly clear other static fields if needed
+	    username = null;
+	    password = null;
+	    brokerUrlJMS = null;
+	}
 
     public static void main( String[] args ) throws InterruptedException
     {
@@ -303,5 +306,20 @@ public class ConcernApp extends Thread
 
 		}
 		return component + "</h3>";
+	}
+
+	public static boolean validateUserPassword(String string, String string2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public static String hashPassword(String password2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static boolean verifyHashedPassword(String password2, String hashed) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

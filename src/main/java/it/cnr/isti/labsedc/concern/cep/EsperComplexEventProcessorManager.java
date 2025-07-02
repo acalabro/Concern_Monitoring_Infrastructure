@@ -50,9 +50,9 @@ import it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry;
 public class EsperComplexEventProcessorManager extends ComplexEventProcessorManager implements MessageListener, MessageAuthorizationPolicy {
 
     private static Logger logger = LogManager.getLogger(EsperComplexEventProcessorManager.class);
-	private TopicConnection receiverConnection;
-	private Topic topic;
-	private Session receiverSession;
+	public TopicConnection receiverConnection;
+	public Topic topic;
+	public Session receiverSession;
 	private CepType cep;
 	private String instanceName;
 	private String staticRuleToLoadAtStartup;
@@ -61,7 +61,7 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 	private String password;
 	private EntryPoint eventStream;
 	private Configuration config;
-	private EPRuntime runtime;
+	public EPRuntime runtime;
 	private EPDeploymentService deploymentService;
 	private CompilerArguments arguments;
 
@@ -113,7 +113,7 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 		
 	}
 
-	private void communicationSetup() throws JMSException {
+	public void communicationSetup() throws JMSException {
 		receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
 		receiverSession = ChannelsManagementRegistry.GetNewSession(receiverConnection);
 		topic = ChannelsManagementRegistry.RegisterNewCepTopic(this.cep.name()+"-"+instanceName, receiverSession, this.cep.name()+"-"+instanceName, ChannelProperties.GENERICREQUESTS, cep);

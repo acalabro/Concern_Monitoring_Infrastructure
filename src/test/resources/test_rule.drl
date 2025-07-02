@@ -1,0 +1,5 @@
+rule "TestRule"
+when
+then
+System.out.println("Hello");
+end
