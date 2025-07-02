@@ -1,4 +1,4 @@
-2025-06-20T19:57:04.915+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+initial debug data2025-07-01T20:00:26.319+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
 
 -----------------------------------------------------
 - NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
@@ -6,31 +6,32 @@
 
 
 
-2025-06-20T19:57:04.919+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
-2025-06-20T19:57:04.923+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
-2025-06-20T19:57:04.924+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
-2025-06-20T19:57:04.939+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
-2025-06-20T19:57:05.220+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
-2025-06-20T19:57:05.220+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
-2025-06-20T19:57:05.220+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
-2025-06-20T19:57:05.290+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
-2025-06-20T19:57:05.290+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
-2025-06-20T19:57:05.291+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
-2025-06-20T19:57:05.291+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
-2025-06-20T19:57:05.291+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
-2025-06-20T19:57:05.292+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
-2025-06-20T19:57:05.292+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
-2025-06-20T19:57:05.293+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
-2025-06-20T19:57:05.293+0200 [grizzly-http-server-2] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
-2025-06-20T19:57:06.421+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
-2025-06-20T19:57:06.478+0200 [grizzly-http-server-2] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
-2025-06-20T19:57:06.514+0200 [Thread-12] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
-2025-06-20T19:57:06.514+0200 [Thread-13] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
-2025-06-20T19:57:07.495+0200 [Thread-12] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
-2025-06-20T19:57:42.171+0200 [grizzly-http-server-4] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
-2025-06-20T19:57:42.172+0200 [grizzly-http-server-4] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
-2025-06-20T19:57:42.172+0200 [grizzly-http-server-4] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
-2025-06-20T19:57:44.804+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+2025-07-01T20:00:26.320+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:00:26.328+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:00:26.328+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:00:26.353+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:00:26.720+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:00:26.721+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:00:26.721+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:00:26.918+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:00:26.919+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:00:26.920+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:00:26.920+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:00:26.924+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:00:26.927+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:00:26.928+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:00:26.928+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:00:26.928+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:00:27.866+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:00:27.951+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:00:27.966+0200 [Thread-5] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:00:28.056+0200 [Thread-6] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:00:29.558+0200 [Thread-5] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:00:29.700+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:00:29.700+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:00:29.700+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:00:29.765+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule foo not found
+2025-07-01T20:01:43.961+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
 
 -----------------------------------------------------
 - NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
@@ -38,24 +39,1025 @@
 
 
 
-2025-06-20T19:57:44.805+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
-2025-06-20T19:57:44.805+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
-2025-06-20T19:57:44.805+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
-2025-06-20T19:57:44.805+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
-2025-06-20T19:57:44.821+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
-2025-06-20T19:57:44.822+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
-2025-06-20T19:57:44.822+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
-2025-06-20T19:57:44.822+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
-2025-06-20T19:57:44.822+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
-2025-06-20T19:57:44.822+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
-2025-06-20T19:57:44.822+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
-2025-06-20T19:57:44.823+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
-2025-06-20T19:57:44.823+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
-2025-06-20T19:57:44.823+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
-2025-06-20T19:57:44.823+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
-2025-06-20T19:57:44.825+0200 [grizzly-http-server-5] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
-2025-06-20T19:57:44.839+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
-2025-06-20T19:57:44.840+0200 [grizzly-http-server-5] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
-2025-06-20T19:57:44.865+0200 [Thread-17] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
-2025-06-20T19:57:44.877+0200 [Thread-18] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
-2025-06-20T19:57:44.971+0200 [Thread-17] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:43.968+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:43.975+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:43.976+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:44.000+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:44.365+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:44.365+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:44.366+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:44.504+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:44.505+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:44.506+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:44.506+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:44.506+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:44.509+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:44.510+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:44.511+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:44.511+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:47.077+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:47.184+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:47.354+0200 [Thread-4] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:47.365+0200 [Thread-5] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:48.849+0200 [Thread-4] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:48.984+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:48.985+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:48.987+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:49.016+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:49.018+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:49.019+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:49.019+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:49.022+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:49.108+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:49.110+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:49.110+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:49.111+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:49.111+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:49.112+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:49.112+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:49.117+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:49.119+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:49.119+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:49.120+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:49.120+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:49.153+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.155+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.189+0200 [Thread-8] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:49.209+0200 [Thread-9] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:49.395+0200 [Thread-8] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:49.484+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:49.484+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:49.485+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:49.486+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:49.487+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:49.487+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:49.488+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:49.488+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:49.494+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:49.495+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:49.495+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:49.496+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:49.496+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:49.500+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:49.501+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:49.501+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:49.502+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:49.502+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:49.502+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:49.502+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:49.515+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.516+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.529+0200 [Thread-15] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:49.529+0200 [Thread-14] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:49.645+0200 [Thread-14] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:49.732+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:49.733+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:49.733+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:49.737+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:49.738+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:49.738+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:49.738+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:49.739+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:49.745+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:49.745+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:49.745+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:49.745+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:49.745+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:49.745+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:49.746+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:49.746+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:49.750+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:49.751+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:49.751+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:49.751+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:49.763+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.766+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.780+0200 [Thread-21] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:49.783+0200 [Thread-20] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:49.865+0200 [Thread-20] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:49.882+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:49.882+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:49.883+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:49.884+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:49.884+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:49.884+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:49.884+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:49.884+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:49.892+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:49.892+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:49.892+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:49.892+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:49.892+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:49.892+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:49.893+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:49.893+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:49.893+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:49.894+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:49.894+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:49.894+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:49.904+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.905+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:49.918+0200 [Thread-26] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:49.918+0200 [Thread-27] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:50.023+0200 [Thread-26] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:50.117+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule dummy not found
+2025-07-01T20:01:50.128+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:50.129+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:50.129+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:50.134+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:50.135+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:50.135+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:50.136+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:50.136+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:50.150+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:50.152+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:50.152+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:50.152+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:50.152+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:50.153+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:50.153+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:50.153+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:50.153+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:50.154+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:50.154+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:50.154+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:50.168+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.168+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.185+0200 [Thread-33] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:50.193+0200 [Thread-32] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:50.275+0200 [Thread-32] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:50.293+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:50.294+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:50.294+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:50.296+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:50.296+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:50.296+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:50.296+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:50.300+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:50.308+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:50.309+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:50.309+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:50.309+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:50.309+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:50.309+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:50.310+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:50.310+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:50.310+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:50.310+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:50.310+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:50.311+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:50.328+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.328+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.353+0200 [Thread-38] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:50.369+0200 [Thread-39] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:50.457+0200 [Thread-38] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:50.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:50.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:50.587+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:50.591+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:50.594+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:50.601+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:50.601+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:50.602+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:50.618+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:50.618+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:50.618+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:50.618+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:50.618+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:50.619+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:50.619+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:50.619+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:50.619+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:50.619+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:50.620+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:50.620+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:50.635+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.636+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.667+0200 [Thread-44] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:50.672+0200 [Thread-45] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:50.752+0200 [Thread-44] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:50.871+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:50.871+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:50.871+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:50.876+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:50.876+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:50.877+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:50.877+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:50.877+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:50.890+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:50.890+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:50.890+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:50.890+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:50.890+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:50.890+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:50.890+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:50.891+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:50.891+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:50.891+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:50.891+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:50.891+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:50.910+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.911+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:50.923+0200 [Thread-50] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:50.926+0200 [Thread-51] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:51.004+0200 [Thread-50] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:51.026+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule nonexistentRule not found
+2025-07-01T20:01:51.040+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:51.041+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:51.041+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:51.042+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:51.042+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:51.042+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:51.043+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:51.043+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:51.051+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:51.052+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:51.052+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:51.052+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:51.052+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:51.052+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:51.052+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:51.053+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:51.053+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:51.053+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:51.053+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:51.053+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:51.062+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.067+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.075+0200 [Thread-56] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:51.076+0200 [Thread-57] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:51.150+0200 [Thread-56] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:51.177+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:51.177+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:51.178+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:51.179+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:51.179+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:51.179+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:51.179+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:51.180+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:51.187+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:51.188+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:51.188+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:51.188+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:51.188+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:51.188+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:51.188+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:51.188+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:51.189+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:51.189+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:51.189+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:51.189+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:51.203+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.204+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.229+0200 [Thread-64] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:51.234+0200 [Thread-63] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:51.307+0200 [Thread-63] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:51.321+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:51.322+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:51.322+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:51.325+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:51.326+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:51.326+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:51.326+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:51.326+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:51.336+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:51.336+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:51.336+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:51.336+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:51.337+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:51.337+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:51.337+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:51.337+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:51.337+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:51.337+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:51.337+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:51.337+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:51.358+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.359+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.380+0200 [Thread-69] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:51.387+0200 [Thread-70] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:51.479+0200 [Thread-69] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:51.571+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule nonexistentRule not found
+2025-07-01T20:01:51.597+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:51.597+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:51.601+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:51.602+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:51.602+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:51.602+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:51.603+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:51.603+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:51.608+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:51.608+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:51.608+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:51.609+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:51.609+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:51.609+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:51.609+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:51.610+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:51.610+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:51.610+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:51.610+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:51.610+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:51.625+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.629+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.667+0200 [Thread-75] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:51.679+0200 [Thread-76] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:51.787+0200 [Thread-75] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:51.848+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:01:51.856+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:51.856+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:51.856+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:51.858+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:51.858+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:51.858+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:51.858+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:51.858+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:51.868+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:51.868+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:51.869+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:51.869+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:51.869+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:51.869+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:51.869+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:51.870+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:51.870+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:51.870+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:51.871+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:51.871+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:51.879+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.880+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:51.890+0200 [Thread-82] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:51.890+0200 [Thread-81] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:51.957+0200 [Thread-81] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:51.990+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:01:51.990+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:01:51.991+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:01:52.002+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:52.002+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:52.003+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:52.003+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:52.004+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:52.004+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:52.004+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:52.004+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:52.011+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:52.012+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:52.012+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:52.012+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:52.012+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:52.012+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:52.012+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:52.012+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:52.012+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:52.013+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:52.013+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:52.013+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:52.025+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:52.033+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:52.044+0200 [Thread-88] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:52.056+0200 [Thread-87] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:52.117+0200 [Thread-87] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:52.145+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule rule1 not found
+2025-07-01T20:01:52.145+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule rule1 not found
+2025-07-01T20:01:52.145+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule rule1 not found
+2025-07-01T20:01:52.155+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:52.155+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:52.156+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:01:52.157+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:01:52.157+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:01:52.157+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:01:52.157+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:01:52.157+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:01:52.166+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:01:52.166+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:01:52.166+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:01:52.166+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:01:52.166+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:01:52.166+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:01:52.167+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:01:52.167+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:01:52.167+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:01:52.167+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:01:52.167+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:01:52.167+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:01:52.174+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:52.175+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:01:52.186+0200 [Thread-93] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:01:52.187+0200 [Thread-94] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:01:52.254+0200 [Thread-93] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:01:52.296+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:01:52.296+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:01:52.296+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:30.705+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:30.708+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:30.715+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:30.715+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:30.733+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:31.104+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:31.104+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:31.104+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:31.237+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:31.239+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:31.240+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:31.240+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:31.241+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:31.246+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:31.246+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:31.247+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:31.247+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:32.458+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:32.534+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:32.562+0200 [Thread-4] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:32.568+0200 [Thread-5] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:34.347+0200 [Thread-4] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:34.423+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:34.423+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:34.424+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:34.437+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:34.438+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:34.440+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:34.440+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:34.440+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:34.452+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:34.452+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:34.452+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:34.453+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:34.453+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:34.453+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:34.453+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:34.453+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:34.454+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:34.454+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:34.454+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:34.454+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:34.468+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:34.469+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:34.485+0200 [Thread-9] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:34.490+0200 [Thread-8] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:34.568+0200 [Thread-8] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:34.584+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:34.584+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:34.585+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:34.586+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:34.586+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:34.587+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:34.587+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:34.587+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:34.597+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:34.598+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:34.598+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:34.598+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:34.598+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:34.599+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:34.599+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:34.599+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:34.600+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:34.600+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:34.600+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:34.601+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:34.617+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:34.618+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:34.636+0200 [Thread-14] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:34.637+0200 [Thread-15] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:34.718+0200 [Thread-14] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:34.738+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:34.738+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:34.739+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:34.746+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:34.746+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:34.747+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:34.747+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:34.748+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:34.755+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:34.756+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:34.756+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:34.756+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:34.756+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:34.756+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:34.757+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:34.757+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:34.758+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:34.758+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:34.758+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:34.758+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:34.770+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:34.771+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:34.783+0200 [Thread-21] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:34.785+0200 [Thread-20] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:34.880+0200 [Thread-20] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:34.984+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:34.984+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:34.985+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:34.986+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:34.986+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:34.987+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:34.987+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:34.987+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:34.997+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:34.998+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:34.998+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:34.998+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:34.998+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:34.998+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:34.998+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:34.999+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:34.999+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:35.000+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:35.000+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:35.000+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:35.015+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.016+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.026+0200 [Thread-26] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:35.046+0200 [Thread-27] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:35.124+0200 [Thread-26] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:35.129+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule dummy not found
+2025-07-01T20:02:35.141+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:35.141+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:35.142+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:35.146+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:35.147+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:35.147+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:35.148+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:35.148+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:35.156+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:35.156+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:35.157+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:35.158+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:35.158+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:35.159+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:35.159+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:35.159+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:35.159+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:35.160+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:35.163+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:35.163+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:35.174+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.175+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.191+0200 [Thread-33] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:35.209+0200 [Thread-32] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:35.287+0200 [Thread-32] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:35.402+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:35.402+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:35.403+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:35.406+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:35.406+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:35.406+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:35.406+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:35.407+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:35.421+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:35.422+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:35.422+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:35.422+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:35.422+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:35.422+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:35.423+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:35.423+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:35.424+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:35.424+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:35.425+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:35.426+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:35.443+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.458+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.509+0200 [Thread-39] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:35.512+0200 [Thread-38] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:35.614+0200 [Thread-38] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:35.693+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:35.693+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:35.696+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:35.700+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:35.700+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:35.701+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:35.701+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:35.701+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:35.714+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:35.714+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:35.715+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:35.715+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:35.715+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:35.715+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:35.716+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:35.716+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:35.717+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:35.717+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:35.717+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:35.719+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:35.752+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.753+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:35.769+0200 [Thread-44] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:35.771+0200 [Thread-45] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:35.873+0200 [Thread-44] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:35.997+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:35.998+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:35.998+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:36.000+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:36.001+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:36.001+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:36.001+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:36.001+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:36.009+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:36.010+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:36.010+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:36.012+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:36.013+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:36.013+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:36.013+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:36.013+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:36.014+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:36.014+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:36.014+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:36.014+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:36.025+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.026+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.041+0200 [Thread-50] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:36.056+0200 [Thread-51] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:36.131+0200 [Thread-50] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:36.139+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule nonexistentRule not found
+2025-07-01T20:02:36.150+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:36.150+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:36.151+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:36.151+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:36.152+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:36.152+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:36.152+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:36.152+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:36.158+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:36.159+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:36.159+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:36.159+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:36.159+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:36.159+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:36.159+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:36.159+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:36.160+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:36.163+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:36.163+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:36.163+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:36.171+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.172+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.183+0200 [Thread-56] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:36.183+0200 [Thread-57] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:36.257+0200 [Thread-56] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:36.289+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:36.289+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:36.289+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:36.290+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:36.290+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:36.290+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:36.290+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:36.291+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:36.299+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:36.300+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:36.300+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:36.300+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:36.300+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:36.300+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:36.300+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:36.301+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:36.301+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:36.301+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:36.301+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:36.301+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:36.314+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.315+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.332+0200 [Thread-63] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:36.339+0200 [Thread-64] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:36.407+0200 [Thread-63] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:36.434+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:36.434+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:36.434+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:36.436+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:36.436+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:36.436+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:36.436+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:36.436+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:36.442+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:36.442+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:36.442+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:36.442+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:36.442+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:36.442+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:36.442+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:36.443+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:36.443+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:36.443+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:36.443+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:36.443+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:36.454+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.454+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.466+0200 [Thread-69] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:36.482+0200 [Thread-70] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:36.548+0200 [Thread-69] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:36.567+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule nonexistentRule not found
+2025-07-01T20:02:36.576+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:36.576+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:36.576+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:36.579+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:36.579+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:36.579+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:36.579+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:36.580+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:36.585+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:36.585+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:36.586+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:36.586+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:36.586+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:36.597+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.597+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.604+0200 [Thread-75] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:36.607+0200 [Thread-76] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:36.677+0200 [Thread-75] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:36.713+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:02:36.721+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:36.722+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:36.722+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:36.724+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:36.724+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:36.724+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:36.724+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:36.724+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:36.737+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:36.737+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:36.738+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:36.738+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:36.738+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:36.738+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:36.738+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:36.740+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:36.742+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:36.742+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:36.743+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:36.743+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:36.756+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.757+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.771+0200 [Thread-82] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:36.781+0200 [Thread-81] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:36.839+0200 [Thread-81] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:36.867+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:02:36.867+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:02:36.867+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule testRule not found
+2025-07-01T20:02:36.874+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:36.874+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:36.875+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-01T20:02:36.876+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2025-07-01T20:02:36.876+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2025-07-01T20:02:36.876+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp is launching the broker.
+2025-07-01T20:02:36.876+0200 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2025-07-01T20:02:36.876+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2025-07-01T20:02:36.884+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker start
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker started
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Enabling SSL ConnectionFactory
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connection sucessfully created
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Component ActiveMQBrokerManager loaded in registry.
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - ConcernApp broker launched.
+2025-07-01T20:02:36.885+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2025-07-01T20:02:36.885+0200 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - into ChannelsManagementRegistry
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry started
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry - ChannelsManagementRegistry loaded in registry.
+2025-07-01T20:02:36.885+0200 [main] DEBUG it.cnr.isti.labsedc.concern.ConcernApp - Channels Management Registry created
+2025-07-01T20:02:36.893+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.896+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - CEP creation 
+2025-07-01T20:02:36.905+0200 [Thread-88] INFO  it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager - ...CEP named InstanceTwo creates a listening channel called: ESPER-InstanceTwo
+2025-07-01T20:02:36.905+0200 [Thread-87] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne creates a listening channel called: DROOLS-InstanceOne
+2025-07-01T20:02:36.972+0200 [Thread-87] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - ...CEP named InstanceOne created Session and fires rules C:\Users\SEDC\git\Concern_Monitoring_Infrastructure/src/main/resources/startupRule.drl with knowledgePackages: [[Package name=it.cnr.isti.labsedc.concern.event]]
+2025-07-01T20:02:37.010+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule rule1 not found
+2025-07-01T20:02:37.014+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule rule1 not found
+2025-07-01T20:02:37.014+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule rule1 not found
+2025-07-01T20:02:37.023+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Waiting for broker stop
+2025-07-01T20:02:37.024+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - broker stopped
+2025-07-01T20:02:37.025+0200 [main] DEBUG it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Connector Stopped
+2025-07-02T10:20:36.978+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:37.002+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:37.022+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:37.037+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.128+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.189+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.290+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.335+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.505+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.590+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.593+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - Rule nonExistentRule not found
+2025-07-02T10:20:42.611+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.687+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.703+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:42.712+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:47.741+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:47.754+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2025-07-02T10:20:47.769+0200 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
