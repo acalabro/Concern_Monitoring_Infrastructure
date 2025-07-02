@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ThisFieldRefForm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -168,13 +169,36 @@ public class MySQLStorageController implements StorageController {
 		return null;
 	}
 
-	public boolean deleteEventsBySenderID(String string) {
-		// TODO Auto-generated method stub
+	public boolean deleteEventsBySenderID(String identifier) {
+	
+		String query = "DELETE FROM event WHERE Identifier = ?";
+		int affectedRows = 0;
+		try {
+			if (this.con != null && !this.con.isClosed()) {
+
+				PreparedStatement pstmt = this.con.prepareStatement(query);
+				pstmt.setString(1, identifier);
+				affectedRows = pstmt.executeUpdate();
+				System.out.println("Deleted rows: " + affectedRows);
+				}		
+			} catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+		if (affectedRows > 0)
+			return true;
 		return false;
 	}
 
 	public boolean isConnected() {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (this.con != null && !this.con.isClosed()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+		}
 	}
 }
