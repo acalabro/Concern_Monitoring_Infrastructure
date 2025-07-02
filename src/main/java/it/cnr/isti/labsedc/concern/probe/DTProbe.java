@@ -48,7 +48,7 @@ public class DTProbe extends ConcernAbstractProbe {
 		}
 	}
 
-	protected static ConcernDTForecast<String> createDTForecastEvents(DTProbe aGenericProbe, String forecastedEvents, String confidenceIntervalInSeconds, String propertyForecasted, String thresholdValue) throws JMSException,NamingException {
+	public static ConcernDTForecast<String> createDTForecastEvents(DTProbe aGenericProbe, String forecastedEvents, String confidenceIntervalInSeconds, String propertyForecasted, String thresholdValue) throws JMSException,NamingException {
 
 		logger.info("Creating Message ");
 
@@ -80,5 +80,15 @@ public class DTProbe extends ConcernAbstractProbe {
 		catch(JMSException asd) {
 
 		}
+	}
+
+	public Object getConnectionFactory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean authenticateUser() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

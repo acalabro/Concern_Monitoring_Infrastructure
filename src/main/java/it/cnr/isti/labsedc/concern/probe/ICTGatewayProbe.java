@@ -127,7 +127,7 @@ public class ICTGatewayProbe extends ConcernAbstractProbe {
 		
 	}
 
-	protected static void sendICTMessage(ICTGatewayProbe aGenericProbe, ConcernICTGatewayEvent<String> message) throws JMSException,NamingException {
+	public static void sendICTMessage(ICTGatewayProbe aGenericProbe, ConcernICTGatewayEvent<String> message) throws JMSException,NamingException {
 
 		DebugMessages.print(
 				System.currentTimeMillis(), 
