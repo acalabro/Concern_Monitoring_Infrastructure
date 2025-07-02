@@ -10,6 +10,7 @@ import jakarta.jms.Topic;
 import jakarta.jms.TopicConnection;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.broker.SslContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -120,5 +121,20 @@ public class ChannelsManagementRegistry {
 
 	public static String getConsumerChannel(String consumerName) {
 		return ConsumersChannels.get(consumerName);
+	}
+
+	public static SslContext createSSLContext(String string, String string2, String string3, String string4) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static void overrideBrokerURI(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static Session GetNewSessionSecurely(String string, String string2) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

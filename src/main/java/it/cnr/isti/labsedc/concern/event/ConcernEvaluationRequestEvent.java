@@ -41,4 +41,9 @@ import it.cnr.isti.labsedc.concern.eventListener.ChannelProperties;
 	public void setEvaluationRuleName(String evaluationRuleName) {
 		this.evaluationRuleName = evaluationRuleName;
 	}
+
+	public void setData(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }
