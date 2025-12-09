@@ -1,0 +1,5 @@
+rule "Test"
+when
+then
+System.out.println("Safe Rule");
+end
