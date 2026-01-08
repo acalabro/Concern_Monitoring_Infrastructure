@@ -87,22 +87,42 @@ public class ChannelsManagementRegistry {
 	}
 
 	public static Connection GetNewTopicConnection(String username, String password) {
-		ChannelsManagementRegistry.connectionFactory.setTrustedPackages(new ArrayList<>(Arrays.asList("it.cnr.isti.labsedc.concern.event,it.cnr.isti.labsedc.concern.cep,it.cnr.isti.labsedc.concern.eventListener,it.cnr.isti.labsedc.concern.requestListener".split(","))));
-		try {
-			ChannelsManagementRegistry.connectionFactory.setTrustStore("client-truststore.jks");
+//		ChannelsManagementRegistry.connectionFactory.setTrustedPackages(new ArrayList<>(Arrays.asList("it.cnr.isti.labsedc.concern.event,it.cnr.isti.labsedc.concern.cep,it.cnr.isti.labsedc.concern.eventListener,it.cnr.isti.labsedc.concern.requestListener".split(","))));
+//		try {
+//			ChannelsManagementRegistry.connectionFactory.setTrustStore("client-truststore.jks");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		ChannelsManagementRegistry.connectionFactory.setTrustStorePassword("changeit");
+//		Connection diocaneConnection = null;
+//		try {
+//			diocaneConnection = ChannelsManagementRegistry.connectionFactory.createConnection(username, password);
+//			diocaneConnection.start();
+//		} catch (JMSException e) {
+//			System.out.println("diomerdoso");
+//			e.printStackTrace();
+//		} 
+//		return diocaneConnection;
+		
+	    ActiveMQSslConnectionFactory cf = ChannelsManagementRegistry.connectionFactory;
+
+	    try {
+			cf.setTrustStore("client-truststore.jks");
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ChannelsManagementRegistry.connectionFactory.setTrustStorePassword("changeit");
-		Connection diocaneConnection = null;
+	    cf.setTrustStorePassword("changeit");
+
+	    Connection conn = null;;
 		try {
-			diocaneConnection = ChannelsManagementRegistry.connectionFactory.createConnection(username, password);
-			diocaneConnection.start();
+			conn = cf.createConnection(username, password);
+			conn.start();
 		} catch (JMSException e) {
-			System.out.println("diomerdoso");
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		return diocaneConnection;
+		}
+	    return conn;
 	}
 	
 	

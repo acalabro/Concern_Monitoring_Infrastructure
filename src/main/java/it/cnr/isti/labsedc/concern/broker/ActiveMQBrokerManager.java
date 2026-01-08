@@ -1,6 +1,9 @@
 package it.cnr.isti.labsedc.concern.broker;
 
+import java.awt.List;
 import java.net.URI;
+
+import javax.net.ssl.KeyManager;
 
 import jakarta.jms.Connection;
 
@@ -46,9 +49,8 @@ public class ActiveMQBrokerManager implements BrokerManager, Runnable {
 			logger.info("Creating TrasportConnector");
 			connector = new TransportConnector();
 			connector.setUri(new URI(ACTIVEMQ_HOST));
-			broker.addConnector(connector);
-
-			broker.setSslContext(new SslContext());
+			broker.addConnector(connector);	
+			
 			broker.setUseJmx(false);
 
 			SystemUsage systemUsage= broker.getSystemUsage();
@@ -70,12 +72,19 @@ public class ActiveMQBrokerManager implements BrokerManager, Runnable {
 		}
 	}
 
-	public static Connection singletonActiveMQ() throws Exception {
+	public static Connection singletonActiveMQ() {
 		if (connectionFactory == null) {
 		connectionFactory = new ActiveMQSslConnectionFactory(ACTIVEMQ_HOST);
-		connectionFactory.setTrustStore("client-truststore.jks");
-		connectionFactory.setTrustStorePassword("changeit");
-		conn = connectionFactory.createConnection(ACTIVEMQ_LOGINNAME,ACTIVEMQ_PASSWORD);
+		try {
+			connectionFactory.setTrustStore("client-truststore.jks");
+			connectionFactory.setTrustStorePassword("changeit");	
+			System.out.println("DIOMERDA");
+			conn = connectionFactory.createConnection(ACTIVEMQ_LOGINNAME,ACTIVEMQ_PASSWORD);
+			}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
 		}
 		return conn;
 	}
