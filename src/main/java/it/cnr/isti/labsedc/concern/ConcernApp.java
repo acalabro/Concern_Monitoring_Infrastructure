@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQSslConnectionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -39,7 +39,7 @@ public class ConcernApp extends Thread
 	public static String brokerUrlJMS;
 	private static Long maxMemoryUsage;
 	private static Long maxCacheUsage;
-	public static ActiveMQConnectionFactory factory;
+	public static ActiveMQSslConnectionFactory factory;
     public static Logger logger = null;
 	private static final boolean SHUTDOWN = false;
 	public static HashMap<String, Boolean> componentStarted = new HashMap<>();
@@ -94,14 +94,14 @@ public class ConcernApp extends Thread
     	if(runningInJMS) {
 
     		if (LOCALBROKER) {
-    			brokerUrlJMS = "tcp://0.0.0.0:61616";
+    			brokerUrlJMS = "ssl://0.0.0.0:61616";
     		} else {
     			System.out.println(System.getenv("ACTIVEMQ"));
     			brokerUrlJMS = System.getenv("ACTIVEMQ");
     		}
     	maxMemoryUsage = 128000l;
     	maxCacheUsage = 128000l;
-    	factory = new ActiveMQConnectionFactory(brokerUrlJMS);
+    	factory = new ActiveMQSslConnectionFactory(brokerUrlJMS);
     	//factory.setTrustAllPackages(true);
     	String[] packages = new String[] { "java.lang", "java.util", "it.cnr.isti.labsedc", "javax.security", "org.apache.activemq", "java.util" };
 
@@ -171,7 +171,7 @@ public class ConcernApp extends Thread
 			e.printStackTrace();
 		}
     }
-	public static void StartComponents(ActiveMQConnectionFactory factory, String brokerUrl, long maxMemoryUsage, long maxCacheUsage) throws InterruptedException {
+	public static void StartComponents(ActiveMQSslConnectionFactory factory, String brokerUrl, long maxMemoryUsage, long maxCacheUsage) throws InterruptedException {
 
 		//storage = new InfluxDBStorageController();
 		if (LOCALBROKER) {
@@ -180,10 +180,10 @@ public class ConcernApp extends Thread
 			broker.run();
 			logger.debug(ConcernApp.class.getSimpleName() + " broker launched.");
 			logger.info("Connecting to ActiveMQ");
-			factory = new ActiveMQConnectionFactory(username, password, brokerUrl);
+			factory = new ActiveMQSslConnectionFactory(brokerUrl);
 		} else
 		{
-			factory = new ActiveMQConnectionFactory(brokerUrl);
+			factory = new ActiveMQSslConnectionFactory(brokerUrl);
 		}
 		logger.info("Connected to ActiveMQ");
 
@@ -209,14 +209,14 @@ public class ConcernApp extends Thread
     	cepManOne.start();
     	
 
-    	//STARTING CEP TWO
-    	cepManTwo = new EsperComplexEventProcessorManager(
-    			"InstanceTwo",
-    			System.getProperty("user.dir")+ "/src/main/resources/startupRule.drl",
-    			username,
-    			password, CepType.ESPER,
-    			runningInJMS);
-    	cepManTwo.start();
+//    	//STARTING CEP TWO
+//    	cepManTwo = new EsperComplexEventProcessorManager(
+//    			"InstanceTwo",
+//    			System.getProperty("user.dir")+ "/src/main/resources/startupRule.drl",
+//    			username,
+//    			password, CepType.ESPER,
+//    			runningInJMS);
+//    	cepManTwo.start();
 
     	while (!cepManOne.cepHasCompletedStartup()) {
     		System.out.println("wait for First CEP start");

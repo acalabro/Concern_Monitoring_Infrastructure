@@ -2,6 +2,7 @@ package it.cnr.isti.labsedc.concern.cep;
 
 import java.util.ArrayList;
 
+import jakarta.jms.Connection;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.MessageConsumer;
@@ -10,7 +11,6 @@ import jakarta.jms.ObjectMessage;
 import jakarta.jms.Session;
 import jakarta.jms.TextMessage;
 import jakarta.jms.Topic;
-import jakarta.jms.TopicConnection;
 
 import org.apache.activemq.broker.ConnectionContext;
 import org.apache.activemq.security.MessageAuthorizationPolicy;
@@ -36,7 +36,7 @@ import it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry;
 public class EsperComplexEventProcessorManager extends ComplexEventProcessorManager implements MessageListener, MessageAuthorizationPolicy {
 
     private static Logger logger = LogManager.getLogger(EsperComplexEventProcessorManager.class);
-	public TopicConnection receiverConnection;
+	public Connection receiverConnection;
 	public Topic topic;
 	public Session receiverSession;
 	private CepType cep;
@@ -95,7 +95,12 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 	}
 
 	public void communicationSetup() throws JMSException {
-		receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+		try {
+			receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+		} catch (Exception e) {
+			logger.debug("Error on channelmanagementRegistry GetNewTopicConnection");
+			e.printStackTrace();
+		}
 		receiverSession = ChannelsManagementRegistry.GetNewSession(receiverConnection);
 		topic = ChannelsManagementRegistry.RegisterNewCepTopic(this.cep.name()+"-"+instanceName, receiverSession, this.cep.name()+"-"+instanceName, ChannelProperties.GENERICREQUESTS, cep);
 		logger.info("...CEP named " + this.getInstanceName() + " creates a listening channel called: " + topic.getTopicName());

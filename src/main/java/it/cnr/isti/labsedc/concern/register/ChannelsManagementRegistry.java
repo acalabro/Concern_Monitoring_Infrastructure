@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import jakarta.jms.Connection;
 import jakarta.jms.JMSException;
 import jakarta.jms.Session;
 import jakarta.jms.Topic;
-import jakarta.jms.TopicConnection;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQSslConnectionFactory;
 import org.apache.activemq.broker.SslContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,10 +25,10 @@ public class ChannelsManagementRegistry {
 	public static HashMap<String, TopicAndProperties> ActiveTopics;
 	public static HashMap<TopicAndProperties, String> ActiveCep;
 	public static HashMap<ChannelProperties, String> ActiveServicesChannel;
-	public static HashMap<Session, TopicConnection> ActiveSessions;
+	public static HashMap<Session, Connection> ActiveSessions;
 	public static HashMap<String, String> ConsumersChannels;
 	public static HashMap<String, String> ProbesChannels;
-	public static ActiveMQConnectionFactory connectionFactory;
+	public static ActiveMQSslConnectionFactory connectionFactory;
 	public static MqttClient mqttClient;
 	//the broker connection factory
 	private static String mqttChannel;
@@ -62,11 +62,11 @@ public class ChannelsManagementRegistry {
     	logger.debug(this.getClass().getSimpleName() + " loaded in registry.");
 	}
 
-	public void setConnectionFactory(ActiveMQConnectionFactory factory) {
+	public void setConnectionFactory(ActiveMQSslConnectionFactory factory) {
 		ChannelsManagementRegistry.connectionFactory = factory;
 	}
 
-	public static ActiveMQConnectionFactory getConnectionFactory() {
+	public static ActiveMQSslConnectionFactory getConnectionFactory() {
 		return connectionFactory;
 	}
 
@@ -86,14 +86,28 @@ public class ChannelsManagementRegistry {
 		return ChannelsManagementRegistry.mqttChannel;
 	}
 
-	public static TopicConnection GetNewTopicConnection(String username, String password) throws JMSException {
+	public static Connection GetNewTopicConnection(String username, String password) {
 		ChannelsManagementRegistry.connectionFactory.setTrustedPackages(new ArrayList<>(Arrays.asList("it.cnr.isti.labsedc.concern.event,it.cnr.isti.labsedc.concern.cep,it.cnr.isti.labsedc.concern.eventListener,it.cnr.isti.labsedc.concern.requestListener".split(","))));
-		ChannelsManagementRegistry.connectionFactory.setUserName(username);
-		ChannelsManagementRegistry.connectionFactory.setPassword(password);
-		return  ChannelsManagementRegistry.connectionFactory.createTopicConnection();
+		try {
+			ChannelsManagementRegistry.connectionFactory.setTrustStore("client-truststore.jks");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ChannelsManagementRegistry.connectionFactory.setTrustStorePassword("changeit");
+		Connection diocaneConnection = null;
+		try {
+			diocaneConnection = ChannelsManagementRegistry.connectionFactory.createConnection(username, password);
+			diocaneConnection.start();
+		} catch (JMSException e) {
+			System.out.println("diomerdoso");
+			e.printStackTrace();
+		} 
+		return diocaneConnection;
 	}
+	
+	
 
-	public static Session GetNewSession(TopicConnection receiverConnection) throws JMSException {
+	public static Session GetNewSession(Connection receiverConnection) throws JMSException {
 		receiverConnection.createSession(true, Session.SESSION_TRANSACTED);
 		Session session = receiverConnection.createSession(true, Session.SESSION_TRANSACTED);
 		ChannelsManagementRegistry.ActiveSessions.put(session, receiverConnection);
