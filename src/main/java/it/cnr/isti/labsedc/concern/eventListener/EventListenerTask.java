@@ -1,5 +1,6 @@
 package it.cnr.isti.labsedc.concern.eventListener;
 
+import jakarta.jms.Connection;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.MessageConsumer;
@@ -9,7 +10,6 @@ import jakarta.jms.ObjectMessage;
 import jakarta.jms.Session;
 import jakarta.jms.TextMessage;
 import jakarta.jms.Topic;
-import jakarta.jms.TopicConnection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +25,7 @@ public class EventListenerTask implements Runnable, MessageListener {
 
 
 	private String eventChannelName;
-	private TopicConnection receiverConnection;
+	private Connection receiverConnection;
 	private String username;
 	private String password;
 	private StorageController storageManager;
@@ -49,7 +49,12 @@ public class EventListenerTask implements Runnable, MessageListener {
 
 		logger.info("...within the executor named " + this.getEventChannelName());
 		try {
-			receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			try {
+				receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			} catch (Exception e) {
+				logger.debug("Error on channelmanagementRegistry GetNewTopicConnection");
+				e.printStackTrace();
+			}
 			receiverSession = ChannelsManagementRegistry.GetNewSession(receiverConnection);
 
 			Topic queue = ChannelsManagementRegistry.GetNewSessionTopic(this.toString(), receiverSession,eventChannelName, ChannelProperties.EVENTS);
@@ -106,7 +111,12 @@ public class EventListenerTask implements Runnable, MessageListener {
 
 	private void forwardEventToCEP(TopicAndProperties topicWhereToForward, Message message) {
 		try {
-			receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			try {
+				receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			} catch (Exception e) {
+				logger.debug("Error on channelmanagementRegistry GetNewTopicConnection");
+				e.printStackTrace();
+			}
             Session session = receiverConnection.createSession(false,Session.AUTO_ACKNOWLEDGE);
             Topic topic = session.createTopic(topicWhereToForward.getTopicAddress());
             MessageProducer producer = session.createProducer(topic);

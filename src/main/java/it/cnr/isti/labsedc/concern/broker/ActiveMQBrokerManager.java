@@ -3,12 +3,11 @@ package it.cnr.isti.labsedc.concern.broker;
 import java.net.URI;
 
 import jakarta.jms.Connection;
-import jakarta.jms.JMSException;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQSslConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.SslBrokerService;
+import org.apache.activemq.broker.SslContext;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.usage.SystemUsage;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +19,7 @@ public class ActiveMQBrokerManager implements BrokerManager, Runnable {
 
 	private static BrokerService broker;
 	private static TransportConnector connector;
-	private static ActiveMQConnectionFactory connectionFactory;
+	private static ActiveMQSslConnectionFactory connectionFactory;
 	private static Connection conn;
 	private static long ACTIVEMQ_MEMORY_USAGE = 0;
 	private static long ACTIVEMQ_TEMP_USAGE = 0;
@@ -44,10 +43,12 @@ public class ActiveMQBrokerManager implements BrokerManager, Runnable {
 		broker.setPersistent(false);
 
 		try {
-			logger.debug("Creating TrasportConnector");
+			logger.info("Creating TrasportConnector");
 			connector = new TransportConnector();
 			connector.setUri(new URI(ACTIVEMQ_HOST));
 			broker.addConnector(connector);
+
+			broker.setSslContext(new SslContext());
 			broker.setUseJmx(false);
 
 			SystemUsage systemUsage= broker.getSystemUsage();
@@ -69,12 +70,12 @@ public class ActiveMQBrokerManager implements BrokerManager, Runnable {
 		}
 	}
 
-	public static Connection singletonActiveMQ() throws JMSException {
+	public static Connection singletonActiveMQ() throws Exception {
 		if (connectionFactory == null) {
 		connectionFactory = new ActiveMQSslConnectionFactory(ACTIVEMQ_HOST);
-		connectionFactory.setUserName(ACTIVEMQ_LOGINNAME);
-		connectionFactory.setPassword(ACTIVEMQ_PASSWORD);
-		conn = connectionFactory.createConnection();
+		connectionFactory.setTrustStore("client-truststore.jks");
+		connectionFactory.setTrustStorePassword("changeit");
+		conn = connectionFactory.createConnection(ACTIVEMQ_LOGINNAME,ACTIVEMQ_PASSWORD);
 		}
 		return conn;
 	}

@@ -1,5 +1,6 @@
 package it.cnr.isti.labsedc.concern.requestListener;
 
+import jakarta.jms.Connection;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.MessageConsumer;
@@ -9,7 +10,6 @@ import jakarta.jms.ObjectMessage;
 import jakarta.jms.Session;
 import jakarta.jms.TextMessage;
 import jakarta.jms.Topic;
-import jakarta.jms.TopicConnection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +24,7 @@ public class ServiceListenerTask implements Runnable, MessageListener {
 
 
 	private String serviceChannelName;
-	private TopicConnection receiverConnection;
+	private Connection receiverConnection;
 	private String username;
 	private String password;
     private static final Logger logger = LogManager.getLogger(ServiceListenerTask.class);
@@ -46,7 +46,12 @@ public class ServiceListenerTask implements Runnable, MessageListener {
 
 		logger.info("...within the serviceListener named " + this.getChannelTaskName());
 		try {
-			receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			try {
+				receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			} catch (Exception e) {
+				logger.debug("Error on channelmanagementRegistry GetNewTopicConnection");
+				e.printStackTrace();
+			}
 			receiverSession = ChannelsManagementRegistry.GetNewSession(receiverConnection);
 
 			Topic topic = ChannelsManagementRegistry.GetNewSessionTopic(this.toString(), receiverSession,serviceChannelName, ChannelProperties.GENERICREQUESTS);
@@ -92,7 +97,12 @@ public class ServiceListenerTask implements Runnable, MessageListener {
 
 	private void forwardToCep(TopicAndProperties queueWhereToForward, Message message) {
 		try {
-			receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			try {
+				receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			} catch (Exception e) {
+				logger.debug("Error on channelmanagementRegistry GetNewTopicConnection");
+				e.printStackTrace();
+			}
             Session session = receiverConnection.createSession(false,Session.AUTO_ACKNOWLEDGE);
             Topic topic = session.createTopic(queueWhereToForward.getTopicAddress());
             MessageProducer producer = session.createProducer(topic);

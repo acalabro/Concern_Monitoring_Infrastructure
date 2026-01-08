@@ -37,7 +37,7 @@ public class ActiveMQBrokerManagerTest {
     }
 
     @Test
-    public void testSingletonActiveMQReturnsConnection() {
+    public void testSingletonActiveMQReturnsConnection() throws Exception {
         try {
             Connection conn = ActiveMQBrokerManager.singletonActiveMQ();
             assertNotNull("SSL JMS Connection should not be null", conn);
