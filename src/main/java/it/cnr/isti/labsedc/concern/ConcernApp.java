@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -167,7 +168,6 @@ public class ConcernApp extends Thread
 		    	System.exit(0);
 	    	}
 		} catch (MqttException | InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -277,7 +277,7 @@ public class ConcernApp extends Thread
     	String ip;
     	URL whatismyip;
 		try {
-			whatismyip = new URL("http://checkip.amazonaws.com");
+			whatismyip = Paths.get("http://checkip.amazonaws.com").toUri().toURL() ;
 	    	BufferedReader in = new BufferedReader(new InputStreamReader(
 	    			whatismyip.openStream()));
 	    	ip = in.readLine(); //you get the IP as a String
@@ -285,7 +285,6 @@ public class ConcernApp extends Thread
 	    	System.out.println(ip);
 	    	return ip;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return "localhost";
@@ -309,17 +308,14 @@ public class ConcernApp extends Thread
 	}
 
 	public static boolean validateUserPassword(String string, String string2) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public static String hashPassword(String password2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public static boolean verifyHashedPassword(String password2, String hashed) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
