@@ -790,3 +790,70 @@ end
 2026-01-08T13:01:30.189+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
 2026-01-08T13:01:30.189+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
 2026-01-08T13:01:30.390+0100 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2026-01-08T13:37:12.904+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2026-01-08T13:37:12.905+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2026-01-08T13:37:12.907+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2026-01-08T13:37:12.912+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2026-01-08T13:37:13.200+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2026-01-08T13:37:13.200+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2026-01-08T13:37:13.381+0100 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2026-01-08T13:38:28.184+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2026-01-08T13:38:28.185+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2026-01-08T13:38:28.187+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2026-01-08T13:38:28.191+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2026-01-08T13:38:28.498+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2026-01-08T13:38:28.498+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2026-01-08T13:38:28.643+0100 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2026-01-08T13:38:54.851+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2026-01-08T13:38:54.852+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2026-01-08T13:38:54.855+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2026-01-08T13:38:54.860+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2026-01-08T13:38:55.173+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2026-01-08T13:38:55.173+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2026-01-08T13:38:55.329+0100 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
+2026-01-08T13:40:51.254+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2026-01-08T13:40:51.255+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2026-01-08T13:40:51.263+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2026-01-08T13:40:51.268+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2026-01-08T14:00:50.258+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - 
+
+-----------------------------------------------------
+- NEW MONITORING SESSION - ALL COMPONENTS RESTARTED -
+-----------------------------------------------------
+
+
+
+2026-01-08T14:00:50.259+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Starting components
+2026-01-08T14:00:50.261+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Start SSL Broker
+2026-01-08T14:00:50.266+0100 [main] INFO  it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager - Creating TrasportConnector
+2026-01-08T14:00:50.566+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connecting to ActiveMQ
+2026-01-08T14:00:50.566+0100 [main] INFO  it.cnr.isti.labsedc.concern.ConcernApp - Connected to ActiveMQ
+2026-01-08T14:00:50.712+0100 [main] INFO  it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager - CEP creation 
