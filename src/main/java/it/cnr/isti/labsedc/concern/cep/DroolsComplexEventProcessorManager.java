@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import jakarta.jms.Connection;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.MessageConsumer;
@@ -12,7 +13,6 @@ import jakarta.jms.ObjectMessage;
 import jakarta.jms.Session;
 import jakarta.jms.TextMessage;
 import jakarta.jms.Topic;
-import jakarta.jms.TopicConnection;
 
 import org.apache.activemq.broker.ConnectionContext;
 import org.apache.activemq.security.MessageAuthorizationPolicy;
@@ -48,7 +48,7 @@ import it.cnr.isti.labsedc.concern.utils.ConcernMQTTCallBack;
 public class DroolsComplexEventProcessorManager extends ComplexEventProcessorManager implements MessageListener, MessageAuthorizationPolicy {
 
     private static Logger logger = LogManager.getLogger(DroolsComplexEventProcessorManager.class);
-	private TopicConnection receiverConnection;
+	private Connection receiverConnection;
 	private Topic topic;
 	private Session receiverSession;
 	private CepType cep;
@@ -128,7 +128,11 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 
 	private void communicationSetup() throws JMSException {
 		if (isUsingJMS) {
-			receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			try {
+				receiverConnection = ChannelsManagementRegistry.GetNewTopicConnection(username, password);
+			} catch (Exception e) {
+				logger.debug("Error on channelmanagementRegistry GetNewTopicConnection");
+			}
 			receiverSession = ChannelsManagementRegistry.GetNewSession(receiverConnection);
 			topic = ChannelsManagementRegistry.RegisterNewCepTopic(this.cep.name()+"-"+instanceName, receiverSession, this.cep.name()+"-"+instanceName, ChannelProperties.GENERICREQUESTS, cep);
 			logger.info("...CEP named " + this.getInstanceName() + " creates a listening channel called: " + topic.getTopicName());
