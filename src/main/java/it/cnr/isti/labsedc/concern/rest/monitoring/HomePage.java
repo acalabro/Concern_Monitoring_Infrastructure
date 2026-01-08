@@ -1,19 +1,14 @@
 package it.cnr.isti.labsedc.concern.rest.monitoring;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.json.JSONObject;
-
 import it.cnr.isti.labsedc.concern.ConcernApp;
-import it.cnr.isti.labsedc.concern.utils.BiecoMessageTypes;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
@@ -26,7 +21,9 @@ import jakarta.ws.rs.core.Response;
 
 public class HomePage {
 
-    /**
+	protected String authorization;
+
+	/**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
      *
@@ -47,7 +44,7 @@ public class HomePage {
 
     }
 
-	private String getComponentStatus() {
+	protected String getComponentStatus() {
 		if (ConcernApp.isRunning()) {
 			return ConcernApp.getStartedComponentsList();
 		} else {
@@ -60,35 +57,35 @@ public class HomePage {
 	public Response biecointerface(
 			String jsonMessage,
 			@Context HttpHeaders headers) {
-    	String authorization = headers.getRequestHeader("Authorization").get(0);
+    	authorization = headers.getRequestHeader("Authorization").get(0);
 		return Response.status(401).entity("invalid access token").build();
     }
 
 
-	private Response heartbeat() {
+	protected Response heartbeat() {
 		return Response.status(200).build();
 	}
 
-	private Response getStatus() {
+	protected Response getStatus() {
 		return Response.status(200).entity(MonitoringStatus()).build();
 	}
-	private Response demo() {
+	protected Response demo() {
 		return Response.status(200).entity(DemoStatus()).build();
 	}
 
-	private Response configure() {
+	protected Response configure() {
 		return Response.status(404).build();
 	}
 
-	private Response data() {
+	protected Response data() {
 		return Response.status(404).build();
 	}
 
-	private Response event() {
+	protected Response event() {
 		return Response.status(404).build();
 	}
 
-	private String MonitoringStart() {
+	protected String MonitoringStart() {
 		try {
 			ConcernApp.getInstance();
 			return "Monitoring started";
@@ -97,11 +94,11 @@ public class HomePage {
 		}
 	}
 
-	private String getLoggerData() {
+	protected String getLoggerData() {
 		return ConcernApp.getLoggerData();
 	}
 
-	private String MonitoringStop() {
+	protected String MonitoringStop() {
 		if (ConcernApp.isRunning()) {
 			ConcernApp.killInstance();
 			return "Monitoring stopped";
@@ -126,29 +123,29 @@ public class HomePage {
 		return "Starting Demo";
 	}
 
-	private String getRulesList() {
+	protected String getRulesList() {
 		return ConcernApp.getRulesList();
 	}
 
-	private String getAmountOfLoadedRules() {
+	protected String getAmountOfLoadedRules() {
 			return Integer.toString(ConcernApp.getAmountOfLoadedRules());
 	}
 
-	private String getHiddenStatus() {
+	protected String getHiddenStatus() {
 		if (!ConcernApp.isRunning()) {
 			return "hidden";
 			}
 		return "";
 	}
 
-	private String getStartStatus() {
+	protected String getStartStatus() {
 		if (ConcernApp.isRunning()) {
 			return "hidden";
 			}
 		return "";
 	}
 
-    private String getStopStatus() {
+	protected String getStopStatus() {
 		if (!ConcernApp.isRunning()) {
 			return "hidden";
 			}
@@ -173,7 +170,6 @@ public class HomePage {
 //		}
 		return InetAddress.getLocalHost().getHostName();
     	} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		return "";
