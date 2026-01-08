@@ -1,7 +1,6 @@
 package it.cnr.isti.labsedc.concern.cep;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
@@ -17,28 +16,15 @@ import org.apache.activemq.broker.ConnectionContext;
 import org.apache.activemq.security.MessageAuthorizationPolicy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.drools.kiesession.rulebase.InternalKnowledgeBase;
-import org.drools.kiesession.rulebase.KnowledgeBaseFactory;
-import org.kie.api.definition.KiePackage;
-import org.kie.api.io.Resource;
-import org.kie.api.io.ResourceType;
-import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.rule.EntryPoint;
-import org.kie.internal.builder.KnowledgeBuilder;
-import org.kie.internal.builder.KnowledgeBuilderFactory;
-import org.kie.internal.io.ResourceFactory;
 
 import com.espertech.esper.common.client.configuration.Configuration;
 import com.espertech.esper.compiler.client.CompilerArguments;
-import com.espertech.esper.runtime.client.EPDeploymentService;
 import com.espertech.esper.runtime.client.EPRuntime;
 import com.espertech.esper.runtime.client.EPRuntimeProvider;
-import com.espertech.esper.runtime.client.EPStatement;
 
 import it.cnr.isti.labsedc.concern.ConcernApp;
 import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernBaseEvent;
-import it.cnr.isti.labsedc.concern.event.ConcernCANbusEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernCmdVelEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernDTForecast;
 import it.cnr.isti.labsedc.concern.event.ConcernEvaluationRequestEvent;
@@ -55,15 +41,12 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 	public Session receiverSession;
 	private CepType cep;
 	private String instanceName;
-	private String staticRuleToLoadAtStartup;
 	private boolean started = false;
 	private String username;
 	private String password;
-	private EntryPoint eventStream;
+	//private EntryPoint eventStream;
 	private Configuration config;
 	public EPRuntime runtime;
-	private EPDeploymentService deploymentService;
-	private CompilerArguments arguments;
 
 	public EsperComplexEventProcessorManager(String instanceName, String staticRuleToLoadAtStartup, String connectionUsername, String connectionPassword, CepType type, boolean runningInJMS) {
 		super();
@@ -80,7 +63,6 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 		logger.info("CEP creation ");
 		this.cep = type;
 		this.instanceName = instanceName;
-		this.staticRuleToLoadAtStartup = staticRuleToLoadAtStartup;
 		this.username = connectionUsername;
 		this.password = connectionPassword;
 	}
@@ -103,11 +85,10 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 		}
 	}
 
-	private void esperEngineSetup() {
+	protected void esperEngineSetup() {
 
 		runtime = EPRuntimeProvider.getDefaultRuntime(config);
-		deploymentService = runtime.getDeploymentService();
-        arguments = new CompilerArguments(config);
+        new CompilerArguments(config);
         
 		ConcernApp.componentStarted.put(this.getClass().getSimpleName() + instanceName, true);
 		
@@ -246,13 +227,13 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 		logger.info("...CEP named " + this.getInstanceName() + " receives rules "  + receivedEvent.getData() + " and load it into the knowledgeBase");
 	}
 
-	private void insertEvent(ConcernCANbusEvent<?> receivedEvent) {
-		if (eventStream != null && receivedEvent != null) {
-			eventStream.insert(receivedEvent);
-
-			logger.info("...CEP named " + this.getInstanceName() + " insert event "  + receivedEvent.getData() +" in the stream");
-			}
-	}
+//	protected void insertEvent(ConcernCANbusEvent<?> receivedEvent) {
+//		if (eventStream != null && receivedEvent != null) {
+//			eventStream.insert(receivedEvent);
+//
+//			logger.info("...CEP named " + this.getInstanceName() + " insert event "  + receivedEvent.getData() +" in the stream");
+//			}
+//	}
 
 	@Override
 	public boolean cepHasCompletedStartup() {
@@ -267,26 +248,21 @@ public class EsperComplexEventProcessorManager extends ComplexEventProcessorMana
 
 	@Override
 	public int getAmountOfLoadedRules() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String getLastRuleLoadedName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ArrayList<String> getRulesList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean deleteRule(String ruleName) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 }
