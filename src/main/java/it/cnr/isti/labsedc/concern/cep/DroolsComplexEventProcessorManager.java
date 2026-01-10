@@ -36,6 +36,7 @@ import org.kie.internal.io.ResourceFactory;
 import it.cnr.isti.labsedc.concern.ConcernApp;
 import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernBaseEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseUnencryptedEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernCmdVelEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernDTForecast;
 import it.cnr.isti.labsedc.concern.event.ConcernEvaluationRequestEvent;
@@ -178,10 +179,10 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 										ConcernICTGatewayEvent<?> receivedEvent = (ConcernICTGatewayEvent<?>) msg.getObject();
 										insertEvent(receivedEvent);
 									} else {
-//										if(msg.getObject() instanceof ConcernAnemometerEvent<?>) {
-//											ConcernAnemometerEvent<?> receivedEvent = (ConcernAnemometerEvent<?>) msg.getObject();
-//											insertEvent(receivedEvent);
-//										} else {
+										if(msg.getObject() instanceof ConcernBaseUnencryptedEvent<?>) {
+											ConcernBaseUnencryptedEvent<?> receivedEvent = (ConcernBaseUnencryptedEvent<?>) msg.getObject();
+											insertEvent(receivedEvent);
+										} else {
 											if (msg.getObject() instanceof ConcernEvaluationRequestEvent<?>) {
 												ConcernEvaluationRequestEvent<?> receivedEvent = (ConcernEvaluationRequestEvent<?>) msg.getObject();
 												if (receivedEvent.getCepType() == CepType.DROOLS) {
@@ -189,7 +190,7 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 													loadRule(receivedEvent);
 												}
 											}
-										//}
+										}
 									}
 								}
 							}
