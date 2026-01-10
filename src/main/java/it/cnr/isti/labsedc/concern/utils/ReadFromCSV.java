@@ -1,6 +1,7 @@
 package it.cnr.isti.labsedc.concern.utils;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
@@ -12,11 +13,12 @@ public class ReadFromCSV implements Iterator<String>, AutoCloseable {
     private int columnIndex;
     private String nextValue;   
 
-    public ReadFromCSV(String csvFile, String columnName) throws IOException {
-        reader = new BufferedReader(new FileReader(csvFile));
+    public ReadFromCSV(String csvFile, String columnName) {
+        try {
+			reader = new BufferedReader(new FileReader(csvFile));
+        String headerLine;
+			headerLine = reader.readLine();
 
-        // Read header
-        String headerLine = reader.readLine();
         if (headerLine == null) {
             throw new IllegalArgumentException("CSV file is empty");
         }
@@ -36,19 +38,28 @@ public class ReadFromCSV implements Iterator<String>, AutoCloseable {
         }
 
         advance();
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
-    private void advance() throws IOException {
+    private void advance() {
         String line;
         nextValue = null;
 
-        while ((line = reader.readLine()) != null) {
-            String[] fields = line.split(",");
-            if (fields.length > columnIndex) {
-                nextValue = fields[columnIndex].trim();
-                return;
-            }
-        }
+        try {
+			while ((line = reader.readLine()) != null) {
+			    String[] fields = line.split(",");
+			    if (fields.length > columnIndex) {
+			        nextValue = fields[columnIndex].trim();
+			        return;
+			    }
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -62,20 +73,21 @@ public class ReadFromCSV implements Iterator<String>, AutoCloseable {
             throw new NoSuchElementException();
         }
         String value = nextValue;
-        try {
-            advance();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        advance();
         return value;
     }
 
     @Override
-    public void close() throws IOException {
-        reader.close();
+    public void close() {
+        try {
+			reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         try (ReadFromCSV reader =
                  new ReadFromCSV("/home/acalabro/Desktop/Dataset/GNB_MacScheduler_ordinato.csv", "ULSCH_Round_1")) {
 
