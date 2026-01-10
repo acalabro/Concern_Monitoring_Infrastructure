@@ -3,29 +3,29 @@ package it.cnr.isti.labsedc.concern.probe;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
+import java.util.Random;
 
 import jakarta.jms.JMSException;
 import jakarta.jms.ObjectMessage;
 
 import javax.naming.NamingException;
 
-
 import it.cnr.isti.labsedc.concern.cep.CepType;
 import it.cnr.isti.labsedc.concern.event.ConcernBaseEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernBaseUnencryptedEvent;
 import it.cnr.isti.labsedc.concern.utils.ConnectionManager;
 import it.cnr.isti.labsedc.concern.utils.DebugMessages;
-import it.cnr.isti.labsedc.concern.utils.Encrypter;
+import it.cnr.isti.labsedc.concern.utils.ReadFromCSV;
 
-public class ConcernEncryptedProbe extends ConcernAbstractProbe {
+public class ConcernUnencryptedProbe extends ConcernAbstractProbe {
 
-	public ConcernEncryptedProbe(Properties settings) {
+	public ConcernUnencryptedProbe(Properties settings) {
 		super(settings);
 	}
 
 	public static void main(String[] args) throws UnknownHostException, InterruptedException {
 		//creating a probe
-		ConcernEncryptedProbe aGenericProbe = new ConcernEncryptedProbe(
+		ConcernUnencryptedProbe aGenericProbe = new ConcernUnencryptedProbe(
 				ConnectionManager.createProbeSettingsPropertiesObject(
 						"org.apache.activemq.jndi.ActiveMQInitialContextFactory",
 						"tcp://localhost:61616","system", "manager",
@@ -35,35 +35,42 @@ public class ConcernEncryptedProbe extends ConcernAbstractProbe {
 		//sending events
 		try {
 			DebugMessages.line();
-			DebugMessages.println(System.currentTimeMillis(), ConcernEncryptedProbe.class.getSimpleName(),"Sending messages");
+			DebugMessages.println(System.currentTimeMillis(), ConcernUnencryptedProbe.class.getSimpleName(),"Sending messages");
 
-			try {
-				sendEncryptedEventMessage(aGenericProbe, "asdasd", "AES");
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+			ReadFromCSV CSVReader = new ReadFromCSV("/home/acalabro/Desktop/Dataset/GNB_MacScheduler_ordinato.csv", "ULSCH_Round_1");
+			
+			while (CSVReader.hasNext()) {
+                String unencryptedValue = CSVReader.next();
+			
+				sendUnencryptedEventMessage(aGenericProbe, unencryptedValue.toString(), "none");
+				Random timeSlot = new Random();
+				
+				Thread.sleep(timeSlot.nextInt(10,80));
+
 			}
+			CSVReader.close();
 //			Thread.sleep(1000);
 //			sendScoreMessage(aGenericProbe, "0.1");
 //			sendVelocityMessage(aGenericProbe, "0.1");
 //			Thread.sleep(5000);
 //			sendConnectionEventMessage(aGenericProbe);
 			
-		} catch (IndexOutOfBoundsException | JMSException | NamingException e) {}
+		} catch (IndexOutOfBoundsException | JMSException | NamingException | NoSuchAlgorithmException e) {}
 	}
 
-	protected static void sendEncryptedEventMessage(
-		ConcernEncryptedProbe aGenericProbe, 
-		String payloadToEncrypt, 
+	protected static void sendUnencryptedEventMessage(
+		ConcernUnencryptedProbe aGenericProbe, 
+		String unencryptedPayload, 
 		String encryptionAlgorithmToUse) throws JMSException, NamingException, NoSuchAlgorithmException {
 			
-		ConcernBaseUnencryptedEvent<String> encryptedEvent = new ConcernBaseUnencryptedEvent<>(
+		ConcernBaseUnencryptedEvent<String> unencryptedEvent = new ConcernBaseUnencryptedEvent<>(
 			System.currentTimeMillis(),
-			"ENCRYPTED_Probe",
+			"UNENCRYPTED_Probe",
 			"Monitoring",
 			"sessionID",
 			"noChecksum",
-			"EncryptedMessage",
-			Encrypter.encrypt(payloadToEncrypt, encryptionAlgorithmToUse),
+			"UnencryptedMessage",
+			unencryptedPayload,
 			CepType.DROOLS,
 			false, 
 			encryptionAlgorithmToUse);
@@ -71,10 +78,10 @@ public class ConcernEncryptedProbe extends ConcernAbstractProbe {
 			try {
 				ObjectMessage messageToSend = publishSession.createObjectMessage();
 				messageToSend.setJMSMessageID(String.valueOf(MESSAGEID++));
-				messageToSend.setObject(encryptedEvent);
+				messageToSend.setObject(unencryptedEvent);
 
 				mProducer.send(messageToSend);
-				System.out.println("encryptedEvent: " + encryptedEvent.getData());
+				System.out.println("unencryptedEvent: " + unencryptedEvent.getData());
 			}
 			catch(JMSException asd) {
 
