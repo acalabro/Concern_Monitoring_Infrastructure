@@ -46,6 +46,7 @@ import it.cnr.isti.labsedc.concern.event.ConcernNetworkEvent;
 import it.cnr.isti.labsedc.concern.eventListener.ChannelProperties;
 import it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry;
 import it.cnr.isti.labsedc.concern.utils.ConcernMQTTCallBack;
+import it.cnr.isti.labsedc.concern.utils.Encrypter;
 
 public class DroolsComplexEventProcessorManager extends ComplexEventProcessorManager implements MessageListener, MessageAuthorizationPolicy {
 
@@ -186,6 +187,7 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 										} else {
 											if(msg.getObject() instanceof ConcernBaseUnencryptedEvent<?>) {
 												ConcernBaseEncryptedEvent<?> receivedEvent = (ConcernBaseEncryptedEvent<?>) msg.getObject();
+												//insertEvent(Encrypter.decryptAES(receivedEvent.getData(), Key ));
 												insertEvent(receivedEvent);
 											} else {
 												if (msg.getObject() instanceof ConcernEvaluationRequestEvent<?>) {
