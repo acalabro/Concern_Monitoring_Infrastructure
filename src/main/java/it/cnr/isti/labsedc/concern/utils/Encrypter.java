@@ -34,7 +34,7 @@ public class Encrypter {
 
 		try {        
         Cipher aesCipher = Cipher.getInstance("AES");
-        byte[] byteText = "diomerdosissimo merdoso del dio merda merdoso".getBytes();
+        byte[] byteText = "askhdkaldhadlk".getBytes();
 
         aesCipher.init(Cipher.ENCRYPT_MODE, secKey);
         byte[] byteCipherText = aesCipher.doFinal(byteText);
