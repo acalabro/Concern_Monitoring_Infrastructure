@@ -33,6 +33,7 @@ public class ConcernUnencryptedProbe extends ConcernAbstractProbe {
 						"it.cnr.isti.labsedc.concern,java.lang,javax.security,java.util",
 						"vera", "griselda"));
 		//sending events
+		while (true) {
 		try {
 			DebugMessages.line();
 			DebugMessages.println(System.currentTimeMillis(), ConcernUnencryptedProbe.class.getSimpleName(),"Sending messages");
@@ -67,8 +68,9 @@ public class ConcernUnencryptedProbe extends ConcernAbstractProbe {
 //			sendVelocityMessage(aGenericProbe, "0.1");
 //			Thread.sleep(5000);
 //			sendConnectionEventMessage(aGenericProbe);
-			
+		
 		} catch (IndexOutOfBoundsException | JMSException | NamingException | NoSuchAlgorithmException e) {}
+	}
 	}
 
 	protected static void sendUnencryptedEventMessage(

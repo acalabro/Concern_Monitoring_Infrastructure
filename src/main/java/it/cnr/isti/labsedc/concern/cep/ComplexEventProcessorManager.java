@@ -15,8 +15,4 @@ public abstract class ComplexEventProcessorManager extends Thread{
 	public abstract ArrayList<String> getRulesList();
 	public abstract boolean deleteRule(String ruleName);
 	public abstract void loadRule(ConcernEvaluationRequestEvent<?> receivedEvent);
-	public void loadRule(it.cnr.isti.labsedc.concern.ConcernEvaluationRequestEvent<String> invalidEvent) {
-		// TODO Auto-generated method stub
-		
-	}
 }
