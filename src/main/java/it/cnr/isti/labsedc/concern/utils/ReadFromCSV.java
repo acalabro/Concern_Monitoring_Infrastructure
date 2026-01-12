@@ -1,7 +1,6 @@
 package it.cnr.isti.labsedc.concern.utils;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;

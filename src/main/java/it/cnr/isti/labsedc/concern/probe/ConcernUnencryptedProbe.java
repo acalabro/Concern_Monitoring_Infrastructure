@@ -48,6 +48,8 @@ public class ConcernUnencryptedProbe extends ConcernAbstractProbe {
 				Thread.sleep(timeSlot.nextInt(1,40));
 
 			}
+			csvReader.close();
+
 			csvReader = new ReadFromCSV("/home/acalabro/Desktop/Dataset/GNB_MacScheduler_ordinato.csv", "BLER_DLSCH");
 			
 			while (csvReader.hasNext()) {
