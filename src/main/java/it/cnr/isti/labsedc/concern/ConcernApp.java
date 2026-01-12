@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ThisFieldRefForm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -43,6 +44,7 @@ public class ConcernApp extends Thread
     public static Logger logger = null;
 	private static final boolean SHUTDOWN = false;
 	public static HashMap<String, Boolean> componentStarted = new HashMap<>();
+	public static int eventCounter = 0;
 	static String username;
 	static String password;
 
@@ -55,7 +57,8 @@ public class ConcernApp extends Thread
 	//public static String PortWhereTheInstanceIsRunning = "4700";
 	public static String PortWhereTheInstanceIsRunning = "8181";
 	//public static String IPAddressWhereTheInstanceIsRunning = GetIP();
-	public static String IPAddressWhereTheInstanceIsRunning = "127.0.0.1";
+	//public static String IPAddressWhereTheInstanceIsRunning = "127.0.0.1";
+	public static String IPAddressWhereTheInstanceIsRunning = "192.168.88.241";
 
 	private static Thread INSTANCE;
 
@@ -317,5 +320,11 @@ public class ConcernApp extends Thread
 
 	public static boolean verifyHashedPassword(String password2, String hashed) {
 		return false;
+	}
+	public static void increaseReceivedEventCounter() {
+		ConcernApp.eventCounter++;
+	}
+	public static int getEventCounter() {
+		return ConcernApp.eventCounter;
 	}
 }

@@ -153,9 +153,11 @@ public class Monitoring {
     			+ "<div class=\"row\">"
 
     				+ "<div class=\"column\"> "
-    				+ 	"<h2><font color=\"RED\">Component status:</font></h2>"
-    					+ getComponentStatus() + "\n"
+    				+ "<h2 align=\"left\"><font color=\"RED\">Component status:</font></h2>"
+    				+ getComponentStatus() + "\n"
+    				+ "<h2 align=\"left\">Received events: <font color=\"GREEN\">" + Integer.toString(ConcernApp.getEventCounter()) + "</font></h2>\n"
     				+ "</div>"
+    				
 
     				+"<div class=\"column\">"
 	    				+ "<br /><button class=\"tab2\"onclick=\"startMonitoring()\" id=\"startMonitoring\" "+

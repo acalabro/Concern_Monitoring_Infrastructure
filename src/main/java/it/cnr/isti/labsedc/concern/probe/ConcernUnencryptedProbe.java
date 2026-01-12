@@ -37,18 +37,29 @@ public class ConcernUnencryptedProbe extends ConcernAbstractProbe {
 			DebugMessages.line();
 			DebugMessages.println(System.currentTimeMillis(), ConcernUnencryptedProbe.class.getSimpleName(),"Sending messages");
 
-			ReadFromCSV CSVReader = new ReadFromCSV("/home/acalabro/Desktop/Dataset/GNB_MacScheduler_ordinato.csv", "ULSCH_Round_1");
-			
-			while (CSVReader.hasNext()) {
-                String unencryptedValue = CSVReader.next();
+			ReadFromCSV csvReader = new ReadFromCSV("/home/acalabro/Desktop/Dataset/GNB_MacScheduler_ordinato.csv", "ULSCH_Round_1");
+			String unencryptedValue = "";
+			while (csvReader.hasNext()) {
+                unencryptedValue = csvReader.next();
 			
 				sendUnencryptedEventMessage(aGenericProbe, unencryptedValue.toString(), "none");
 				Random timeSlot = new Random();
 				
-				Thread.sleep(timeSlot.nextInt(10,80));
+				Thread.sleep(timeSlot.nextInt(1,50));
 
 			}
-			CSVReader.close();
+			csvReader = new ReadFromCSV("/home/acalabro/Desktop/Dataset/GNB_MacScheduler_ordinato.csv", "BLER_DLSCH");
+			
+			while (csvReader.hasNext()) {
+                unencryptedValue = csvReader.next();
+			
+				sendUnencryptedEventMessage(aGenericProbe, unencryptedValue.toString(), "none");
+				Random timeSlot = new Random();
+				
+				Thread.sleep(timeSlot.nextInt(1,50));
+
+			}
+			csvReader.close();
 //			Thread.sleep(1000);
 //			sendScoreMessage(aGenericProbe, "0.1");
 //			sendVelocityMessage(aGenericProbe, "0.1");
