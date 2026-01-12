@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ThisFieldRefForm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;

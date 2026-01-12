@@ -37,9 +37,6 @@ public class Main {
 // 		
 //    	StaticHttpHandler staticHttpHandler = new StaticHttpHandler(currentPath);
 //        server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/images");
-
-        
-        
         
     	System.out.println("Current IP: " + BASE_URI );
 
@@ -75,9 +72,7 @@ public class Main {
         }
     	System.out.println(String.format("Jersey app started with endpoints available at "
                 + "%s%nHit Ctrl-C to stop it...", BASE_URI));
-    	
 
- 		
 
     }
 
@@ -89,4 +84,3 @@ public class Main {
 		Main.server = server;
 	}
 }
-
