@@ -49,7 +49,7 @@ public class ICTGatewayProbe extends ConcernAbstractProbe {
 					"REGISTRATION_RESPONSE", "REGISTRATION")
 			);
 			
-			Thread.sleep(1000);
+			Thread.sleep(10);
 			
 			ICTGatewayProbe.sendICTMessage(aGenericProbe, new ConcernICTGatewayEvent<String>(
 					System.currentTimeMillis(),
@@ -81,14 +81,14 @@ public class ICTGatewayProbe extends ConcernAbstractProbe {
 			DebugMessages.line();
 			DebugMessages.println(System.currentTimeMillis(), ICTGatewayProbe.class.getSimpleName(),"INJECTING DEVIATION IN 3 SECONDS");
 			DebugMessages.line();
-			Thread.sleep(1000);
+			Thread.sleep(10);
 			DebugMessages.line();
 			DebugMessages.println(System.currentTimeMillis(), ICTGatewayProbe.class.getSimpleName(),"INJECTING DEVIATION IN 2 SECONDS");
 			DebugMessages.line();
-			Thread.sleep(1000);
+			Thread.sleep(10);
 			DebugMessages.line();
 			DebugMessages.println(System.currentTimeMillis(), ICTGatewayProbe.class.getSimpleName(),"INJECTING DEVIATION IN 1 SECONDS");
-			Thread.sleep(1000);
+			Thread.sleep(10);
 			DebugMessages.line();
 			DebugMessages.println(System.currentTimeMillis(), ICTGatewayProbe.class.getSimpleName(),"Injecting failure");
 			DebugMessages.line();
@@ -118,10 +118,10 @@ public class ICTGatewayProbe extends ConcernAbstractProbe {
 	private static void simMessage() throws InterruptedException {
 
 		for (int i = 0; i< 4; i++) {
-			Thread.sleep(1300);
+			Thread.sleep(13);
 			DebugMessages.line();
 			DebugMessages.println(System.currentTimeMillis(), ICTGatewayProbe.class.getSimpleName(),"A non relevant method is executed");
-			Thread.sleep(500);
+			Thread.sleep(5);
 			DebugMessages.println(System.currentTimeMillis(), ICTGatewayProbe.class.getSimpleName(),"Generic operations");			
 		}
 		
