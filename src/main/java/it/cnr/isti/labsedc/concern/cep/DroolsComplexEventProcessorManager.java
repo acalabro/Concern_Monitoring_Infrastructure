@@ -46,7 +46,6 @@ import it.cnr.isti.labsedc.concern.event.ConcernNetworkEvent;
 import it.cnr.isti.labsedc.concern.eventListener.ChannelProperties;
 import it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry;
 import it.cnr.isti.labsedc.concern.utils.ConcernMQTTCallBack;
-import it.cnr.isti.labsedc.concern.utils.Encrypter;
 
 public class DroolsComplexEventProcessorManager extends ComplexEventProcessorManager implements MessageListener, MessageAuthorizationPolicy {
 
@@ -281,7 +280,7 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 	private void insertEvent(ConcernAbstractEvent<?> receivedEvent) {
 		if (eventStream != null && receivedEvent != null) {
 			eventStream.insert(receivedEvent);
-			logger.debug("...CEP named " + this.getInstanceName() + " received an event of type:\n"  + receivedEvent.getClass().getCanonicalName() +" in the stream, sent from " + receivedEvent.getSenderID());
+			//logger.debug("...CEP named " + this.getInstanceName() + " received an event of type:\n"  + receivedEvent.getClass().getCanonicalName() +" in the stream, sent from " + receivedEvent.getSenderID());
 			if (receivedEvent instanceof ConcernBaseEvent<?>) {
 				ConcernApp.storageManager.saveMessage(receivedEvent);
 				logger.debug("with data:" +
@@ -298,6 +297,7 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 //			if (receivedEvent instanceof ConcernAnemometerEvent<?>) {
 //				ConcernApp.storageManager.saveWindData((ConcernAnemometerEvent<?>)receivedEvent);
 //			}
+		ConcernApp.increaseReceivedEventCounter();
 		}
 	}
 
