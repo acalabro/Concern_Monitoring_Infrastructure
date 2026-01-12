@@ -45,7 +45,7 @@ public class ConcernUnencryptedProbe extends ConcernAbstractProbe {
 				sendUnencryptedEventMessage(aGenericProbe, unencryptedValue.toString(), "none");
 				Random timeSlot = new Random();
 				
-				Thread.sleep(timeSlot.nextInt(1,50));
+				Thread.sleep(timeSlot.nextInt(1,40));
 
 			}
 			csvReader = new ReadFromCSV("/home/acalabro/Desktop/Dataset/GNB_MacScheduler_ordinato.csv", "BLER_DLSCH");
@@ -56,7 +56,7 @@ public class ConcernUnencryptedProbe extends ConcernAbstractProbe {
 				sendUnencryptedEventMessage(aGenericProbe, unencryptedValue.toString(), "none");
 				Random timeSlot = new Random();
 				
-				Thread.sleep(timeSlot.nextInt(1,50));
+				Thread.sleep(timeSlot.nextInt(1,40));
 
 			}
 			csvReader.close();
