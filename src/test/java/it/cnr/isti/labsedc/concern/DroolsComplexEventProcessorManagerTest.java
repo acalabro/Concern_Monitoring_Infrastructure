@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import it.cnr.isti.labsedc.concern.cep.CepType;
 import it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager;
-import it.cnr.isti.labsedc.concern.event.ConcernEvaluationRequestEvent;
 
 public class DroolsComplexEventProcessorManagerTest {
 
@@ -19,7 +18,6 @@ public class DroolsComplexEventProcessorManagerTest {
 
     @Before
     public void setUp() {
-        // Use a safe, invalid file path to avoid triggering real compilation
         String dummyDRLPath = "src/test/resources/empty.drl";
         cepManager = new DroolsComplexEventProcessorManager("testInstance", dummyDRLPath,
                 "testUser", "testPass", CepType.DROOLS, false); // MQTT only, avoids JMS connection

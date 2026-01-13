@@ -11,8 +11,8 @@ import javax.naming.NamingException;
 
 
 import it.cnr.isti.labsedc.concern.cep.CepType;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseEncryptedEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernBaseEvent;
-import it.cnr.isti.labsedc.concern.event.ConcernBaseUnencryptedEvent;
 import it.cnr.isti.labsedc.concern.utils.ConnectionManager;
 import it.cnr.isti.labsedc.concern.utils.DebugMessages;
 import it.cnr.isti.labsedc.concern.utils.Encrypter;
@@ -56,7 +56,7 @@ public class ConcernEncryptedProbe extends ConcernAbstractProbe {
 		String payloadToEncrypt, 
 		String encryptionAlgorithmToUse) throws JMSException, NamingException, NoSuchAlgorithmException {
 			
-		ConcernBaseUnencryptedEvent<String> encryptedEvent = new ConcernBaseUnencryptedEvent<>(
+		ConcernBaseEncryptedEvent<String> encryptedEvent = new ConcernBaseEncryptedEvent<>(
 			System.currentTimeMillis(),
 			"ENCRYPTED_Probe",
 			"Monitoring",
