@@ -186,7 +186,7 @@ public class Monitoring {
     			+"</div>"
 				+ "    	<script>\n"
 				+ "    	function loadFunction() {\n"
-				+ "    	    window.open(\"./biecointerface/loadrules\", \"_blank\", \"toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=750,height=750\");\n"
+				+ "    	    window.open(\"./loadrules\", \"_blank\", \"toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=750,height=750\");\n"
 				+ "    	}\n"
 				+ "    	</script>"
 				+ "    	<script>\n"
