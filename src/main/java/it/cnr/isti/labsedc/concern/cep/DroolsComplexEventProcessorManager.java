@@ -187,7 +187,7 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 										} else {
 											if(msg.getObject() instanceof ConcernBaseEncryptedEvent<?>) {
 												ConcernBaseEncryptedEvent<?> receivedEvent = (ConcernBaseEncryptedEvent<?>) msg.getObject(); 	
-												insertEvent(Encrypter.decryptObject(receivedEvent));
+												insertEvent(receivedEvent);
 											} else {
 												if (msg.getObject() instanceof ConcernEvaluationRequestEvent<?>) {
 													ConcernEvaluationRequestEvent<?> receivedEvent = (ConcernEvaluationRequestEvent<?>) msg.getObject();

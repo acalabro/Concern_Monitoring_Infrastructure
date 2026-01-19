@@ -52,7 +52,7 @@ public class ConcernApp extends Thread
 	public static String PortWhereTheInstanceIsRunning = "8181";
 	//public static String IPAddressWhereTheInstanceIsRunning = GetIP();
 	//public static String IPAddressWhereTheInstanceIsRunning = "127.0.0.1";
-	public static String IPAddressWhereTheInstanceIsRunning = "10.0.0.198";
+	public static String IPAddressWhereTheInstanceIsRunning = "146.48.52.135";
 
 	private static Thread INSTANCE;
 
