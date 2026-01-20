@@ -1,0 +1,36 @@
+//created Jan 24, 2023 - 17:41:32
+package it.cnr.isti.labsedc.concern.event;
+import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernProbeEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseEncryptedEvent;
+import it.cnr.isti.labsedc.concern.utils.KieLauncher;
+import it.cnr.isti.labsedc.concern.utils.Encrypter;
+import it.cnr.isti.labsedc.concern.notification.NotificationManager;
+
+//Check a sequence of events strictly
+
+dialect "java"
+
+declare ConcernBaseEncryptedEvent
+    @role( event )
+    @timestamp( timestamp )
+    @expires(2m)
+end
+
+rule "decrypt"
+no-loop
+salience 1000
+dialect "java"
+when
+	$aEvent: ConcernBaseEncryptedEvent(
+		this.senderID == "ENCRYPTED_Probe",
+		this.destinationID == "Monitoring",
+		this.name == "EncryptedMessage",
+		this.encryption == "AES",
+		this.consumed == false);
+
+then
+		$aEvent.setConsumed(true);
+		update($aEvent);
+		Encrypter.decrypt($aEvent.getData().toString(),"AES");		
+end
