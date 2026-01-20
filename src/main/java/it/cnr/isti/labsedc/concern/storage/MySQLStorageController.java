@@ -20,8 +20,8 @@ public class MySQLStorageController implements StorageController {
 	public String serverAddress = "localhost"; //default is localhost
 	public int serverPort = 3306; //default is mysql
 	public String username = "concern";
-	public String password = "unsecure";
-	public String dbName = "concern";
+	public String password = "un53cur3!!";
+	public String dbName = "eventdb";
 	private Connection con;
 
 	public MySQLStorageController(String serverAddress, int serverPort, String username, String password, String collectionName) {
@@ -88,7 +88,7 @@ public class MySQLStorageController implements StorageController {
 				      preparedStmt.setString(4, message.getData().getClass().getCanonicalName());
 				      // execute the preparedstatement
 				      preparedStmt.execute();
-				      logger.info("Event: " + message.toString() + " stored.");
+				      //logger.info("Event: " + message.toString() + " stored.");
 				      return true;
 			}
 		} catch (SQLException e) {

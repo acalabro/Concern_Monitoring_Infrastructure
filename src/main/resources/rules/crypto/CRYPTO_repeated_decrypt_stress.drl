@@ -1,0 +1,35 @@
+//created Jan 24, 2023 - 17:41:32
+package it.cnr.isti.labsedc.concern.event;
+import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernProbeEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseEncryptedEvent;
+import it.cnr.isti.labsedc.concern.utils.KieLauncher;
+import it.cnr.isti.labsedc.concern.utils.Encrypter;
+import it.cnr.isti.labsedc.concern.notification.NotificationManager;
+
+
+dialect "java"
+
+declare ConcernBaseEncryptedEvent
+    @role( event )
+    @timestamp( timestamp )
+    @expires( 2m )
+end
+
+rule "CRYPTO_repeated_decrypt_stress"
+salience 50
+when
+    $aEvent : ConcernBaseEncryptedEvent(
+        this.senderID == "ENCRYPTED_Probe",
+        this.destinationID == "Monitoring",
+        this.name == "EncryptedMessage",
+        this.encryption == "AES",
+        this.consumed == false
+    );
+then
+    for (int i = 0; i < 10; i++) {
+    	String clear = Encrypter.decrypt($aEvent.getData().toString(),$aEvent.getEncryption());
+    }
+    $aEvent.setConsumed(true);
+    update($aEvent);
+end

@@ -46,7 +46,6 @@ import it.cnr.isti.labsedc.concern.event.ConcernNetworkEvent;
 import it.cnr.isti.labsedc.concern.eventListener.ChannelProperties;
 import it.cnr.isti.labsedc.concern.register.ChannelsManagementRegistry;
 import it.cnr.isti.labsedc.concern.utils.ConcernMQTTCallBack;
-import it.cnr.isti.labsedc.concern.utils.Encrypter;
 
 public class DroolsComplexEventProcessorManager extends ComplexEventProcessorManager implements MessageListener, MessageAuthorizationPolicy {
 
@@ -283,16 +282,29 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 			//logger.debug("...CEP named " + this.getInstanceName() + " received an event of type:\n"  + receivedEvent.getClass().getCanonicalName() +" in the stream, sent from " + receivedEvent.getSenderID());
 			if (receivedEvent instanceof ConcernBaseEvent<?>) {
 				ConcernApp.storageManager.saveMessage(receivedEvent);
-				logger.debug("with data:" +
-						"\nName: "+ receivedEvent.getName() +
-						"\nDestination: " + receivedEvent.getDestinationID() +
-						"\nData: " + receivedEvent.getData() +
-						"\nSenderID: " + receivedEvent.getSenderID() +
-						"\nTimestamp: " + receivedEvent.getTimestamp() +
-						"\nSessionID: " + receivedEvent.getSessionID() +
-						"\nChecksum: " + receivedEvent.getChecksum() +
-						"\nCepType: " + receivedEvent.getCepType().toString());
+//				logger.debug("with data:" +
+//						"\nName: "+ receivedEvent.getName() +
+//						"\nDestination: " + receivedEvent.getDestinationID() +
+//						"\nData: " + receivedEvent.getData() +
+//						"\nSenderID: " + receivedEvent.getSenderID() +
+//						"\nTimestamp: " + receivedEvent.getTimestamp() +
+//						"\nSessionID: " + receivedEvent.getSessionID() +
+//						"\nChecksum: " + receivedEvent.getChecksum() +
+//						"\nCepType: " + receivedEvent.getCepType().toString());
 
+			} else {
+				if (receivedEvent instanceof ConcernBaseEncryptedEvent<?>) {
+					ConcernApp.storageManager.saveMessage(receivedEvent);
+//					logger.debug("with data:" +
+//							"\nName: "+ receivedEvent.getName() +
+//							"\nDestination: " + receivedEvent.getDestinationID() +
+//							"\nData: " + receivedEvent.getData() +
+//							"\nSenderID: " + receivedEvent.getSenderID() +
+//							"\nTimestamp: " + receivedEvent.getTimestamp() +
+//							"\nSessionID: " + receivedEvent.getSessionID() +
+//							"\nChecksum: " + receivedEvent.getChecksum() +
+//							"\nCepType: " + receivedEvent.getCepType().toString());
+				}
 			}
 //			if (receivedEvent instanceof ConcernAnemometerEvent<?>) {
 //				ConcernApp.storageManager.saveWindData((ConcernAnemometerEvent<?>)receivedEvent);
