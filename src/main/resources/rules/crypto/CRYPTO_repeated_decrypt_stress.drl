@@ -23,8 +23,7 @@ when
         this.senderID == "ENCRYPTED_Probe",
         this.destinationID == "Monitoring",
         this.name == "EncryptedMessage",
-        this.encryption == "AES",
-        this.consumed == false
+        this.encryption == "AES"
     );
 then
     for (int i = 0; i < 10; i++) {

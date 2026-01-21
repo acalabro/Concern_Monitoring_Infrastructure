@@ -28,13 +28,13 @@ when
         
 then
     String clear = Encrypter.decrypt($aEvent.getData().toString(),$aEvent.getEncryption());
+    $aEvent.setConsumed(true);
     $aEvent.setData(clear);
 
     ConcernApp test = (ConcernApp)ConcernApp.getInstance();
     test.getStorageController().saveMessage($aEvent);
     test.getStorageController().saveMessage($aEvent);
     test.getStorageController().saveMessage($aEvent);
-    
-    $aEvent.setConsumed(true);
+
     update($aEvent);
 end

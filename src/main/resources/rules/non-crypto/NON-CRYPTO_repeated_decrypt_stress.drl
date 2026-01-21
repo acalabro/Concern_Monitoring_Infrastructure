@@ -2,35 +2,33 @@
 package it.cnr.isti.labsedc.concern.event;
 import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernProbeEvent;
-import it.cnr.isti.labsedc.concern.event.ConcernBaseEncryptedEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseUnencryptedEvent;
 import it.cnr.isti.labsedc.concern.utils.KieLauncher;
 import it.cnr.isti.labsedc.concern.utils.Encrypter;
 import it.cnr.isti.labsedc.concern.notification.NotificationManager;
-
+import it.cnr.isti.labsedc.concern.ConcernApp;
 
 dialect "java"
 
-declare ConcernBaseEncryptedEvent
+declare ConcernBaseUnencryptedEvent
     @role( event )
     @timestamp( timestamp )
     @expires( 2m )
 end
 
-rule "CRYPTO_BASELINE_single_decrypt"
-no-loop
-salience 1000
-dialect "java"
+rule "CRYPTO_repeated_decrypt_stress"
+salience 50
 when
-    $aEvent : ConcernBaseEncryptedEvent(
-        this.senderID == "ENCRYPTED_Probe",
+    $aEvent : ConcernBaseUnencryptedEvent(
+        this.senderID == "UNENCRYPTED_Probe",
         this.destinationID == "Monitoring",
-        this.name == "EncryptedMessage",
-        this.encryption == "AES",
+        this.name == "UnencryptedMessage",
+        this.encryption == "none",
         this.consumed == false);
-        
 then
-    String clear = Encrypter.decrypt($aEvent.getData().toString(),$aEvent.getEncryption());
-
+    for (int i = 0; i < 10; i++) {
+    	String clear = $aEvent.getData().toString();
+    }
     $aEvent.setConsumed(true);
     update($aEvent);
 end
