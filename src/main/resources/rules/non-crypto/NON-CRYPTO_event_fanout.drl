@@ -2,7 +2,7 @@
 package it.cnr.isti.labsedc.concern.event;
 import it.cnr.isti.labsedc.concern.event.ConcernAbstractEvent;
 import it.cnr.isti.labsedc.concern.event.ConcernProbeEvent;
-import it.cnr.isti.labsedc.concern.event.ConcernBaseEncryptedEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseUnencryptedEvent;
 import it.cnr.isti.labsedc.concern.utils.KieLauncher;
 import it.cnr.isti.labsedc.concern.utils.Encrypter;
 import it.cnr.isti.labsedc.concern.notification.NotificationManager;
@@ -10,35 +10,35 @@ import it.cnr.isti.labsedc.concern.ConcernApp;
 
 dialect "java"
 
-declare ConcernBaseEncryptedEvent
+declare ConcernBaseUnencryptedEvent
     @role( event )
     @timestamp( timestamp )
     @expires( 2m )
 end
 
-rule "CRYPTO_event_fanout"
+rule "NON-CRYPTO_event_fanout"
 when
-    $aEvent : ConcernBaseEncryptedEvent(
-        this.senderID == "ENCRYPTED_Probe",
+
+    $aEvent : ConcernBaseUnencryptedEvent(
+        this.senderID == "UNENCRYPTED_Probe",
         this.destinationID == "Monitoring",
-        this.name == "EncryptedMessage",
-        this.encryption == "AES",
-        this.consumed == false
-    );
+        this.name == "UnencryptedMessage",
+        this.encryption == "none",
+        this.consumed == false);
+        
 then
-    String clear = Encrypter.decrypt($aEvent.getData().toString(),$aEvent.getEncryption());
     ConcernApp test = (ConcernApp)ConcernApp.getInstance();
     
     for (int i = 0; i < 20; i++) {
-        ConcernBaseEncryptedEvent ne =
-            new ConcernBaseEncryptedEvent(
+        ConcernBaseUnencryptedEvent ne =
+            new ConcernBaseUnencryptedEvent(
             $aEvent.getTimestamp(),
             $aEvent.getSenderID(),
             $aEvent.getDestinationID(),
             $aEvent.getSessionID(),
             $aEvent.getChecksum(),
             $aEvent.getName(),
-            Encrypter.encrypt(clear,$aEvent.getEncryption()),
+            $aEvent.getData(),
             $aEvent.getCepType(),
             false,
             $aEvent.getEncryption());
