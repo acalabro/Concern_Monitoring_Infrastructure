@@ -27,12 +27,12 @@ when
         this.consumed == false);
         
 then
+    $aEvent.setConsumed(true);
 
     ConcernApp test = (ConcernApp)ConcernApp.getInstance();
     test.getStorageController().saveMessage($aEvent);
     test.getStorageController().saveMessage($aEvent);
     test.getStorageController().saveMessage($aEvent);
     
-    $aEvent.setConsumed(true);
     update($aEvent);
 end
