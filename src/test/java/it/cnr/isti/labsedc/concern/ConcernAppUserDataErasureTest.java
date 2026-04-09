@@ -41,7 +41,7 @@ public class ConcernAppUserDataErasureTest {
 
     @Test
     public void testDeleteAllRules() {
-        ArrayList<String> rules = ConcernApp.cepManOne.getRulesList();
+        ArrayList<String> rules = ConcernApp.getDroolsComplexEventProcessor().getRulesList();
         if (rules != null) {
             for (String rule : rules) {
                 ConcernApp.deleteRule(rule);

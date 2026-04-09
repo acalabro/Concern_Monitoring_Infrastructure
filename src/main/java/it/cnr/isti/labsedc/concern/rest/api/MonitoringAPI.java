@@ -12,8 +12,6 @@ import it.cnr.isti.labsedc.concern.storage.MySQLStorageController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * API REST moderna per il monitoraggio del sistema
@@ -84,7 +82,7 @@ public class MonitoringAPI {
                 PreparedStatement stmt = conn.prepareStatement(
                     "SELECT COUNT(*) as total FROM event"
                 );
-                ResultSet rs = stmt.fetchQuery();
+                ResultSet rs = stmt.executeQuery(); // FIX: executeQuery() invece di fetchQuery()
                 if (rs.next()) {
                     metrics.put("totalEvents", rs.getInt("total"));
                 }
@@ -95,7 +93,7 @@ public class MonitoringAPI {
                 stmt = conn.prepareStatement(
                     "SELECT COUNT(*) as total FROM violation"
                 );
-                rs = stmt.fetchQuery();
+                rs = stmt.executeQuery(); // FIX
                 if (rs.next()) {
                     metrics.put("totalViolations", rs.getInt("total"));
                 }
@@ -108,7 +106,7 @@ public class MonitoringAPI {
                     "SELECT COUNT(*) as total FROM event WHERE timestamp > ?"
                 );
                 stmt.setLong(1, oneHourAgo);
-                rs = stmt.fetchQuery();
+                rs = stmt.executeQuery(); // FIX
                 if (rs.next()) {
                     metrics.put("eventsLastHour", rs.getInt("total"));
                 }
@@ -120,7 +118,7 @@ public class MonitoringAPI {
                     "SELECT COUNT(*) as total FROM violation WHERE violationTimestamp > ?"
                 );
                 stmt.setLong(1, oneHourAgo);
-                rs = stmt.fetchQuery();
+                rs = stmt.executeQuery(); // FIX
                 if (rs.next()) {
                     metrics.put("violationsLastHour", rs.getInt("total"));
                 }
@@ -160,7 +158,7 @@ public class MonitoringAPI {
             JSONObject response = new JSONObject();
             JSONArray rulesArray = new JSONArray();
             
-            if (ConcernApp.isRunning()) {
+            if (ConcernApp.isRunning() && ConcernApp.getDroolsComplexEventProcessor() != null) {
                 var rulesList = ConcernApp.getDroolsComplexEventProcessor().getRulesList();
                 if (rulesList != null) {
                     for (String rule : rulesList) {
@@ -269,7 +267,7 @@ public class MonitoringAPI {
                 "ORDER BY count DESC " +
                 "LIMIT 10"
             );
-            ResultSet rs = stmt.fetchQuery();
+            ResultSet rs = stmt.executeQuery(); // FIX
             
             JSONArray bySender = new JSONArray();
             while (rs.next()) {
@@ -288,7 +286,7 @@ public class MonitoringAPI {
                 "GROUP BY dataClassName " +
                 "ORDER BY count DESC"
             );
-            rs = stmt.fetchQuery();
+            rs = stmt.executeQuery(); // FIX
             
             JSONArray byClass = new JSONArray();
             while (rs.next()) {
@@ -311,7 +309,7 @@ public class MonitoringAPI {
                 "ORDER BY hour"
             );
             stmt.setLong(1, oneDayAgo);
-            rs = stmt.fetchQuery();
+            rs = stmt.executeQuery(); // FIX
             
             JSONArray timeline = new JSONArray();
             while (rs.next()) {
@@ -364,7 +362,7 @@ public class MonitoringAPI {
                 "ORDER BY count DESC " +
                 "LIMIT 10"
             );
-            ResultSet rs = stmt.fetchQuery();
+            ResultSet rs = stmt.executeQuery(); // FIX
             
             JSONArray byRule = new JSONArray();
             while (rs.next()) {
@@ -384,7 +382,7 @@ public class MonitoringAPI {
                 "ORDER BY count DESC " +
                 "LIMIT 10"
             );
-            rs = stmt.fetchQuery();
+            rs = stmt.executeQuery(); // FIX
             
             JSONArray byProbe = new JSONArray();
             while (rs.next()) {
@@ -407,7 +405,7 @@ public class MonitoringAPI {
                 "ORDER BY hour"
             );
             stmt.setLong(1, oneDayAgo);
-            rs = stmt.fetchQuery();
+            rs = stmt.executeQuery(); // FIX
             
             JSONArray timeline = new JSONArray();
             while (rs.next()) {
@@ -425,7 +423,7 @@ public class MonitoringAPI {
                 "ORDER BY violationTimestamp DESC " +
                 "LIMIT 20"
             );
-            rs = stmt.fetchQuery();
+            rs = stmt.executeQuery(); // FIX
             
             JSONArray recent = new JSONArray();
             while (rs.next()) {
