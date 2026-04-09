@@ -19,7 +19,7 @@ function RulesManagement({ rules, onRulesChanged }) {
   // Fetch lista file regole
   const fetchRuleFiles = async () => {
     try {
-      const response = await axios.get('/api/rules-mgmt/list');
+      const response = await axios.get('/api/rules/files');  // ← CAMBIATO
       setRuleFiles(response.data.files || []);
     } catch (err) {
       console.error('Error fetching rule files:', err);
@@ -47,7 +47,7 @@ function RulesManagement({ rules, onRulesChanged }) {
     setSuccess(null);
 
     try {
-      const response = await axios.post('/api/rules-mgmt/upload', {
+      const response = await axios.post('/api/rules/upload', {
         ruleName: ruleName,
         ruleContent: ruleContent
       });
@@ -125,7 +125,7 @@ function RulesManagement({ rules, onRulesChanged }) {
   const handleViewFile = async (filename) => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/rules/content/${filename}`);
+      const response = await axios.get(`/api/rules/files/${filename}`);  // ← CAMBIATO
       setSelectedFile({
         name: filename,
         content: response.data.content
@@ -142,23 +142,18 @@ function RulesManagement({ rules, onRulesChanged }) {
     if (!confirm(`Sei sicuro di voler eliminare "${filename}"?`)) {
       return;
     }
-
+   
     setLoading(true);
     setError(null);
-
+   
     try {
-      await axios.delete(`/api/rules/delete/${filename}`);
+      await axios.delete(`/api/rules/files/${filename}`);  // ← CAMBIATO
       setSuccess(`File "${filename}" eliminato con successo`);
       await fetchRuleFiles();
-      
-      // Triggera refresh
-      if (onRulesChanged) {
-        onRulesChanged();
-      }
-      
+      if (onRulesChanged) onRulesChanged();
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
-      setError(err.response?.data?.error || 'Errore durante l\'eliminazione');
+      setError(err.response?.data?.error || "Errore durante l'eliminazione");
     } finally {
       setLoading(false);
     }
@@ -170,7 +165,7 @@ function RulesManagement({ rules, onRulesChanged }) {
     setError(null);
 
     try {
-      const response = await axios.post(`/api/rules-mgmt/load/${filename}`);
+      const response = await axios.post(`/api/rules/load/${filename}`);
       setSuccess(`Regola "${filename}" caricata nel motore CEP!`);
       
       // IMPORTANTE: Aspetta un attimo poi refresha le regole
