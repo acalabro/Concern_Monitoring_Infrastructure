@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDroolsValidation, ValidationIndicator } from './hooks/useDroolsValidation';
 import {
   Upload, FileText, Plus, Trash2, Eye, CheckCircle, 
   XCircle, AlertCircle, Download, RefreshCw, Code
@@ -77,6 +78,8 @@ function RulesManagement({ rules, onRulesChanged }) {
       setLoading(false);
     }
   };
+
+  const validation = useDroolsValidation(ruleContent, 1000);
 
   // Validazione regola
   const handleValidateRule = async () => {
@@ -386,6 +389,7 @@ end`;
                 placeholder="Inserisci il contenuto della regola Drools..."
                 spellCheck={false}
               />
+			  <ValidationIndicator validation={validation} />
             </div>
 
             {validationResult && (
