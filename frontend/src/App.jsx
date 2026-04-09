@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import RulesManagement from './RulesManagement';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -19,12 +20,16 @@ function App() {
   const [eventsStats, setEventsStats] = useState(null);
   const [violationsStats, setViolationsStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
+  const [actionLoading, setActionLoading] = useState(false);
 
   // Fetch dati dal backend
   const fetchData = async () => {
     try {
-      const [statusRes, metricsRes, rulesRes, eventsRes, violationsRes] = await Promise.all([
+      setError(null);
+      
+      const [statusRes, metricsRes, rulesRes, eventsRes, violationsRes] = await Promise.allSettled([
         axios.get('/api/status'),
         axios.get('/api/metrics'),
         axios.get('/api/rules'),
@@ -32,14 +37,50 @@ function App() {
         axios.get('/api/stats/violations')
       ]);
 
-      setSystemStatus(statusRes.data);
-      setMetrics(metricsRes.data);
-      setRules(rulesRes.data.rules);
-      setEventsStats(eventsRes.data);
-      setViolationsStats(violationsRes.data);
+      // Status (obbligatorio)
+      if (statusRes.status === 'fulfilled') {
+        setSystemStatus(statusRes.value.data);
+      } else {
+        console.error('Error fetching status:', statusRes.reason);
+        setSystemStatus({ running: false, timestamp: Date.now() });
+      }
+
+      // Metrics
+      if (metricsRes.status === 'fulfilled') {
+        setMetrics(metricsRes.value.data);
+      } else {
+        console.error('Error fetching metrics:', metricsRes.reason);
+        setMetrics({ totalEvents: 0, totalViolations: 0 });
+      }
+
+      // Rules
+      if (rulesRes.status === 'fulfilled') {
+        setRules(rulesRes.value.data.rules || []);
+      } else {
+        console.error('Error fetching rules:', rulesRes.reason);
+        setRules([]);
+      }
+
+      // Events stats
+      if (eventsRes.status === 'fulfilled') {
+        setEventsStats(eventsRes.value.data);
+      } else {
+        console.error('Error fetching events stats:', eventsRes.reason);
+        setEventsStats({ bySender: [], byClass: [], timeline24h: [] });
+      }
+
+      // Violations stats
+      if (violationsRes.status === 'fulfilled') {
+        setViolationsStats(violationsRes.value.data);
+      } else {
+        console.error('Error fetching violations stats:', violationsRes.reason);
+        setViolationsStats({ byRule: [], byProbe: [], timeline24h: [], recent: [] });
+      }
+
       setLoading(false);
     } catch (error) {
       console.error('Errore nel recupero dei dati:', error);
+      setError('Impossibile connettersi al backend. Verifica che sia in esecuzione su porta 8181.');
       setLoading(false);
     }
   };
@@ -53,19 +94,42 @@ function App() {
   // Azioni di controllo
   const startMonitoring = async () => {
     try {
-      await axios.post('/api/start');
-      fetchData();
+      setActionLoading(true);
+      setError(null);
+      
+      const response = await axios.post('/api/start');
+      console.log('Start response:', response.data);
+      
+      // Aspetta un po' prima di fare il refresh per dare tempo al sistema di avviarsi
+      setTimeout(() => {
+        fetchData();
+        setActionLoading(false);
+      }, 2000);
+      
     } catch (error) {
       console.error('Errore nell\'avvio:', error);
+      setError(error.response?.data?.error || 'Errore durante l\'avvio del monitoring');
+      setActionLoading(false);
     }
   };
 
   const stopMonitoring = async () => {
     try {
-      await axios.post('/api/stop');
-      fetchData();
+      setActionLoading(true);
+      setError(null);
+      
+      const response = await axios.post('/api/stop');
+      console.log('Stop response:', response.data);
+      
+      setTimeout(() => {
+        fetchData();
+        setActionLoading(false);
+      }, 1000);
+      
     } catch (error) {
       console.error('Errore nella fermata:', error);
+      setError(error.response?.data?.error || 'Errore durante lo stop del monitoring');
+      setActionLoading(false);
     }
   };
 
@@ -85,20 +149,26 @@ function App() {
         <div className="header-content">
           <h1><Activity /> Concern Monitoring Dashboard</h1>
           <div className="header-controls">
-            <button onClick={fetchData} className="btn-refresh">
-              <RefreshCw size={18} /> Aggiorna
+            <button onClick={fetchData} className="btn-refresh" disabled={actionLoading}>
+              <RefreshCw size={18} className={actionLoading ? 'spinning' : ''} /> Aggiorna
             </button>
             {systemStatus?.running ? (
-              <button onClick={stopMonitoring} className="btn-stop">
-                <Square size={18} /> Stop
+              <button onClick={stopMonitoring} className="btn-stop" disabled={actionLoading}>
+                <Square size={18} /> {actionLoading ? 'Stopping...' : 'Stop'}
               </button>
             ) : (
-              <button onClick={startMonitoring} className="btn-start">
-                <Play size={18} /> Start
+              <button onClick={startMonitoring} className="btn-start" disabled={actionLoading}>
+                <Play size={18} /> {actionLoading ? 'Starting...' : 'Start'}
               </button>
             )}
           </div>
         </div>
+        {error && (
+          <div className="error-banner">
+            <AlertTriangle size={18} />
+            <span>{error}</span>
+          </div>
+        )}
       </header>
 
       {/* Status Cards */}
@@ -213,31 +283,39 @@ function OverviewTab({ metrics, eventsStats, violationsStats }) {
       {/* Timeline Eventi 24h */}
       <div className="chart-card wide">
         <h3>Andamento Eventi (24h)</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={eventsStats?.timeline24h || []}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="hour" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="count" stroke="#0088FE" name="Eventi" />
-          </LineChart>
-        </ResponsiveContainer>
+        {eventsStats?.timeline24h && eventsStats.timeline24h.length > 0 ? (
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={eventsStats.timeline24h}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="hour" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="count" stroke="#0088FE" name="Eventi" />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="no-data">Nessun dato disponibile</div>
+        )}
       </div>
 
       {/* Timeline Violazioni 24h */}
       <div className="chart-card wide">
         <h3>Andamento Violazioni (24h)</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={violationsStats?.timeline24h || []}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="hour" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="count" stroke="#FF8042" name="Violazioni" />
-          </LineChart>
-        </ResponsiveContainer>
+        {violationsStats?.timeline24h && violationsStats.timeline24h.length > 0 ? (
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={violationsStats.timeline24h}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="hour" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="count" stroke="#FF8042" name="Violazioni" />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="no-data">Nessun dato disponibile</div>
+        )}
       </div>
     </div>
   );
@@ -250,54 +328,66 @@ function EventsTab({ stats }) {
       {/* Eventi per Sender */}
       <div className="chart-card">
         <h3>Eventi per Sender</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={stats?.bySender || []}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="senderID" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#0088FE" />
-          </BarChart>
-        </ResponsiveContainer>
+        {stats?.bySender && stats.bySender.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={stats.bySender}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="senderID" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#0088FE" />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="no-data">Nessun evento registrato</div>
+        )}
       </div>
 
       {/* Eventi per Classe */}
       <div className="chart-card">
         <h3>Eventi per Classe</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={stats?.byClass || []}
-              dataKey="count"
-              nameKey="className"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              label
-            >
-              {(stats?.byClass || []).map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
+        {stats?.byClass && stats.byClass.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={stats.byClass}
+                dataKey="count"
+                nameKey="className"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                label
+              >
+                {stats.byClass.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="no-data">Nessun evento registrato</div>
+        )}
       </div>
 
       {/* Timeline 24h */}
       <div className="chart-card wide">
         <h3>Timeline Eventi (24h)</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={stats?.timeline24h || []}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="hour" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="count" stroke="#00C49F" strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
+        {stats?.timeline24h && stats.timeline24h.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={stats.timeline24h}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="hour" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="count" stroke="#00C49F" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="no-data">Nessun dato disponibile</div>
+        )}
       </div>
     </div>
   );
@@ -310,51 +400,63 @@ function ViolationsTab({ stats }) {
       {/* Violazioni per Regola */}
       <div className="chart-card">
         <h3>Violazioni per Regola</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={stats?.byRule || []}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="ruleName" angle={-45} textAnchor="end" height={100} />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#FF8042" />
-          </BarChart>
-        </ResponsiveContainer>
+        {stats?.byRule && stats.byRule.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={stats.byRule}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="ruleName" angle={-45} textAnchor="end" height={100} />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#FF8042" />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="no-data">Nessuna violazione registrata</div>
+        )}
       </div>
 
       {/* Violazioni per Probe */}
       <div className="chart-card">
         <h3>Violazioni per Probe</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={stats?.byProbe || []}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="probeName" angle={-45} textAnchor="end" height={100} />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#FFBB28" />
-          </BarChart>
-        </ResponsiveContainer>
+        {stats?.byProbe && stats.byProbe.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={stats.byProbe}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="probeName" angle={-45} textAnchor="end" height={100} />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#FFBB28" />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="no-data">Nessuna violazione registrata</div>
+        )}
       </div>
 
       {/* Violazioni Recenti */}
       <div className="chart-card wide">
         <h3>Violazioni Recenti</h3>
-        <div className="violations-list">
-          {(stats?.recent || []).map((v) => (
-            <div key={v.id} className="violation-item">
-              <div className="violation-header">
-                <AlertTriangle size={18} color="#FF8042" />
-                <strong>{v.rule}</strong>
-                <span className="timestamp">
-                  <Clock size={14} /> {new Date(v.timestamp).toLocaleString('it-IT')}
-                </span>
+        {stats?.recent && stats.recent.length > 0 ? (
+          <div className="violations-list">
+            {stats.recent.map((v) => (
+              <div key={v.id} className="violation-item">
+                <div className="violation-header">
+                  <AlertTriangle size={18} color="#FF8042" />
+                  <strong>{v.rule}</strong>
+                  <span className="timestamp">
+                    <Clock size={14} /> {new Date(v.timestamp).toLocaleString('it-IT')}
+                  </span>
+                </div>
+                <div className="violation-body">
+                  <div className="violation-probe">Probe: {v.probe}</div>
+                  <div className="violation-message">{v.message}</div>
+                </div>
               </div>
-              <div className="violation-body">
-                <div className="violation-probe">Probe: {v.probe}</div>
-                <div className="violation-message">{v.message}</div>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="no-data">Nessuna violazione recente</div>
+        )}
       </div>
     </div>
   );
@@ -362,22 +464,7 @@ function ViolationsTab({ stats }) {
 
 // Tab Regole
 function RulesTab({ rules }) {
-  return (
-    <div className="rules-container">
-      <div className="chart-card">
-        <h3>Regole Caricate ({rules.length})</h3>
-        <div className="rules-list">
-          {rules.map((rule, index) => (
-            <div key={index} className="rule-item">
-              <CheckCircle size={18} color="#00C49F" />
-              <span>{rule.name}</span>
-              {rule.enabled && <span className="badge badge-success">Attiva</span>}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <RulesManagement rules={rules} />;
 }
 
 // Tab Sistema
@@ -392,27 +479,33 @@ function SystemTab({ metrics, systemStatus }) {
       {/* Memoria */}
       <div className="chart-card">
         <h3>Utilizzo Memoria</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={memoryData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              label={(entry) => `${entry.name}: ${entry.value} MB`}
-            >
-              <Cell fill="#FF8042" />
-              <Cell fill="#00C49F" />
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-        <div className="memory-stats">
-          <div>Max: {metrics?.system?.maxMemoryMB} MB</div>
-          <div>Totale: {metrics?.system?.totalMemoryMB} MB</div>
-        </div>
+        {memoryData.length > 0 ? (
+          <>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={memoryData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  label={(entry) => `${entry.name}: ${entry.value} MB`}
+                >
+                  <Cell fill="#FF8042" />
+                  <Cell fill="#00C49F" />
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="memory-stats">
+              <div>Max: {metrics?.system?.maxMemoryMB} MB</div>
+              <div>Totale: {metrics?.system?.totalMemoryMB} MB</div>
+            </div>
+          </>
+        ) : (
+          <div className="no-data">Dati memoria non disponibili</div>
+        )}
       </div>
 
       {/* Componenti */}
