@@ -19,7 +19,7 @@ function RulesManagement({ rules, onRulesChanged }) {
   // Fetch lista file regole
   const fetchRuleFiles = async () => {
     try {
-      const response = await axios.get('/api/rules/list');
+      const response = await axios.get('/api/rules-mgmt/list');
       setRuleFiles(response.data.files || []);
     } catch (err) {
       console.error('Error fetching rule files:', err);
@@ -47,7 +47,7 @@ function RulesManagement({ rules, onRulesChanged }) {
     setSuccess(null);
 
     try {
-      const response = await axios.post('/api/rules/upload', {
+      const response = await axios.post('/api/rules-mgmt/upload', {
         ruleName: ruleName,
         ruleContent: ruleContent
       });
@@ -170,7 +170,7 @@ function RulesManagement({ rules, onRulesChanged }) {
     setError(null);
 
     try {
-      const response = await axios.post(`/api/rules/load/${filename}`);
+      const response = await axios.post(`/api/rules-mgmt/load/${filename}`);
       setSuccess(`Regola "${filename}" caricata nel motore CEP!`);
       
       // IMPORTANTE: Aspetta un attimo poi refresha le regole
