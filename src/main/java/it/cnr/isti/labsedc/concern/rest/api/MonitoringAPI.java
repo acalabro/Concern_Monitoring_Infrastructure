@@ -51,7 +51,7 @@ public class MonitoringAPI {
             status.put("components", components);
             
             // Statistiche base
-            status.put("eventsReceived", 0);
+            status.put("eventsReceived", ConcernApp.eventCounter);
             
             int rulesLoaded = 0;
             if (running && ConcernApp.getDroolsComplexEventProcessor() != null) {
