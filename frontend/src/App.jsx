@@ -32,7 +32,7 @@ function App() {
       const [statusRes, metricsRes, rulesRes, eventsRes, violationsRes] = await Promise.allSettled([
         axios.get('/api/status'),
         axios.get('/api/metrics'),
-        axios.get('/api/active-rules'),
+        axios.get('/api/rules'),
         axios.get('/api/stats/events'),
         axios.get('/api/stats/violations')
       ]);
