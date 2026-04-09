@@ -24,6 +24,10 @@ public class MySQLStorageController implements StorageController {
 	public String dbName = "eventdb";
 	private Connection con;
 
+	public Connection getConnection() {
+		return con;
+	}
+
 	public MySQLStorageController(String serverAddress, int serverPort, String username, String password, String collectionName) {
 
 		this.serverAddress = serverAddress;
