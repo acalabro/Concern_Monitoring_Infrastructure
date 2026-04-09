@@ -104,7 +104,7 @@ public class MySQLStorageController implements StorageController {
 	}
 	
 	public boolean saveViolation(String eventTriggeredBy, String violationMessage, String ruleViolated,
-			long currentTimeMillis, Map<String, Object> metaData) {
+			long currentTimeMillis, String metaData) {
 
 		try {
 			if (this.con != null && !this.con.isClosed()) {
@@ -116,7 +116,7 @@ public class MySQLStorageController implements StorageController {
 				      preparedStmt.setString (2, eventTriggeredBy);
 				      preparedStmt.setString(3, ruleViolated);
 				      preparedStmt.setLong(4, currentTimeMillis);
-				      preparedStmt.setObject(5, metaData);
+				      preparedStmt.setString(5, metaData);
 				      // execute the preparedstatement
 				      preparedStmt.execute();
 				      logger.info("Violation on rule " + ruleViolated + " stored.");

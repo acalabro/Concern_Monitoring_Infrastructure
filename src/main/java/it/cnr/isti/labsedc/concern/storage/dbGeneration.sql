@@ -7,7 +7,7 @@ CREATE TABLE violation (
     probeNameThatTriggersError VARCHAR(255),
     ruleViolatedName VARCHAR(255),
     violationTimestamp BIGINT,
-    ruleMetadata JSON
+    ruleMetadata VARCHAR(255)
 );
 
 CREATE TABLE event (
