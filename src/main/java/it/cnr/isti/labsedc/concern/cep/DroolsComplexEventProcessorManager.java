@@ -308,29 +308,29 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 		if (eventStream != null && receivedEvent != null) {
 			eventStream.insert(receivedEvent);
 			ConcernApp.increaseReceivedEventCounter();
-//			if (receivedEvent instanceof ConcernBaseEvent<?>) {
-//				ConcernApp.storageManager.saveMessage(receivedEvent);
-////				logger.debug("with data:" +
-////						"\nName: "+ receivedEvent.getName() +
-////						"\nDestination: " + receivedEvent.getDestinationID() +
-////						"\nData: " + receivedEvent.getData() +
-////						"\nSenderID: " + receivedEvent.getSenderID() +
-////						"\nTimestamp: " + receivedEvent.getTimestamp() +
-////						"\nSessionID: " + receivedEvent.getSessionID() +
-////						"\nChecksum: " + receivedEvent.getChecksum() +
-////						"\nCepType: " + receivedEvent.getCepType().toString());
-//			} else {
-//				if (receivedEvent instanceof ConcernBaseEncryptedEvent<?>) {
-//					ConcernApp.storageManager.saveMessage(receivedEvent);
-//					ConcernApp.increaseReceivedEventCounter();
-//
-//				} else {
-//					if (receivedEvent instanceof ConcernBaseUnencryptedEvent<?>) {
-//						ConcernApp.storageManager.saveMessage(receivedEvent);
-//						ConcernApp.increaseReceivedEventCounter();
-//					}
-//				}
-//			}
+			if (receivedEvent instanceof ConcernBaseEvent<?>) {
+				ConcernApp.storageManager.saveMessage(receivedEvent);
+//				logger.debug("with data:" +
+//						"\nName: "+ receivedEvent.getName() +
+//						"\nDestination: " + receivedEvent.getDestinationID() +
+//						"\nData: " + receivedEvent.getData() +
+//						"\nSenderID: " + receivedEvent.getSenderID() +
+//						"\nTimestamp: " + receivedEvent.getTimestamp() +
+//						"\nSessionID: " + receivedEvent.getSessionID() +
+//						"\nChecksum: " + receivedEvent.getChecksum() +
+//						"\nCepType: " + receivedEvent.getCepType().toString());
+			} else {
+				if (receivedEvent instanceof ConcernBaseEncryptedEvent<?>) {
+					ConcernApp.storageManager.saveMessage(receivedEvent);
+					ConcernApp.increaseReceivedEventCounter();
+
+				} else {
+					if (receivedEvent instanceof ConcernBaseUnencryptedEvent<?>) {
+						ConcernApp.storageManager.saveMessage(receivedEvent);
+						ConcernApp.increaseReceivedEventCounter();
+					}
+				}
+			}
 		}
 	}
 

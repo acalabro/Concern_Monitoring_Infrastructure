@@ -12,6 +12,8 @@ import it.cnr.isti.labsedc.concern.event.ConcernEvaluationRequestEvent;
 import it.cnr.isti.labsedc.concern.cep.CepType;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
@@ -75,6 +77,10 @@ public class MonitoringAPI {
      * GET /api/metrics
      * Ritorna metriche del sistema
      */
+    /**
+     * GET /api/metrics
+     * Ritorna metriche dettagliate del sistema
+     */
     @GET
     @Path("metrics")
     @Produces(MediaType.APPLICATION_JSON)
@@ -82,22 +88,69 @@ public class MonitoringAPI {
         try {
             JSONObject metrics = new JSONObject();
             
-            // Metriche memoria
+            MySQLStorageController storage = ConcernApp.getStorageController();
+            
+            if (storage != null) {
+                Connection conn = storage.getConnection();
+                
+                // Conteggio eventi totali
+                PreparedStatement stmt = conn.prepareStatement(
+                    "SELECT COUNT(*) as total FROM event"
+                );
+                ResultSet rs = stmt.executeQuery(); // FIX: executeQuery() invece di fetchQuery()
+                if (rs.next()) {
+                    metrics.put("totalEvents", rs.getInt("total"));
+                }
+                rs.close();
+                stmt.close();
+                
+                // Conteggio violazioni totali
+                stmt = conn.prepareStatement(
+                    "SELECT COUNT(*) as total FROM violation"
+                );
+                rs = stmt.executeQuery(); // FIX
+                if (rs.next()) {
+                    metrics.put("totalViolations", rs.getInt("total"));
+                }
+                rs.close();
+                stmt.close();
+                
+                // Eventi ultima ora
+                long oneHourAgo = System.currentTimeMillis() - (60 * 60 * 1000);
+                stmt = conn.prepareStatement(
+                    "SELECT COUNT(*) as total FROM event WHERE timestamp > ?"
+                );
+                stmt.setLong(1, oneHourAgo);
+                rs = stmt.executeQuery(); // FIX
+                if (rs.next()) {
+                    metrics.put("eventsLastHour", rs.getInt("total"));
+                }
+                rs.close();
+                stmt.close();
+                
+                // Violazioni ultima ora
+                stmt = conn.prepareStatement(
+                    "SELECT COUNT(*) as total FROM violation WHERE violationTimestamp > ?"
+                );
+                stmt.setLong(1, oneHourAgo);
+                rs = stmt.executeQuery(); // FIX
+                if (rs.next()) {
+                    metrics.put("violationsLastHour", rs.getInt("total"));
+                }
+                rs.close();
+                stmt.close();
+            }
+            
+            // Metriche di sistema
             Runtime runtime = Runtime.getRuntime();
-            long totalMemory = runtime.totalMemory();
-            long freeMemory = runtime.freeMemory();
-            long maxMemory = runtime.maxMemory();
-            long usedMemory = totalMemory - freeMemory;
+            JSONObject systemMetrics = new JSONObject();
+            systemMetrics.put("totalMemoryMB", runtime.totalMemory() / (1024 * 1024));
+            systemMetrics.put("freeMemoryMB", runtime.freeMemory() / (1024 * 1024));
+            systemMetrics.put("usedMemoryMB", 
+                (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024));
+            systemMetrics.put("maxMemoryMB", runtime.maxMemory() / (1024 * 1024));
             
-            JSONObject system = new JSONObject();
-            system.put("usedMemoryMB", usedMemory / (1024 * 1024));
-            system.put("freeMemoryMB", freeMemory / (1024 * 1024));
-            system.put("totalMemoryMB", totalMemory / (1024 * 1024));
-            system.put("maxMemoryMB", maxMemory / (1024 * 1024));
-            
-            metrics.put("system", system);
-            metrics.put("totalEvents", 0);
-            metrics.put("totalViolations", 0);
+            metrics.put("system", systemMetrics);
             metrics.put("timestamp", System.currentTimeMillis());
             
             return Response.ok(metrics.toString()).build();
@@ -517,23 +570,87 @@ public class MonitoringAPI {
         }
     }
 
+
     /**
      * GET /api/stats/events
-     * Statistiche eventi
+     * Statistiche dettagliate sugli eventi
      */
     @GET
     @Path("stats/events")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEventsStats() {
         try {
-            if (!ConcernApp.isRunning()) {
-                return Response.ok("{\"error\": \"Storage not available\"}").build();
+            JSONObject stats = new JSONObject();
+            MySQLStorageController storage = ConcernApp.getStorageController();
+            
+            if (storage == null) {
+                return Response.status(503)
+                    .entity("{\"error\": \"Storage not available\"}").build();
             }
             
-            JSONObject stats = new JSONObject();
+            Connection conn = storage.getConnection();
+            
+            // Eventi per senderID
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT senderID, COUNT(*) as count " +
+                "FROM event " +
+                "GROUP BY senderID " +
+                "ORDER BY count DESC " +
+                "LIMIT 10"
+            );
+            ResultSet rs = stmt.executeQuery(); // FIX
+            
             JSONArray bySender = new JSONArray();
+            while (rs.next()) {
+                JSONObject item = new JSONObject();
+                item.put("senderID", rs.getString("senderID"));
+                item.put("count", rs.getInt("count"));
+                bySender.put(item);
+            }
+            rs.close();
+            stmt.close();
+            
+            // Eventi per classe
+            stmt = conn.prepareStatement(
+                "SELECT dataClassName, COUNT(*) as count " +
+                "FROM event " +
+                "GROUP BY dataClassName " +
+                "ORDER BY count DESC"
+            );
+            rs = stmt.executeQuery(); // FIX
+            
             JSONArray byClass = new JSONArray();
+            while (rs.next()) {
+                JSONObject item = new JSONObject();
+                item.put("className", rs.getString("dataClassName"));
+                item.put("count", rs.getInt("count"));
+                byClass.put(item);
+            }
+            rs.close();
+            stmt.close();
+            
+            // Timeline eventi (ultime 24h, raggruppati per ora)
+            long oneDayAgo = System.currentTimeMillis() - (24 * 60 * 60 * 1000);
+            stmt = conn.prepareStatement(
+                "SELECT FROM_UNIXTIME(timestamp/1000, '%Y-%m-%d %H:00:00') as hour, " +
+                "COUNT(*) as count " +
+                "FROM event " +
+                "WHERE timestamp > ? " +
+                "GROUP BY hour " +
+                "ORDER BY hour"
+            );
+            stmt.setLong(1, oneDayAgo);
+            rs = stmt.executeQuery(); // FIX
+            
             JSONArray timeline = new JSONArray();
+            while (rs.next()) {
+                JSONObject item = new JSONObject();
+                item.put("hour", rs.getString("hour"));
+                item.put("count", rs.getInt("count"));
+                timeline.put(item);
+            }
+            rs.close();
+            stmt.close();
             
             stats.put("bySender", bySender);
             stats.put("byClass", byClass);
@@ -543,6 +660,7 @@ public class MonitoringAPI {
             return Response.ok(stats.toString()).build();
             
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(500)
                 .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
         }
@@ -550,22 +668,106 @@ public class MonitoringAPI {
 
     /**
      * GET /api/stats/violations
-     * Statistiche violazioni
+     * Statistiche dettagliate sulle violazioni
      */
     @GET
     @Path("stats/violations")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getViolationsStats() {
         try {
-            if (!ConcernApp.isRunning()) {
-                return Response.ok("{\"error\": \"Storage not available\"}").build();
+            JSONObject stats = new JSONObject();
+            MySQLStorageController storage = ConcernApp.getStorageController();
+            
+            if (storage == null) {
+                return Response.status(503)
+                    .entity("{\"error\": \"Storage not available\"}").build();
             }
             
-            JSONObject stats = new JSONObject();
+            Connection conn = storage.getConnection();
+            
+            // Violazioni per regola
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT ruleViolatedName, COUNT(*) as count " +
+                "FROM violation " +
+                "GROUP BY ruleViolatedName " +
+                "ORDER BY count DESC " +
+                "LIMIT 10"
+            );
+            ResultSet rs = stmt.executeQuery(); // FIX
+            
             JSONArray byRule = new JSONArray();
+            while (rs.next()) {
+                JSONObject item = new JSONObject();
+                item.put("ruleName", rs.getString("ruleViolatedName"));
+                item.put("count", rs.getInt("count"));
+                byRule.put(item);
+            }
+            rs.close();
+            stmt.close();
+            
+            // Violazioni per probe
+            stmt = conn.prepareStatement(
+                "SELECT probeNameThatTriggersError, COUNT(*) as count " +
+                "FROM violation " +
+                "GROUP BY probeNameThatTriggersError " +
+                "ORDER BY count DESC " +
+                "LIMIT 10"
+            );
+            rs = stmt.executeQuery(); // FIX
+            
             JSONArray byProbe = new JSONArray();
+            while (rs.next()) {
+                JSONObject item = new JSONObject();
+                item.put("probeName", rs.getString("probeNameThatTriggersError"));
+                item.put("count", rs.getInt("count"));
+                byProbe.put(item);
+            }
+            rs.close();
+            stmt.close();
+            
+            // Timeline violazioni (ultime 24h)
+            long oneDayAgo = System.currentTimeMillis() - (24 * 60 * 60 * 1000);
+            stmt = conn.prepareStatement(
+                "SELECT FROM_UNIXTIME(violationTimestamp/1000, '%Y-%m-%d %H:00:00') as hour, " +
+                "COUNT(*) as count " +
+                "FROM violation " +
+                "WHERE violationTimestamp > ? " +
+                "GROUP BY hour " +
+                "ORDER BY hour"
+            );
+            stmt.setLong(1, oneDayAgo);
+            rs = stmt.executeQuery(); // FIX
+            
             JSONArray timeline = new JSONArray();
+            while (rs.next()) {
+                JSONObject item = new JSONObject();
+                item.put("hour", rs.getString("hour"));
+                item.put("count", rs.getInt("count"));
+                timeline.put(item);
+            }
+            rs.close();
+            stmt.close();
+            
+            // Violazioni recenti
+            stmt = conn.prepareStatement(
+                "SELECT * FROM violation " +
+                "ORDER BY violationTimestamp DESC " +
+                "LIMIT 20"
+            );
+            rs = stmt.executeQuery(); // FIX
+            
             JSONArray recent = new JSONArray();
+            while (rs.next()) {
+                JSONObject item = new JSONObject();
+                item.put("id", rs.getLong("id"));
+                item.put("message", rs.getString("violationMessage"));
+                item.put("probe", rs.getString("probeNameThatTriggersError"));
+                item.put("rule", rs.getString("ruleViolatedName"));
+                item.put("timestamp", rs.getLong("violationTimestamp"));
+                recent.put(item);
+            }
+            rs.close();
+            stmt.close();
             
             stats.put("byRule", byRule);
             stats.put("byProbe", byProbe);
@@ -576,6 +778,7 @@ public class MonitoringAPI {
             return Response.ok(stats.toString()).build();
             
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(500)
                 .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
         }
