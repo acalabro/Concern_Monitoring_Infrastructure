@@ -227,22 +227,42 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 
 	@Override
 	public void loadRule(ConcernEvaluationRequestEvent<?> receivedEvent) {
-		Object[] packages = kbase.getKiePackages().toArray();
-		for (int m = 0; m < packages.length; m++) {
-		}
-		Resource drlToLoad = ResourceFactory.newByteArrayResource(receivedEvent.getData().toString().getBytes());
-		DroolsComplexEventProcessorManager.lastRuleLoadedName = receivedEvent.getEvaluationRuleName();
-		kbuilder.add(drlToLoad, ResourceType.DRL);
-		pkgs = kbuilder.getKnowledgePackages();
-		kbase.addPackages(pkgs);
-
-		if (kbuilder.hasErrors()) {
-			System.out.println(kbuilder.getErrors().toString());
-			throw new RuntimeException("unable to compile dlr");
-		}
-		logger.info("...CEP named " + this.getInstanceName() + " load rules received into the knowledgeBase");
-		rulesCounter();
+	    logger.info("=== Caricamento regola: " + receivedEvent.getEvaluationRuleName() + " ===");
+	    logger.info("Regole prima: " + DroolsComplexEventProcessorManager.totalRulesLoaded);
+	    
+	    // IMPORTANTE: Crea un nuovo KnowledgeBuilder per evitare accumulo errori
+	    KnowledgeBuilder newBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+	    
+	    // Carica la regola nel nuovo builder
+	    Resource drlToLoad = ResourceFactory.newByteArrayResource(receivedEvent.getData().toString().getBytes());
+	    newBuilder.add(drlToLoad, ResourceType.DRL);
+	    
+	    // Controlla errori
+	    if (newBuilder.hasErrors()) {
+	        logger.error("Errori nella compilazione della regola:");
+	        System.out.println(newBuilder.getErrors().toString());
+	        throw new RuntimeException("unable to compile drl: " + newBuilder.getErrors().toString());
+	    }
+	    
+	    // Ottieni i package compilati
+	    Collection<KiePackage> newPackages = newBuilder.getKnowledgePackages();
+	    
+	    // Aggiungi SOLO i nuovi package alla knowledge base
+	    kbase.addPackages(newPackages);
+	    
+	    // Aggiorna il nome dell'ultima regola
+	    DroolsComplexEventProcessorManager.lastRuleLoadedName = receivedEvent.getEvaluationRuleName();
+	    
+	    logger.info("Package aggiunti: " + newPackages.size());
+	    logger.info("...CEP named " + this.getInstanceName() + " load rules received into the knowledgeBase");
+	    
+	    // Riconteggia le regole
+	    rulesCounter();
+	    
+	    logger.info("Regole dopo: " + DroolsComplexEventProcessorManager.totalRulesLoaded);
+	    logger.info("Nomi regole: " + DroolsComplexEventProcessorManager.rulesNames);
 	}
+	 
 
 	private void rulesCounter() {
 		Object[] packages2 = kbase.getKiePackages().toArray();

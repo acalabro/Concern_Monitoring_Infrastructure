@@ -23,7 +23,7 @@ function App() {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [actionLoading, setActionLoading] = useState(false);
-
+  
   // Fetch dati dal backend
   const fetchData = async () => {
     try {
@@ -244,7 +244,7 @@ function App() {
         )}
         {activeTab === 'events' && <EventsTab stats={eventsStats} />}
         {activeTab === 'violations' && <ViolationsTab stats={violationsStats} />}
-        {activeTab === 'rules' && <RulesTab rules={rules} />}
+		{activeTab === 'rules' && <RulesTab rules={rules} onRefresh={fetchData} />}
         {activeTab === 'system' && <SystemTab metrics={metrics} systemStatus={systemStatus} />}
       </div>
     </div>
@@ -463,10 +463,23 @@ function ViolationsTab({ stats }) {
 }
 
 // Tab Regole
-function RulesTab({ rules }) {
-  return <RulesManagement rules={rules} />;
+function RulesTab({ rules, onRefresh }) {
+  const handleRulesChanged = async () => {
+    console.log('🔄 Regole cambiate, refresh tra 1.5s...');
+    setTimeout(() => {
+      if (onRefresh) {
+        onRefresh();
+      }
+    }, 1500);
+  };
+ 
+  return (
+    <RulesManagement 
+      rules={rules} 
+      onRulesChanged={handleRulesChanged}
+    />
+  );
 }
-
 // Tab Sistema
 function SystemTab({ metrics, systemStatus }) {
   const memoryData = metrics?.system ? [

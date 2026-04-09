@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 
 function RulesManagement({ rules, onRulesChanged }) {
-  const [activeView, setActiveView] = useState('list'); // 'list', 'upload', 'editor'
+  const [activeView, setActiveView] = useState('list');
   const [ruleFiles, setRuleFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [ruleContent, setRuleContent] = useState('');
@@ -52,14 +52,18 @@ function RulesManagement({ rules, onRulesChanged }) {
         ruleContent: ruleContent
       });
 
-      setSuccess(`Regola "${response.data.ruleName}" caricata con successo!`);
+      setSuccess(`Regola "${response.data.ruleName}" caricata con successo!${response.data.loadedDynamically ? ' E caricata nel motore CEP!' : ''}`);
       setRuleName('');
       setRuleContent('');
       setValidationResult(null);
       
-      // Refresh lista
+      // Refresh lista file
       await fetchRuleFiles();
-      if (onRulesChanged) onRulesChanged();
+      
+      // IMPORTANTE: Triggera refresh delle regole nel parent
+      if (onRulesChanged) {
+        onRulesChanged();
+      }
       
       // Torna alla lista dopo 2 secondi
       setTimeout(() => {
@@ -146,7 +150,11 @@ function RulesManagement({ rules, onRulesChanged }) {
       await axios.delete(`/api/rules/delete/${filename}`);
       setSuccess(`File "${filename}" eliminato con successo`);
       await fetchRuleFiles();
-      if (onRulesChanged) onRulesChanged();
+      
+      // Triggera refresh
+      if (onRulesChanged) {
+        onRulesChanged();
+      }
       
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
@@ -156,17 +164,23 @@ function RulesManagement({ rules, onRulesChanged }) {
     }
   };
 
-  // Carica file nel motore
+  // Carica file nel motore - CON AUTO-REFRESH
   const handleLoadFile = async (filename) => {
     setLoading(true);
     setError(null);
 
     try {
       const response = await axios.post(`/api/rules/load/${filename}`);
-      setSuccess(`Regola "${filename}" caricata nel motore CEP`);
-      if (onRulesChanged) onRulesChanged();
+      setSuccess(`Regola "${filename}" caricata nel motore CEP!`);
       
-      setTimeout(() => setSuccess(null), 3000);
+      // IMPORTANTE: Aspetta un attimo poi refresha le regole
+      setTimeout(async () => {
+        if (onRulesChanged) {
+          await onRulesChanged();
+        }
+        setSuccess(null);
+      }, 1500);
+      
     } catch (err) {
       setError(err.response?.data?.error || 'Errore durante il caricamento nel motore');
     } finally {
@@ -241,7 +255,14 @@ end`;
               style={{ display: 'none' }}
             />
           </label>
-          <button onClick={fetchRuleFiles} className="btn-refresh-small">
+          <button 
+            onClick={() => {
+              fetchRuleFiles();
+              if (onRulesChanged) onRulesChanged();
+            }} 
+            className="btn-refresh-small"
+            title="Aggiorna regole"
+          >
             <RefreshCw size={18} />
           </button>
         </div>
@@ -316,8 +337,9 @@ end`;
                     </button>
                     <button
                       onClick={() => handleLoadFile(file.name)}
-                      className="btn-icon"
+                      className="btn-icon btn-primary-icon"
                       title="Carica nel motore"
+                      disabled={loading}
                     >
                       <Upload size={18} />
                     </button>
