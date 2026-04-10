@@ -119,7 +119,7 @@ public class MySQLStorageController implements StorageController {
 				      preparedStmt.setString(5, metaData);
 				      // execute the preparedstatement
 				      preparedStmt.execute();
-				      logger.info("Violation on rule " + ruleViolated + " stored.");
+				     // logger.info("Violation on rule " + ruleViolated + " stored.");
 				      return true;
 			}
 		} catch (SQLException e) {
