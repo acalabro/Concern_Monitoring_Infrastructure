@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 /**
- * Hook per validazione real-time della sintassi Drools
- * Valida mentre l'utente scrive, con debounce per evitare troppe chiamate
+ * Hook for real-time Drools syntax validation.
+ * Validates as the user types, with debounce to avoid excessive API calls.
  */
 export function useDroolsValidation(ruleContent, debounceMs = 1000) {
   const [validation, setValidation] = useState({
@@ -16,7 +16,7 @@ export function useDroolsValidation(ruleContent, debounceMs = 1000) {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    // Non validare se il contenuto è vuoto
+    // Skip validation if content is empty
     if (!ruleContent || ruleContent.trim().length === 0) {
       setValidation({
         isValidating: false,
@@ -27,15 +27,15 @@ export function useDroolsValidation(ruleContent, debounceMs = 1000) {
       return;
     }
 
-    // Cancella il timeout precedente
+    // Cancel previous timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    // Imposta lo stato di validazione in corso
+    // Set validating state
     setValidation(prev => ({ ...prev, isValidating: true }));
 
-    // Avvia nuovo timeout per validazione
+    // Start new validation timeout
     timeoutRef.current = setTimeout(async () => {
       try {
         const response = await axios.post('/api/rules/validate', {
@@ -53,7 +53,7 @@ export function useDroolsValidation(ruleContent, debounceMs = 1000) {
         setValidation({
           isValidating: false,
           isValid: false,
-          errors: ['Errore durante la validazione'],
+          errors: ['Error during validation'],
           warnings: []
         });
       }
