@@ -75,7 +75,7 @@ public class ConcernApp extends Thread
 	    logger.info("Shutting down Concern Monitoring Infrastructure...");
 	    
 	    try {
-	        // 1. Ferma ActiveMQ Broker
+	        // 1. Stop ActiveMQ Broker
 	        if (broker != null) {
 	            logger.info("Stopping ActiveMQ Broker...");
 	            try {
@@ -86,19 +86,19 @@ public class ConcernApp extends Thread
 	            broker = null;
 	        }
 	        
-	        // 2. Ferma Drools CEP Engine
+	        // 2. Stop Drools CEP Engine
 	        if (droolsCEP != null) {
 	            logger.info("Stopping Drools CEP Engine...");
 	            try {
-	                // Il DroolsComplexEventProcessorManager potrebbe avere un metodo dispose/stop
-	                // Se non c'è, almeno resettiamo il riferimento
+	                // DroolsComplexEventProcessorManager may have a dispose/stop method
+	                // If not, at least reset the reference
 	                droolsCEP = null;
 	            } catch (Exception e) {
 	                logger.error("Error stopping Drools CEP: " + e.getMessage());
 	            }
 	        }
 	        
-	        // 3. Ferma Esper CEP Engine (se usato)
+	        // 3. Stop Esper CEP Engine (if used)
 	        if (esperCEP != null) {
 	            logger.info("Stopping Esper CEP Engine...");
 	            try {
@@ -108,18 +108,18 @@ public class ConcernApp extends Thread
 	            }
 	        }
 	        
-	        // 4. Ferma NotificationManager
+	        // 4. Stop NotificationManager
 	        if (notificationManager != null) {
 	            logger.info("Stopping Notification Manager...");
 	            try {
-	                // Se ha un metodo stop/shutdown, chiamalo
+	                // If it has a stop/shutdown method, call it
 	                notificationManager = null;
 	            } catch (Exception e) {
 	                logger.error("Error stopping notification manager: " + e.getMessage());
 	            }
 	        }
 	        
-	        // 5. Disconnetti dal Database
+	        // 5. Disconnect from Database
 	        if (storageManager != null) {
 	            logger.info("Disconnecting from database...");
 	            try {
@@ -130,7 +130,7 @@ public class ConcernApp extends Thread
 	            storageManager = null;
 	        }
 	        
-	        // 6. Chiudi MQTT Client (se usato)
+	        // 6. Close MQTT Client (if used)
 	        if (listenerClient != null) {
 	            logger.info("Disconnecting MQTT client...");
 	            try {
@@ -144,19 +144,19 @@ public class ConcernApp extends Thread
 	            listenerClient = null;
 	        }
 	        
-	        // 7. Chiudi ActiveMQ Connection Factory
+	        // 7. Close ActiveMQ Connection Factory
 	        if (factory != null) {
 	            logger.info("Closing ActiveMQ factory...");
 	            factory = null;
 	        }
 	        
-	        // 8. Resetta Channel Registry
+	        // 8. Reset Channel Registry
 	        if (channelRegistry != null) {
 	            logger.info("Clearing channel registry...");
 	            channelRegistry = null;
 	        }
 	        
-	        // 9. Reset variabili statiche
+	        // 9. Reset static variables
 	        username = null;
 	        password = null;
 	        brokerUrlJMS = null;
@@ -168,7 +168,7 @@ public class ConcernApp extends Thread
 	        // 11. Reset event counter
 	        eventCounter = 0;
 	        
-	        // 12. Reset INSTANCE per permettere riavvio
+	        // 12. Reset INSTANCE to allow restart
 	        INSTANCE = null;
 	        
 	        logger.info("Shutdown completed successfully!");
