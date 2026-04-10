@@ -127,7 +127,7 @@ public class MonitoringAPI {
                 stmt = conn.prepareStatement(
                     "SELECT COUNT(*) as total FROM event WHERE timestamp > ?"
                 );
-                stmt.setObject(1, oneHourAgo, Types.BIGINT);
+                stmt.setString(1, String.valueOf(oneHourAgo));  // FIX: usa setString
                 rs = stmt.executeQuery(); // FIX
                 int eventsLastHour = 0;
                 
@@ -145,8 +145,8 @@ public class MonitoringAPI {
                     );
                     stmt.setString(1, String.valueOf(oneHourAgo));  // FIX: usa setString
                     rs = stmt.executeQuery();
-                    
                     int violationsLastHour = 0;
+                    
                     if (rs.next()) {
                         violationsLastHour = rs.getInt("total");
                     }

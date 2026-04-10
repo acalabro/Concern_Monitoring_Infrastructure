@@ -305,35 +305,21 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 	}
 
 	private void insertEvent(ConcernAbstractEvent<?> receivedEvent) {
-		if (eventStream != null && receivedEvent != null) {
-			eventStream.insert(receivedEvent);
-			ConcernApp.increaseReceivedEventCounter();
-			if (receivedEvent instanceof ConcernBaseEvent<?>) {
-				ConcernApp.storageManager.saveMessage(receivedEvent);
-//				logger.debug("with data:" +
-//						"\nName: "+ receivedEvent.getName() +
-//						"\nDestination: " + receivedEvent.getDestinationID() +
-//						"\nData: " + receivedEvent.getData() +
-//						"\nSenderID: " + receivedEvent.getSenderID() +
-//						"\nTimestamp: " + receivedEvent.getTimestamp() +
-//						"\nSessionID: " + receivedEvent.getSessionID() +
-//						"\nChecksum: " + receivedEvent.getChecksum() +
-//						"\nCepType: " + receivedEvent.getCepType().toString());
-			} else {
-				if (receivedEvent instanceof ConcernBaseEncryptedEvent<?>) {
-					ConcernApp.storageManager.saveMessage(receivedEvent);
-					ConcernApp.increaseReceivedEventCounter();
+	    if (eventStream == null || receivedEvent == null) {
+	        return;
+	    }
 
-				} else {
-					if (receivedEvent instanceof ConcernBaseUnencryptedEvent<?>) {
-						ConcernApp.storageManager.saveMessage(receivedEvent);
-						ConcernApp.increaseReceivedEventCounter();
-					}
-				}
-			}
-		}
+	    eventStream.insert(receivedEvent);
+	    ConcernApp.increaseReceivedEventCounter();
+
+	    if (receivedEvent instanceof ConcernBaseEvent<?> ||
+	        receivedEvent instanceof ConcernBaseEncryptedEvent<?> ||
+	        receivedEvent instanceof ConcernBaseUnencryptedEvent<?> ||
+	        receivedEvent instanceof ConcernICTGatewayEvent<?>) {
+	        ConcernApp.storageManager.saveMessage(receivedEvent);
+	    }
 	}
-
+	
 	@Override
 	public boolean cepHasCompletedStartup() {
 		return started;
