@@ -72,14 +72,110 @@ public class ConcernApp extends Thread
     }
 
 	public static void killInstance() {
-	    if (broker != null) {
-	        broker.stopActiveMQBroker();
-	        broker = null;
+	    logger.info("Shutting down Concern Monitoring Infrastructure...");
+	    
+	    try {
+	        // 1. Ferma ActiveMQ Broker
+	        if (broker != null) {
+	            logger.info("Stopping ActiveMQ Broker...");
+	            try {
+	                broker.stopActiveMQBroker();
+	            } catch (Exception e) {
+	                logger.error("Error stopping broker: " + e.getMessage());
+	            }
+	            broker = null;
+	        }
+	        
+	        // 2. Ferma Drools CEP Engine
+	        if (droolsCEP != null) {
+	            logger.info("Stopping Drools CEP Engine...");
+	            try {
+	                // Il DroolsComplexEventProcessorManager potrebbe avere un metodo dispose/stop
+	                // Se non c'è, almeno resettiamo il riferimento
+	                droolsCEP = null;
+	            } catch (Exception e) {
+	                logger.error("Error stopping Drools CEP: " + e.getMessage());
+	            }
+	        }
+	        
+	        // 3. Ferma Esper CEP Engine (se usato)
+	        if (esperCEP != null) {
+	            logger.info("Stopping Esper CEP Engine...");
+	            try {
+	                esperCEP = null;
+	            } catch (Exception e) {
+	                logger.error("Error stopping Esper CEP: " + e.getMessage());
+	            }
+	        }
+	        
+	        // 4. Ferma NotificationManager
+	        if (notificationManager != null) {
+	            logger.info("Stopping Notification Manager...");
+	            try {
+	                // Se ha un metodo stop/shutdown, chiamalo
+	                notificationManager = null;
+	            } catch (Exception e) {
+	                logger.error("Error stopping notification manager: " + e.getMessage());
+	            }
+	        }
+	        
+	        // 5. Disconnetti dal Database
+	        if (storageManager != null) {
+	            logger.info("Disconnecting from database...");
+	            try {
+	                storageManager.disconnectFromDB();
+	            } catch (Exception e) {
+	                logger.error("Error disconnecting from database: " + e.getMessage());
+	            }
+	            storageManager = null;
+	        }
+	        
+	        // 6. Chiudi MQTT Client (se usato)
+	        if (listenerClient != null) {
+	            logger.info("Disconnecting MQTT client...");
+	            try {
+	                if (listenerClient.isConnected()) {
+	                    listenerClient.disconnect();
+	                }
+	                listenerClient.close();
+	            } catch (Exception e) {
+	                logger.error("Error disconnecting MQTT: " + e.getMessage());
+	            }
+	            listenerClient = null;
+	        }
+	        
+	        // 7. Chiudi ActiveMQ Connection Factory
+	        if (factory != null) {
+	            logger.info("Closing ActiveMQ factory...");
+	            factory = null;
+	        }
+	        
+	        // 8. Resetta Channel Registry
+	        if (channelRegistry != null) {
+	            logger.info("Clearing channel registry...");
+	            channelRegistry = null;
+	        }
+	        
+	        // 9. Reset variabili statiche
+	        username = null;
+	        password = null;
+	        brokerUrlJMS = null;
+	        mqttBrokerUrl = null;
+	        
+	        // 10. Reset component status map
+	        componentStarted.clear();
+	        
+	        // 11. Reset event counter
+	        eventCounter = 0;
+	        
+	        // 12. Reset INSTANCE per permettere riavvio
+	        INSTANCE = null;
+	        
+	        logger.info("Shutdown completed successfully!");
+	        
+	    } catch (Exception e) {
+	        logger.error("Error during shutdown: " + e.getMessage(), e);
 	    }
-	    // Possibly clear other static fields if needed
-	    username = null;
-	    password = null;
-	    brokerUrlJMS = null;
 	}
 	
 	public static ComplexEventProcessorManager getDroolsComplexEventProcessor() {
