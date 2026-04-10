@@ -17,7 +17,6 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.io.File;
 import java.io.FileWriter;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -127,15 +126,16 @@ public class MonitoringAPI {
                 stmt = conn.prepareStatement(
                     "SELECT COUNT(*) as total FROM event WHERE timestamp > ?"
                 );
-                stmt.setString(1, String.valueOf(oneHourAgo));  // FIX: usa setString
-                rs = stmt.executeQuery(); // FIX
-                int eventsLastHour = 0;
-                
-                if (rs.next()) {
-                    metrics.put("eventsLastHour", rs.getInt("total"));
-                }
-                metrics.put("eventsLastHour", eventsLastHour);
+                stmt.setObject(1, oneHourAgo, Types.BIGINT);  
+                rs = stmt.executeQuery();
 
+                int eventsLastHour = 0;
+                if (rs.next()) {
+                    eventsLastHour = rs.getInt("total");  
+            	}
+
+                metrics.put("eventsLastHour", eventsLastHour);  
+                
                 rs.close();
                 stmt.close();
                 

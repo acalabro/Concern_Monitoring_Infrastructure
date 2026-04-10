@@ -181,7 +181,7 @@ function App() {
         />
         <StatusCard
           icon={<Database />}
-          title="Eventi Ricevuti"
+          title="Eventi Ricevuti da Start"
           value={systemStatus?.eventsReceived || 0}
           status="info"
         />
@@ -550,7 +550,7 @@ function SystemTab({ metrics, systemStatus }) {
         <div className="system-info">
           <div className="info-row">
             <Cpu size={20} />
-            <span>Eventi Ricevuti:</span>
+            <span>Eventi Ricevuti da Start:</span>
             <strong>{systemStatus?.eventsReceived || 0}</strong>
           </div>
           <div className="info-row">
