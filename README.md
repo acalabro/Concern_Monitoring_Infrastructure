@@ -107,8 +107,9 @@ docker-compose up -d
 
 ---
 
-![Dashboard](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/1.jpg?raw=true)
-![Statistics](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/2.jpg?raw=true)
+![Dashboard](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/src/main/resources/img/1.jpg?raw=true)
+![Statistics](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/src/main/resources/img/2.jpg?raw=true)
+![Rules Management](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/src/main/resources/img/2.jpg?raw=true)
 
 
 ## 📝 License
