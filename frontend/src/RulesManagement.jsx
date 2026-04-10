@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDroolsValidation } from './hooks/useDroolsValidation';
 import { ValidationIndicator } from './components/ValidationIndicator';
-import { useDroolsValidation, ValidationIndicator } from './hooks/useDroolsValidation';
 import {
   Upload, FileText, Plus, Trash2, Eye, CheckCircle, 
   XCircle, AlertCircle, Download, RefreshCw, Code
