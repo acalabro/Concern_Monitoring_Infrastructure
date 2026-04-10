@@ -14,8 +14,10 @@ import it.cnr.isti.labsedc.concern.cep.CepType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.io.File;
 import java.io.FileWriter;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -117,28 +119,41 @@ public class MonitoringAPI {
                 
                 // Eventi ultima ora
                 long oneHourAgo = System.currentTimeMillis() - (60 * 60 * 1000);
+//                
+//                System.out.println(System.currentTimeMillis()- (60 * 60 * 1000));
+//                System.out.println(BigInteger.valueOf(oneHourAgo).longValue());
+//                System.out.println(BigInteger.valueOf(oneHourAgo));
+//                
                 stmt = conn.prepareStatement(
                     "SELECT COUNT(*) as total FROM event WHERE timestamp > ?"
                 );
-                stmt.setLong(1, oneHourAgo);
+                stmt.setObject(1, oneHourAgo, Types.BIGINT);
                 rs = stmt.executeQuery(); // FIX
+                int eventsLastHour = 0;
+                
                 if (rs.next()) {
                     metrics.put("eventsLastHour", rs.getInt("total"));
                 }
+                metrics.put("eventsLastHour", eventsLastHour);
+
                 rs.close();
                 stmt.close();
                 
                 // Violazioni ultima ora
                 stmt = conn.prepareStatement(
-                    "SELECT COUNT(*) as total FROM violation WHERE violationTimestamp > ?"
-                );
-                stmt.setLong(1, oneHourAgo);
-                rs = stmt.executeQuery(); // FIX
-                if (rs.next()) {
-                    metrics.put("violationsLastHour", rs.getInt("total"));
-                }
-                rs.close();
-                stmt.close();
+                        "SELECT COUNT(*) as total FROM violation WHERE violationTimestamp > ?"
+                    );
+                    stmt.setString(1, String.valueOf(oneHourAgo));  // FIX: usa setString
+                    rs = stmt.executeQuery();
+                    
+                    int violationsLastHour = 0;
+                    if (rs.next()) {
+                        violationsLastHour = rs.getInt("total");
+                    }
+                    metrics.put("violationsLastHour", violationsLastHour);
+                    
+                    rs.close();
+                    stmt.close();
             }
             
             // Metriche di sistema
