@@ -5,96 +5,76 @@ services:
   mysql:
     image: mysql:8.0
     container_name: concern-mysql
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: eventdb
       MYSQL_USER: concern
-      MYSQL_PASSWORD: concern123
+      MYSQL_PASSWORD: un53cur3!!
     ports:
       - "3306:3306"
     volumes:
+      # Monta lo script di inizializzazione
+      - ./docker/init-db:/docker-entrypoint-initdb.d:ro
+      # Volume persistente per i dati
       - mysql-data:/var/lib/mysql
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     networks:
       - concern-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "concern", "-pun53cur3!!"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
-  # Concern Monitoring Backend
-  concern-backend:
+  # Backend Java
+  backend:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile.backend
     container_name: concern-backend
-    ports:
-      - "8181:8181"
-      - "61616:61616"  # ActiveMQ
-    environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_PORT=3306
-      - MYSQL_DATABASE=eventdb
-      - MYSQL_USER=concern
-      - MYSQL_PASSWORD=concern123
-      - ACTIVEMQ_URL=tcp://0.0.0.0:61616
+    restart: unless-stopped
     depends_on:
       mysql:
         condition: service_healthy
-    networks:
-      - concern-network
-    volumes:
-      - ./logs:/app/logs
-      - ./src/main/resources/rules:/app/rules
-
-  # Frontend Dashboard (Nginx)
-  frontend:
-    image: nginx:alpine
-    container_name: concern-frontend
-    ports:
-      - "3000:80"
-    volumes:
-      - ./frontend/dist:/usr/share/nginx/html
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - concern-backend
-    networks:
-      - concern-network
-
-  # Grafana
-  grafana:
-    image: grafana/grafana:latest
-    container_name: concern-grafana
-    ports:
-      - "3001:3000"
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_INSTALL_PLUGINS=grafana-clock-panel
-    volumes:
-      - grafana-data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
-    depends_on:
-      - mysql
-    networks:
-      - concern-network
-
-  # Prometheus (per metriche sistema)
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: concern-prometheus
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: eventdb
+      MYSQL_USER: concern
+      MYSQL_PASSWORD: un53cur3!!
+      JAVA_OPTS: "-Xmx2g -Xms512m"
     ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
+      - "8181:8181"   # REST API
+      - "61616:61616" # ActiveMQ
     networks:
       - concern-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8181/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Frontend React + Nginx
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: concern-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - concern-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
 
 networks:
   concern-network:
@@ -102,5 +82,4 @@ networks:
 
 volumes:
   mysql-data:
-  grafana-data:
-  prometheus-data:
+    driver: local

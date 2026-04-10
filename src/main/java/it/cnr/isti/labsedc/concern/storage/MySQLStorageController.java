@@ -40,9 +40,14 @@ public class MySQLStorageController implements StorageController {
 		}
 
 	public MySQLStorageController() {
-
-		logger.info("Setting up storage with default parameters");
-		}
+	    this.serverAddress = System.getenv().getOrDefault("MYSQL_HOST", "localhost");
+	    this.serverPort = Integer.parseInt(System.getenv().getOrDefault("MYSQL_PORT", "3306"));
+	    this.username = System.getenv().getOrDefault("MYSQL_USER", "concern");
+	    this.password = System.getenv().getOrDefault("MYSQL_PASSWORD", "un53cur3!!");
+	    this.dbName = System.getenv().getOrDefault("MYSQL_DATABASE", "eventdb");
+	    
+	    logger.info("MySQL Storage: " + serverAddress + ":" + serverPort + "/" + dbName);
+	}
 
 	@Override
 	public boolean connectToDB() {
