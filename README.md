@@ -1,5 +1,4 @@
-# Concern Monitoring Infrastructure 
-**CONCERN** - COmplex eveNt proCEssing monitoR iNfrastructure
+# **CONCERN** - COmplex eveNt proCEssing monitoR iNfrastructure
 ---
 
 ## 🚀 Quick Start with Docker
