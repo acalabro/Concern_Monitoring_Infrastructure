@@ -1,2 +1,2 @@
-2026-04-10T10:22:39.613+0200 [grizzly-http-server-10] INFO  it.cnr.isti.labsedc.concern.storage.MySQLStorageController - Setting up storage with default parameters
-2026-04-10T10:22:39.794+0200 [grizzly-http-server-10] INFO  it.cnr.isti.labsedc.concern.storage.MySQLStorageController - Connected successfully to eventdb on localhost
+2026-04-10T10:31:09.037+0200 [grizzly-http-server-18] INFO  it.cnr.isti.labsedc.concern.storage.MySQLStorageController - Setting up storage with default parameters
+2026-04-10T10:31:09.289+0200 [grizzly-http-server-18] INFO  it.cnr.isti.labsedc.concern.storage.MySQLStorageController - Connected successfully to eventdb on localhost
