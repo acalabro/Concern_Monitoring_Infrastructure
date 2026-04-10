@@ -1,9 +1,5 @@
 # Concern Monitoring Infrastructure 
 **CONCERN** - COmplex eveNt proCEssing monitoR iNfrastructure
-
-![Dashboard](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/1.jpg?raw=true)
-![Statistics](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/2.jpg?raw=true)
-
 ---
 
 ## 🚀 Quick Start with Docker
@@ -113,9 +109,13 @@ docker-compose up -d
 
 ---
 
+![Dashboard](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/1.jpg?raw=true)
+![Statistics](https://github.com/acalabro/Concern_Monitoring_Infrastructure/blob/master/2.jpg?raw=true)
+
+
 ## 📝 License
 
-[Add your license here]
+GPL 3.0
 
 ## 👥 Contributors
 
