@@ -490,7 +490,7 @@ public class MonitoringAPI {
 
     /**
      * DELETE /api/rules/files/{filename}
-     * Elimina un file .drl
+     * Elimina un file .drl e rimuove le regole corrispondenti dal motore CEP
      */
     @DELETE
     @Path("rules/files/{filename}")
@@ -510,12 +510,32 @@ public class MonitoringAPI {
                     .entity("{\"error\": \"File not found\"}").build();
             }
             
+            // Prima di eliminare il file, leggi il contenuto per estrarre i nomi delle regole
+            // e rimuoverle dal motore CEP
+            JSONArray removedFromEngine = new JSONArray();
+            if (ConcernApp.isRunning() && ConcernApp.getDroolsComplexEventProcessor() != null) {
+                try {
+                    String content = new String(Files.readAllBytes(Paths.get(filePath)));
+                    // Estrai tutti i nomi delle regole dal file .drl
+                    java.util.List<String> ruleNames = extractRuleNamesFromDrl(content);
+                    for (String ruleName : ruleNames) {
+                        boolean removed = ConcernApp.getDroolsComplexEventProcessor().deleteRule(ruleName);
+                        if (removed) {
+                            removedFromEngine.put(ruleName);
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error removing rules from CEP engine: " + e.getMessage());
+                }
+            }
+            
             boolean deleted = file.delete();
             
             JSONObject response = new JSONObject();
             response.put("success", deleted);
-            response.put("message", deleted ? "Rule deleted successfully" : "Failed to delete rule");
+            response.put("message", deleted ? "Rule file deleted successfully" : "Failed to delete rule file");
             response.put("filename", filename);
+            response.put("removedFromEngine", removedFromEngine);
             response.put("timestamp", System.currentTimeMillis());
             
             return Response.ok(response.toString()).build();
@@ -525,6 +545,107 @@ public class MonitoringAPI {
             return Response.status(500)
                 .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
         }
+    }
+
+    /**
+     * DELETE /api/rules/active/{ruleName}
+     * Rimuove una regola dal motore CEP (senza eliminare il file .drl)
+     */
+    @DELETE
+    @Path("rules/active/{ruleName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteActiveRule(@PathParam("ruleName") String ruleName) {
+        try {
+            if (ruleName == null || ruleName.trim().isEmpty()) {
+                return Response.status(400)
+                    .entity("{\"error\": \"Rule name is required\"}").build();
+            }
+            
+            if (!ConcernApp.isRunning() || ConcernApp.getDroolsComplexEventProcessor() == null) {
+                return Response.status(400)
+                    .entity("{\"error\": \"Monitoring system is not running\"}").build();
+            }
+            
+            boolean removed = ConcernApp.getDroolsComplexEventProcessor().deleteRule(ruleName);
+            
+            JSONObject response = new JSONObject();
+            response.put("success", removed);
+            response.put("ruleName", ruleName);
+            response.put("message", removed 
+                ? "Rule '" + ruleName + "' removed from CEP engine" 
+                : "Rule '" + ruleName + "' not found in CEP engine");
+            
+            // Ritorna la lista aggiornata delle regole attive
+            var updatedRules = ConcernApp.getDroolsComplexEventProcessor().getRulesList();
+            JSONArray rulesArray = new JSONArray();
+            if (updatedRules != null) {
+                for (String rule : updatedRules) {
+                    rulesArray.put(rule);
+                }
+            }
+            response.put("activeRules", rulesArray);
+            response.put("activeRulesCount", rulesArray.length());
+            response.put("timestamp", System.currentTimeMillis());
+            
+            return Response.ok(response.toString()).build();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500)
+                .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
+        }
+    }
+
+    /**
+     * GET /api/rules/files/{filename}/download
+     * Scarica un file .drl
+     */
+    @GET
+    @Path("rules/files/{filename}/download")
+    @Produces("application/octet-stream")
+    public Response downloadRuleFile(@PathParam("filename") String filename) {
+        try {
+            if (filename.contains("..") || filename.contains("/") || filename.contains("\\")) {
+                return Response.status(400)
+                    .entity("Invalid filename").build();
+            }
+            
+            String filePath = RULES_DIR + filename;
+            File file = new File(filePath);
+            
+            if (!file.exists()) {
+                return Response.status(404)
+                    .entity("File not found").build();
+            }
+            
+            byte[] fileContent = Files.readAllBytes(Paths.get(filePath));
+            
+            return Response.ok(fileContent)
+                .header("Content-Disposition", "attachment; filename=\"" + filename + "\"")
+                .header("Content-Type", "application/octet-stream")
+                .build();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500)
+                .entity("Error downloading file: " + e.getMessage()).build();
+        }
+    }
+
+    /**
+     * Estrae i nomi delle regole da un contenuto .drl
+     * Cerca pattern: rule "nome-regola" oppure rule 'nome-regola'
+     */
+    private java.util.List<String> extractRuleNamesFromDrl(String drlContent) {
+        java.util.List<String> ruleNames = new java.util.ArrayList<>();
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(
+            "rule\\s+[\"']([^\"']+)[\"']"
+        );
+        java.util.regex.Matcher matcher = pattern.matcher(drlContent);
+        while (matcher.find()) {
+            ruleNames.add(matcher.group(1));
+        }
+        return ruleNames;
     }
 
     /**

@@ -1078,3 +1078,96 @@ button:disabled {
     border-radius: 0;
   }
 }
+
+/* === Stili Toggle Attiva/Disattiva === */
+
+.view-description {
+  color: #888;
+  font-size: 0.9rem;
+  margin: -0.5rem 0 1rem 0;
+}
+
+.badge-inactive {
+  background: #444;
+  color: #aaa;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-warning {
+  background: #5c4a00;
+  color: #FFBB28;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.file-row-active {
+  border-left: 3px solid #00C49F;
+  background: rgba(0, 196, 159, 0.05);
+}
+
+.btn-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-toggle-on {
+  background: rgba(0, 196, 159, 0.15);
+  color: #00C49F;
+  border: 1px solid rgba(0, 196, 159, 0.3);
+}
+
+.btn-toggle-on:hover {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ff5050;
+  border-color: rgba(255, 80, 80, 0.3);
+}
+
+.btn-toggle-off {
+  background: rgba(100, 100, 100, 0.15);
+  color: #aaa;
+  border: 1px solid rgba(100, 100, 100, 0.3);
+}
+
+.btn-toggle-off:hover {
+  background: rgba(0, 196, 159, 0.15);
+  color: #00C49F;
+  border-color: rgba(0, 196, 159, 0.3);
+}
+
+.btn-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-label {
+  display: inline;
+}
+
+.rules-count {
+  color: #888;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .btn-label {
+    display: none;
+  }
+  
+  .btn-toggle {
+    padding: 6px 10px;
+  }
+}
