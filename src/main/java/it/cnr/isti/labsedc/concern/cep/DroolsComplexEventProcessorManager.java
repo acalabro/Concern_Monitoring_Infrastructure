@@ -304,7 +304,7 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 		return false;
 	}
 
-	private void insertEvent(ConcernAbstractEvent<?> receivedEvent) {
+	public void insertEvent(ConcernAbstractEvent<?> receivedEvent) {
 	    if (eventStream == null || receivedEvent == null) {
 	        return;
 	    }

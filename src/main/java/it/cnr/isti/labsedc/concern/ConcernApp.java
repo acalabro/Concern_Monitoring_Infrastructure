@@ -13,7 +13,6 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import it.cnr.isti.labsedc.concern.broker.ActiveMQBrokerManager;
 import it.cnr.isti.labsedc.concern.broker.BrokerManager;
 import it.cnr.isti.labsedc.concern.cep.CepType;
-import it.cnr.isti.labsedc.concern.cep.ComplexEventProcessorManager;
 import it.cnr.isti.labsedc.concern.cep.DroolsComplexEventProcessorManager;
 import it.cnr.isti.labsedc.concern.cep.EsperComplexEventProcessorManager;
 import it.cnr.isti.labsedc.concern.notification.NotificationManager;
@@ -25,8 +24,8 @@ import it.cnr.isti.labsedc.concern.utils.Sub;
 public class ConcernApp extends Thread
 {
 	private static BrokerManager broker;
-	private static ComplexEventProcessorManager droolsCEP;
-	private static ComplexEventProcessorManager esperCEP;
+	private static DroolsComplexEventProcessorManager droolsCEP;
+	private static EsperComplexEventProcessorManager esperCEP;
 	public static NotificationManager notificationManager;
 	private static ChannelsManagementRegistry channelRegistry;
 	public static MySQLStorageController storageManager;
@@ -178,8 +177,12 @@ public class ConcernApp extends Thread
 	    }
 	}
 	
-	public static ComplexEventProcessorManager getDroolsComplexEventProcessor() {
+	public static DroolsComplexEventProcessorManager getDroolsComplexEventProcessor() {
 		return droolsCEP;
+	}
+	
+	public static EsperComplexEventProcessorManager getEsperComplexEventProcessor() {
+		return esperCEP;
 	}
 
 

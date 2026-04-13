@@ -1,0 +1,213 @@
+package it.cnr.isti.labsedc.concern.event;
+
+import it.cnr.isti.labsedc.concern.event.ConcernEvaluationRequestEvent;
+import it.cnr.isti.labsedc.concern.utils.KieLauncher;
+import org.json.JSONObject;
+
+dialect "java"
+
+declare ConcernEvaluationRequestEvent
+    @role( event )
+    @timestamp( timestamp )
+end
+
+// ========================================
+// REGOLA 1: Allarme Latenza Alta (> 60 secondi)
+// ========================================
+rule "satellite-high-latency"
+    no-loop
+    salience 10
+    dialect "java"
+    when
+        $event: ConcernEvaluationRequestEvent(
+            this.getName() == "SatelliteMessage",
+            eval(getLatency($event) > 60.0)
+        )
+    then
+        double latency = getLatency($event);
+        String serial = getSerial($event);
+        
+        KieLauncher.printWarning(
+            "⚠️  HIGH LATENCY: RockBlock " + serial + 
+            " took " + String.format("%.1f", latency) + " seconds to reach CEP"
+        );
+end
+
+// ========================================
+// REGOLA 2: GPS CEP Alto (bassa precisione)
+// ========================================
+rule "satellite-low-gps-accuracy"
+    no-loop
+    salience 9
+    dialect "java"
+    when
+        $event: ConcernEvaluationRequestEvent(
+            this.getName() == "SatelliteMessage",
+            eval(getGpsCep($event) > 10)
+        )
+    then
+        int cep = getGpsCep($event);
+        String serial = getSerial($event);
+        
+        KieLauncher.printWarning(
+            "⚠️  LOW GPS ACCURACY: RockBlock " + serial + 
+            " has CEP of " + cep + " km"
+        );
+end
+
+// ========================================
+// REGOLA 3: Messaggio ricevuto (log info)
+// ========================================
+rule "satellite-message-received"
+    no-loop
+    salience 8
+    dialect "java"
+    when
+        $event: ConcernEvaluationRequestEvent(
+            this.getName() == "SatelliteMessage"
+        )
+    then
+        String serial = getSerial($event);
+        int momsn = getMomsn($event);
+        String payload = getPayload($event);
+        double latency = getLatency($event);
+        
+        KieLauncher.printer(
+            "📡 Satellite message #" + momsn + " from " + serial + 
+            " | Latency: " + String.format("%.1f", latency) + "s" +
+            " | Payload: " + payload
+        );
+end
+
+// ========================================
+// REGOLA 4: Latenza in miglioramento
+// ========================================
+rule "satellite-latency-improving"
+    no-loop
+    salience 7
+    dialect "java"
+    when
+        $e1: ConcernEvaluationRequestEvent(
+            this.getName() == "SatelliteMessage",
+            $sender: this.getSenderID(),
+            $lat1: getLatency(this)
+        )
+        $e2: ConcernEvaluationRequestEvent(
+            this != $e1,
+            this.getName() == "SatelliteMessage",
+            this.getSenderID() == $sender,
+            this.getTimestamp() > $e1.getTimestamp(),
+            eval(getLatency(this) < $lat1 * 0.5)  // Latenza dimezzata
+        )
+    then
+        double improvement = $lat1 - getLatency($e2);
+        KieLauncher.printer(
+            "✅ Latency improvement: " + $sender + 
+            " reduced by " + String.format("%.1f", improvement) + " seconds"
+        );
+end
+
+// ========================================
+// REGOLA 5: Latenza in peggioramento
+// ========================================
+rule "satellite-latency-degrading"
+    no-loop
+    salience 7
+    dialect "java"
+    when
+        $e1: ConcernEvaluationRequestEvent(
+            this.getName() == "SatelliteMessage",
+            $sender: this.getSenderID(),
+            $lat1: getLatency(this),
+            $lat1 < 60.0  // Prima era ok
+        )
+        $e2: ConcernEvaluationRequestEvent(
+            this != $e1,
+            this.getName() == "SatelliteMessage",
+            this.getSenderID() == $sender,
+            this.getTimestamp() > $e1.getTimestamp(),
+            eval(getLatency(this) > $lat1 * 2.0)  // Latenza raddoppiata
+        )
+    then
+        double degradation = getLatency($e2) - $lat1;
+        KieLauncher.printWarning(
+            "⚠️  Latency degradation: " + $sender + 
+            " increased by " + String.format("%.1f", degradation) + " seconds"
+        );
+end
+
+// ========================================
+// REGOLA 6: Burst di messaggi (più messaggi in 5 minuti)
+// ========================================
+rule "satellite-message-burst"
+    no-loop
+    salience 6
+    dialect "java"
+    when
+        accumulate(
+            $e: ConcernEvaluationRequestEvent(
+                this.getName() == "SatelliteMessage",
+                this.getTimestamp() > (System.currentTimeMillis() - 300000)  // ultimi 5 min
+            );
+            $count: count($e)
+        )
+        eval($count > 5)
+    then
+        KieLauncher.printWarning(
+            "⚠️  Message burst detected: " + $count + " satellite messages in 5 minutes"
+        );
+end
+
+// ========================================
+// FUNZIONI HELPER per parsing JSON
+// ========================================
+
+function double getLatency(ConcernEvaluationRequestEvent event) {
+    try {
+        String data = (String) event.getData();
+        JSONObject json = new JSONObject(data);
+        return json.optDouble("latency_sec", 0.0);
+    } catch (Exception e) {
+        return 0.0;
+    }
+}
+
+function String getSerial(ConcernEvaluationRequestEvent event) {
+    try {
+        String data = (String) event.getData();
+        JSONObject json = new JSONObject(data);
+        return json.optString("serial", "unknown");
+    } catch (Exception e) {
+        return "unknown";
+    }
+}
+
+function int getMomsn(ConcernEvaluationRequestEvent event) {
+    try {
+        String data = (String) event.getData();
+        JSONObject json = new JSONObject(data);
+        return json.optInt("momsn", 0);
+    } catch (Exception e) {
+        return 0;
+    }
+}
+
+function String getPayload(ConcernEvaluationRequestEvent event) {
+    try {
+        String data = (String) event.getData();
+        JSONObject json = new JSONObject(data);
+        return json.optString("payload", "");
+    } catch (Exception e) {
+        return "";
+    }
+}
+
+function int getGpsCep(ConcernEvaluationRequestEvent event) {
+    try {
+        String data = (String) event.getData();
+        JSONObject json = new JSONObject(data);
+        return json.optInt("gps_cep_km", 0);
+    } catch (Exception e) {
+        return 0;
+    }
+}
