@@ -72,7 +72,7 @@ dialect "java"
 		this.getDestinationID == "Monitoring",
 		this.getData == "established",
 		this.getConsumed == false,
-		this after $aEvent);				
+		this after [0s, 5s] $aEvent);				
 	then
 		KieLauncher.printWarning("More than one connection between LocalPlanner and Global Planner established.\nShut down systems");	
 		retract($aEvent);
