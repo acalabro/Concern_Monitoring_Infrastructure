@@ -21,7 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * API REST completa per il monitoraggio e gestione regole
+ * Complete REST API for monitoring and rule management
  */
 @Path("api")
 public class MonitoringAPI {
@@ -30,7 +30,7 @@ public class MonitoringAPI {
 
     /**
      * GET /api/status
-     * Ritorna lo stato generale del sistema
+     * Returns the general system status
      */
     @GET
     @Path("status")
@@ -39,11 +39,11 @@ public class MonitoringAPI {
         try {
             JSONObject status = new JSONObject();
             
-            // Stato generale
+            // General status
             boolean running = ConcernApp.isRunning();
             status.put("running", running);
             
-            // Componenti
+            // Components
             JSONObject components = new JSONObject();
             components.put("notification", running);
             components.put("storage", running);
@@ -51,7 +51,7 @@ public class MonitoringAPI {
             components.put("cep", running && ConcernApp.getDroolsComplexEventProcessor() != null);
             status.put("components", components);
             
-            // Statistiche base
+            // Basic statistics
             status.put("eventsReceived", ConcernApp.eventCounter);
             
             int rulesLoaded = 0;
@@ -76,11 +76,11 @@ public class MonitoringAPI {
 
     /**
      * GET /api/metrics
-     * Ritorna metriche del sistema
+     * Returns system metrics
      */
     /**
      * GET /api/metrics
-     * Ritorna metriche dettagliate del sistema
+     * Returns detailed system metrics
      */
     @GET
     @Path("metrics")
@@ -94,7 +94,7 @@ public class MonitoringAPI {
             if (storage != null) {
                 Connection conn = storage.getConnection();
                 
-                // Conteggio eventi totali
+                // Total events count
                 PreparedStatement stmt = conn.prepareStatement(
                     "SELECT COUNT(*) as total FROM event"
                 );
@@ -105,7 +105,7 @@ public class MonitoringAPI {
                 rs.close();
                 stmt.close();
                 
-                // Conteggio violazioni totali
+                // Total violations count
                 stmt = conn.prepareStatement(
                     "SELECT COUNT(*) as total FROM violation"
                 );
@@ -116,7 +116,7 @@ public class MonitoringAPI {
                 rs.close();
                 stmt.close();
                 
-                // Eventi ultima ora
+                // Events last hour
                 long oneHourAgo = System.currentTimeMillis() - (60 * 60 * 1000);
 //                
 //                System.out.println(System.currentTimeMillis()- (60 * 60 * 1000));
@@ -139,7 +139,7 @@ public class MonitoringAPI {
                 rs.close();
                 stmt.close();
                 
-                // Violazioni ultima ora
+                // Violations last hour
                 stmt = conn.prepareStatement(
                         "SELECT COUNT(*) as total FROM violation WHERE violationTimestamp > ?"
                     );
@@ -156,7 +156,7 @@ public class MonitoringAPI {
                     stmt.close();
             }
             
-            // Metriche di sistema
+            // System metrics
             Runtime runtime = Runtime.getRuntime();
             JSONObject systemMetrics = new JSONObject();
             systemMetrics.put("totalMemoryMB", runtime.totalMemory() / (1024 * 1024));
@@ -178,7 +178,7 @@ public class MonitoringAPI {
 
     /**
      * GET /api/rules
-     * Ritorna la lista delle regole ATTIVE nel motore CEP
+     * Returns the list of ACTIVE rules in the CEP engine
      */
     @GET
     @Path("rules")
@@ -223,7 +223,7 @@ public class MonitoringAPI {
 
     /**
      * GET /api/rules/files
-     * Lista tutti i file .drl disponibili
+     * Lists all available .drl files
      */
     @GET
     @Path("rules/files")
@@ -265,7 +265,7 @@ public class MonitoringAPI {
 
     /**
      * GET /api/rules/files/{filename}
-     * Ottiene il contenuto di un file .drl
+     * Gets the content of a .drl file
      */
     @GET
     @Path("rules/files/{filename}")
@@ -305,7 +305,7 @@ public class MonitoringAPI {
 
     /**
      * POST /api/rules/upload
-     * Carica una nuova regola
+     * Uploads a new rule
      */
     @POST
     @Path("rules/upload")
@@ -384,7 +384,7 @@ public class MonitoringAPI {
 
     /**
      * POST /api/rules/load/{filename}
-     * Carica una regola nel motore CEP
+     * Loads a rule into the CEP engine
      */
     @POST
     @Path("rules/load/{filename}")
@@ -443,7 +443,7 @@ public class MonitoringAPI {
 
     /**
      * POST /api/rules/validate
-     * Valida sintassi regola
+     * Validates rule syntax
      */
     @POST
     @Path("rules/validate")
@@ -490,7 +490,7 @@ public class MonitoringAPI {
 
     /**
      * DELETE /api/rules/files/{filename}
-     * Elimina un file .drl e rimuove le regole corrispondenti dal motore CEP
+     * Deletes a .drl file and removes the corresponding rules from the CEP engine
      */
     @DELETE
     @Path("rules/files/{filename}")
@@ -510,13 +510,13 @@ public class MonitoringAPI {
                     .entity("{\"error\": \"File not found\"}").build();
             }
             
-            // Prima di eliminare il file, leggi il contenuto per estrarre i nomi delle regole
-            // e rimuoverle dal motore CEP
+            // Before deleting the file, read content to extract rule names
+            // and remove them from the CEP engine
             JSONArray removedFromEngine = new JSONArray();
             if (ConcernApp.isRunning() && ConcernApp.getDroolsComplexEventProcessor() != null) {
                 try {
                     String content = new String(Files.readAllBytes(Paths.get(filePath)));
-                    // Estrai tutti i nomi delle regole dal file .drl
+                    // Extract all rule names from the .drl file
                     java.util.List<String> ruleNames = extractRuleNamesFromDrl(content);
                     for (String ruleName : ruleNames) {
                         boolean removed = ConcernApp.getDroolsComplexEventProcessor().deleteRule(ruleName);
@@ -549,7 +549,7 @@ public class MonitoringAPI {
 
     /**
      * DELETE /api/rules/active/{ruleName}
-     * Rimuove una regola dal motore CEP (senza eliminare il file .drl)
+     * Removes a rule from the CEP engine (without deleting the .drl file)
      */
     @DELETE
     @Path("rules/active/{ruleName}")
@@ -575,7 +575,7 @@ public class MonitoringAPI {
                 ? "Rule '" + ruleName + "' removed from CEP engine" 
                 : "Rule '" + ruleName + "' not found in CEP engine");
             
-            // Ritorna la lista aggiornata delle regole attive
+            // Return the updated list of active rules
             var updatedRules = ConcernApp.getDroolsComplexEventProcessor().getRulesList();
             JSONArray rulesArray = new JSONArray();
             if (updatedRules != null) {
@@ -598,7 +598,7 @@ public class MonitoringAPI {
 
     /**
      * GET /api/rules/files/{filename}/download
-     * Scarica un file .drl
+     * Downloads a .drl file
      */
     @GET
     @Path("rules/files/{filename}/download")
@@ -633,8 +633,8 @@ public class MonitoringAPI {
     }
 
     /**
-     * Estrae i nomi delle regole da un contenuto .drl
-     * Cerca pattern: rule "nome-regola" oppure rule 'nome-regola'
+     * Extracts rule names from .drl content
+     * Matches pattern: rule "rule-name" or rule 'rule-name'
      */
     private java.util.List<String> extractRuleNamesFromDrl(String drlContent) {
         java.util.List<String> ruleNames = new java.util.ArrayList<>();
@@ -650,7 +650,7 @@ public class MonitoringAPI {
 
     /**
      * POST /api/start
-     * Avvia il sistema di monitoring
+     * Starts the monitoring system
      */
     @POST
     @Path("start")
@@ -679,7 +679,7 @@ public class MonitoringAPI {
 
     /**
      * POST /api/stop
-     * Ferma il sistema di monitoring
+     * Stops the monitoring system
      */
     @POST
     @Path("stop")
@@ -709,7 +709,7 @@ public class MonitoringAPI {
 
     /**
      * GET /api/stats/events
-     * Statistiche dettagliate sugli eventi
+     * Detailed event statistics
      */
     @GET
     @Path("stats/events")
@@ -726,7 +726,7 @@ public class MonitoringAPI {
             
             Connection conn = storage.getConnection();
             
-            // Eventi per senderID
+            // Events by senderID
             PreparedStatement stmt = conn.prepareStatement(
                 "SELECT senderID, COUNT(*) as count " +
                 "FROM event " +
@@ -746,7 +746,7 @@ public class MonitoringAPI {
             rs.close();
             stmt.close();
             
-            // Eventi per classe
+            // Events by class
             stmt = conn.prepareStatement(
                 "SELECT dataClassName, COUNT(*) as count " +
                 "FROM event " +
@@ -765,7 +765,7 @@ public class MonitoringAPI {
             rs.close();
             stmt.close();
             
-            // Timeline eventi (ultime 24h, raggruppati per ora)
+            // Events timeline (ultime 24h, raggruppati per ora)
             long oneDayAgo = System.currentTimeMillis() - (24 * 60 * 60 * 1000);
             stmt = conn.prepareStatement(
                 "SELECT FROM_UNIXTIME(timestamp/1000, '%Y-%m-%d %H:00:00') as hour, " +
@@ -804,7 +804,7 @@ public class MonitoringAPI {
 
     /**
      * GET /api/stats/violations
-     * Statistiche dettagliate sulle violazioni
+     * Detailed violation statistics
      */
     @GET
     @Path("stats/violations")
@@ -821,7 +821,7 @@ public class MonitoringAPI {
             
             Connection conn = storage.getConnection();
             
-            // Violazioni per regola
+            // Violations by rule
             PreparedStatement stmt = conn.prepareStatement(
                 "SELECT ruleViolatedName, COUNT(*) as count " +
                 "FROM violation " +
@@ -841,7 +841,7 @@ public class MonitoringAPI {
             rs.close();
             stmt.close();
             
-            // Violazioni per probe
+            // Violations by probe
             stmt = conn.prepareStatement(
                 "SELECT probeNameThatTriggersError, COUNT(*) as count " +
                 "FROM violation " +
@@ -861,7 +861,7 @@ public class MonitoringAPI {
             rs.close();
             stmt.close();
             
-            // Timeline violazioni (ultime 24h)
+            // Violations timeline (ultime 24h)
             long oneDayAgo = System.currentTimeMillis() - (24 * 60 * 60 * 1000);
             stmt = conn.prepareStatement(
                 "SELECT FROM_UNIXTIME(violationTimestamp/1000, '%Y-%m-%d %H:00:00') as hour, " +
@@ -884,7 +884,7 @@ public class MonitoringAPI {
             rs.close();
             stmt.close();
             
-            // Violazioni recenti
+            // Recent violations
             stmt = conn.prepareStatement(
                 "SELECT * FROM violation " +
                 "ORDER BY violationTimestamp DESC " +

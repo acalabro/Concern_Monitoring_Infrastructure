@@ -227,40 +227,40 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 
 	@Override
 	public void loadRule(ConcernEvaluationRequestEvent<?> receivedEvent) {
-	    logger.info("=== Caricamento regola: " + receivedEvent.getEvaluationRuleName() + " ===");
-	    logger.info("Regole prima: " + DroolsComplexEventProcessorManager.totalRulesLoaded);
+	    logger.info("=== Loading rule: " + receivedEvent.getEvaluationRuleName() + " ===");
+	    logger.info("Rules before: " + DroolsComplexEventProcessorManager.totalRulesLoaded);
 	    
-	    // IMPORTANTE: Crea un nuovo KnowledgeBuilder per evitare accumulo errori
+	    // IMPORTANT: Create a new KnowledgeBuilder to avoid error accumulation
 	    KnowledgeBuilder newBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 	    
-	    // Carica la regola nel nuovo builder
+	    // Load the rule into the new builder
 	    Resource drlToLoad = ResourceFactory.newByteArrayResource(receivedEvent.getData().toString().getBytes());
 	    newBuilder.add(drlToLoad, ResourceType.DRL);
 	    
-	    // Controlla errori
+	    // Check for errors
 	    if (newBuilder.hasErrors()) {
-	        logger.error("Errori nella compilazione della regola:");
+	        logger.error("Errors compiling rule:");
 	        System.out.println(newBuilder.getErrors().toString());
 	        throw new RuntimeException("unable to compile drl: " + newBuilder.getErrors().toString());
 	    }
 	    
-	    // Ottieni i package compilati
+	    // Get compiled packages
 	    Collection<KiePackage> newPackages = newBuilder.getKnowledgePackages();
 	    
-	    // Aggiungi SOLO i nuovi package alla knowledge base
+	    // Add ONLY the new packages to the knowledge base
 	    kbase.addPackages(newPackages);
 	    
-	    // Aggiorna il nome dell'ultima regola
+	    // Update last loaded rule name
 	    DroolsComplexEventProcessorManager.lastRuleLoadedName = receivedEvent.getEvaluationRuleName();
 	    
-	    logger.info("Package aggiunti: " + newPackages.size());
+	    logger.info("Packages added: " + newPackages.size());
 	    logger.info("...CEP named " + this.getInstanceName() + " load rules received into the knowledgeBase");
 	    
-	    // Riconteggia le regole
+	    // Recount rules
 	    rulesCounter();
 	    
-	    logger.info("Regole dopo: " + DroolsComplexEventProcessorManager.totalRulesLoaded);
-	    logger.info("Nomi regole: " + DroolsComplexEventProcessorManager.rulesNames);
+	    logger.info("Rules after: " + DroolsComplexEventProcessorManager.totalRulesLoaded);
+	    logger.info("Rule names: " + DroolsComplexEventProcessorManager.rulesNames);
 	}
 	 
 
@@ -304,7 +304,7 @@ public class DroolsComplexEventProcessorManager extends ComplexEventProcessorMan
 		return false;
 	}
 
-	private void insertEvent(ConcernAbstractEvent<?> receivedEvent) {
+	public void insertEvent(ConcernAbstractEvent<?> receivedEvent) {
 	    if (eventStream == null || receivedEvent == null) {
 	        return;
 	    }

@@ -56,7 +56,7 @@ public class DroolsKieTest extends Thread {
 
 	static void loadRule() throws InterruptedException {
 		Thread.sleep(2000);
-		System.out.println("metto altra regola");
+		System.out.println("loading another rule");
 	    kbuilder.add(ResourceFactory.newFileResource(System.getProperty("user.dir")+ "/src/main/resources/testSequence.drl"), ResourceType.DRL);
 	    kbase.addPackages(kbuilder.getKnowledgePackages());
 	    printcose();

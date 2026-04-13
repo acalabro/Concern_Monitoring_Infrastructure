@@ -21,10 +21,10 @@ function RulesManagement({ rules, onRulesChanged }) {
   const [togglingRule, setTogglingRule] = useState(null);
   const [deletingFile, setDeletingFile] = useState(null);
 
-  // Nomi regole attive nel motore (derivato da props)
+  // Active rule names in the engine (derived from props)
   const activeRuleNames = (rules || []).map(r => r.name);
 
-  // Fetch lista file regole
+  // Fetch rule files list
   const fetchRuleFiles = async () => {
     try {
       const response = await axios.get('/api/rules/files');
@@ -39,7 +39,7 @@ function RulesManagement({ rules, onRulesChanged }) {
   }, []);
 
   /**
-   * Estrae i nomi delle regole dal contenuto di un file .drl
+   * Extracts rule names from a .drl file content
    */
   const extractRuleNamesFromContent = (content) => {
     const matches = [];
@@ -52,7 +52,7 @@ function RulesManagement({ rules, onRulesChanged }) {
   };
 
   /**
-   * Mappa file -> nomi regole contenute (cache locale)
+   * Map: filename -> rule names contained (local cache)
    */
   const [fileRuleMap, setFileRuleMap] = useState({});
 
@@ -76,13 +76,13 @@ function RulesManagement({ rules, onRulesChanged }) {
   }, [ruleFiles, buildFileRuleMap]);
 
   /**
-   * Verifica se le regole di un file sono caricate nel motore
-   * Ritorna 'active' | 'partial' | 'inactive'
+   * Checks whether the rules in a file are loaded in the engine.
+   * Returns 'active' | 'partial' | 'inactive'
    */
   const getFileStatus = useCallback((filename) => {
     const rulesInFile = fileRuleMap[filename] || [];
     if (rulesInFile.length === 0) {
-      // Fallback: confronto per nome file
+      // Fallback: compare by filename
       const baseName = filename.replace('.drl', '');
       return activeRuleNames.some(rn =>
         rn === baseName || rn.toLowerCase() === baseName.toLowerCase()
@@ -94,25 +94,25 @@ function RulesManagement({ rules, onRulesChanged }) {
     return 'inactive';
   }, [fileRuleMap, activeRuleNames]);
 
-  // ---- AZIONI ----
+  // ---- ACTIONS ----
 
-  // ATTIVA: carica le regole del file nel motore
+  // ACTIVATE: load the file's rules into the engine
   const handleActivateFile = async (filename) => {
     setTogglingRule(filename);
     setError(null);
     try {
       await axios.post(`/api/rules/load/${filename}`);
-      setSuccess(`Regole di "${filename}" attivate nel motore CEP`);
+      setSuccess(`Rules from "${filename}" activated in CEP engine`);
       if (onRulesChanged) await onRulesChanged();
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
-      setError(err.response?.data?.error || 'Errore durante l\'attivazione');
+      setError(err.response?.data?.error || 'Error during activation');
     } finally {
       setTogglingRule(null);
     }
   };
 
-  // DISATTIVA: rimuove le regole del file dal motore (il file resta su disco)
+  // DEACTIVATE: remove the file's rules from the engine (file stays on disk)
   const handleDeactivateFile = async (filename) => {
     setTogglingRule(filename);
     setError(null);
@@ -130,21 +130,21 @@ function RulesManagement({ rules, onRulesChanged }) {
           }
         }
         if (allRemoved) {
-          setSuccess(`Regole di "${filename}" disattivate dal motore CEP`);
+          setSuccess(`Rules from "${filename}" deactivated from CEP engine`);
         } else {
-          setSuccess(`Alcune regole di "${filename}" sono state disattivate`);
+          setSuccess(`Some rules from "${filename}" have been deactivated`);
         }
       } else {
-        // Fallback: prova col nome file senza estensione
+        // Fallback: try with filename without extension
         const baseName = filename.replace('.drl', '');
         await axios.delete(`/api/rules/active/${encodeURIComponent(baseName)}`);
-        setSuccess(`Regola "${baseName}" disattivata dal motore CEP`);
+        setSuccess(`Rule "${baseName}" deactivated from CEP engine`);
       }
 
       if (onRulesChanged) await onRulesChanged();
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
-      setError(err.response?.data?.error || 'Errore durante la disattivazione');
+      setError(err.response?.data?.error || 'Error during deactivation');
     } finally {
       setTogglingRule(null);
     }
@@ -160,14 +160,14 @@ function RulesManagement({ rules, onRulesChanged }) {
     }
   };
 
-  // RIMUOVI: elimina il file dal filesystem (e scarica dal motore se attivo)
+  // DELETE: remove the file from the filesystem (and unload from engine if active)
   const handleDeleteFile = async (filename) => {
     const status = getFileStatus(filename);
     const statusLabel = (status === 'active' || status === 'partial')
-      ? '\n\nATTENZIONE: le regole sono attualmente ATTIVE nel motore e verranno anche disattivate.'
+      ? '\n\nWARNING: the rules are currently ACTIVE in the engine and will also be deactivated.'
       : '';
 
-    if (!confirm(`Sei sicuro di voler ELIMINARE il file "${filename}"?${statusLabel}`)) {
+    if (!confirm(`Are you sure you want to DELETE the file "${filename}"?${statusLabel}`)) {
       return;
     }
 
@@ -176,18 +176,18 @@ function RulesManagement({ rules, onRulesChanged }) {
 
     try {
       await axios.delete(`/api/rules/files/${filename}`);
-      setSuccess(`File "${filename}" eliminato con successo`);
+      setSuccess(`File "${filename}" deleted successfully`);
       await fetchRuleFiles();
       if (onRulesChanged) onRulesChanged();
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
-      setError(err.response?.data?.error || "Errore durante l'eliminazione");
+      setError(err.response?.data?.error || 'Error during deletion');
     } finally {
       setDeletingFile(null);
     }
   };
 
-  // Download file .drl
+  // Download .drl file
   const handleDownloadFile = (filename) => {
     const downloadUrl = `/api/rules/files/${encodeURIComponent(filename)}/download`;
     const link = document.createElement('a');
@@ -198,7 +198,7 @@ function RulesManagement({ rules, onRulesChanged }) {
     document.body.removeChild(link);
   };
 
-  // Visualizza contenuto file
+  // View file content
   const handleViewFile = async (filename) => {
     setLoading(true);
     try {
@@ -208,20 +208,20 @@ function RulesManagement({ rules, onRulesChanged }) {
         content: response.data.content
       });
     } catch (err) {
-      setError(err.response?.data?.error || 'Errore durante la lettura del file');
+      setError(err.response?.data?.error || 'Error reading file');
     } finally {
       setLoading(false);
     }
   };
 
-  // Upload regola da editor
+  // Upload rule from editor
   const handleUploadRule = async () => {
     if (!ruleName.trim()) {
-      setError('Inserisci un nome per la regola');
+      setError('Please enter a rule name');
       return;
     }
     if (!ruleContent.trim()) {
-      setError('Inserisci il contenuto della regola');
+      setError('Please enter the rule content');
       return;
     }
 
@@ -236,8 +236,8 @@ function RulesManagement({ rules, onRulesChanged }) {
       });
 
       setSuccess(
-        `Regola "${response.data.ruleName}" caricata con successo!` +
-        (response.data.loadedDynamically ? ' E attivata nel motore CEP!' : '')
+        `Rule "${response.data.ruleName}" uploaded successfully!` +
+        (response.data.loadedDynamically ? ' And activated in CEP engine!' : '')
       );
       setRuleName('');
       setRuleContent('');
@@ -251,7 +251,7 @@ function RulesManagement({ rules, onRulesChanged }) {
         setSuccess(null);
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.error || 'Errore durante il caricamento della regola');
+      setError(err.response?.data?.error || 'Error uploading rule');
     } finally {
       setLoading(false);
     }
@@ -259,10 +259,10 @@ function RulesManagement({ rules, onRulesChanged }) {
 
   const validation = useDroolsValidation(ruleContent, 1000);
 
-  // Validazione regola
+  // Validate rule
   const handleValidateRule = async () => {
     if (!ruleContent.trim()) {
-      setError('Inserisci il contenuto della regola da validare');
+      setError('Please enter rule content to validate');
       return;
     }
     setLoading(true);
@@ -273,18 +273,18 @@ function RulesManagement({ rules, onRulesChanged }) {
       });
       setValidationResult(response.data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Errore durante la validazione');
+      setError(err.response?.data?.error || 'Error during validation');
     } finally {
       setLoading(false);
     }
   };
 
-  // Upload file .drl da disco
+  // Upload .drl file from disk
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
     if (!file.name.endsWith('.drl')) {
-      setError('Il file deve avere estensione .drl');
+      setError('File must have a .drl extension');
       return;
     }
     const reader = new FileReader();
@@ -297,7 +297,7 @@ function RulesManagement({ rules, onRulesChanged }) {
     reader.readAsText(file);
   };
 
-  // Template regola vuota
+  // Empty rule template
   const getEmptyRuleTemplate = () => {
     return `package it.cnr.isti.labsedc.concern.event;
 
@@ -325,33 +325,33 @@ rule "my-new-rule"
 end`;
   };
 
-  // Helper: badge stato
+  // Helper: status badge
   const StatusBadge = ({ status }) => {
     if (status === 'active') {
-      return <span className="badge badge-success">Attiva</span>;
+      return <span className="badge badge-success">Active</span>;
     }
     if (status === 'partial') {
-      return <span className="badge badge-warning">Parziale</span>;
+      return <span className="badge badge-warning">Partial</span>;
     }
-    return <span className="badge badge-inactive">Disattiva</span>;
+    return <span className="badge badge-inactive">Inactive</span>;
   };
 
   return (
     <div className="rules-management">
-      {/* Header con azioni */}
+      {/* Header with actions */}
       <div className="rules-header">
         <div className="rules-tabs">
           <button
             className={activeView === 'files' ? 'active' : ''}
             onClick={() => { setActiveView('files'); fetchRuleFiles(); }}
           >
-            <Code size={18} /> Gestione Regole ({ruleFiles.length})
+            <Code size={18} /> Rule Management ({ruleFiles.length})
           </button>
           <button
             className={activeView === 'active' ? 'active' : ''}
             onClick={() => setActiveView('active')}
           >
-            <Power size={18} /> Attive nel Motore ({rules.length})
+            <Power size={18} /> Active in Engine ({rules.length})
           </button>
           <button
             className={activeView === 'editor' ? 'active' : ''}
@@ -360,14 +360,14 @@ end`;
               if (!ruleContent) setRuleContent(getEmptyRuleTemplate());
             }}
           >
-            <Plus size={18} /> Nuova Regola
+            <Plus size={18} /> New Rule
           </button>
         </div>
 
         <div className="rules-actions">
           <label className="btn-upload">
             <Upload size={18} />
-            <span>Carica File .drl</span>
+            <span>Upload .drl File</span>
             <input
               type="file"
               accept=".drl"
@@ -381,14 +381,14 @@ end`;
               if (onRulesChanged) onRulesChanged();
             }}
             className="btn-refresh-small"
-            title="Aggiorna"
+            title="Refresh"
           >
             <RefreshCw size={18} />
           </button>
         </div>
       </div>
 
-      {/* Messaggi */}
+      {/* Messages */}
       {error && (
         <div className="message-banner error">
           <XCircle size={18} />
@@ -403,12 +403,12 @@ end`;
         </div>
       )}
 
-      {/* ===== TAB: GESTIONE REGOLE (file + toggle attiva/disattiva) ===== */}
+      {/* ===== TAB: RULE MANAGEMENT (files + activate/deactivate toggle) ===== */}
       {activeView === 'files' && (
         <div className="files-list-view">
-          <h3>Regole Disponibili</h3>
+          <h3>Available Rules</h3>
           <p className="view-description">
-            Attiva o disattiva le regole nel motore CEP. Le regole disattivate restano disponibili su disco.
+            Activate or deactivate rules in the CEP engine. Deactivated rules remain available on disk.
           </p>
           {ruleFiles.length > 0 ? (
             <div className="files-table">
@@ -429,36 +429,36 @@ end`;
                         </div>
                         <div className="file-meta">
                           {(file.size / 1024).toFixed(2)} KB •{' '}
-                          {new Date(file.lastModified).toLocaleString('it-IT')}
+                          {new Date(file.lastModified).toLocaleString('en-US')}
                           {rulesInFile.length > 0 && (
                             <span className="rules-count">
-                              {' '}• {rulesInFile.length} regol{rulesInFile.length === 1 ? 'a' : 'e'}
+                              {' '}• {rulesInFile.length} rule{rulesInFile.length !== 1 ? 's' : ''}
                             </span>
                           )}
                         </div>
                       </div>
                     </div>
                     <div className="file-actions">
-                      {/* Toggle Attiva/Disattiva */}
+                      {/* Toggle Activate/Deactivate */}
                       <button
                         onClick={() => handleToggleFile(file.name)}
                         className={`btn-toggle ${status === 'active' || status === 'partial' ? 'btn-toggle-on' : 'btn-toggle-off'}`}
-                        title={status === 'active' || status === 'partial' ? 'Disattiva regola' : 'Attiva regola'}
+                        title={status === 'active' || status === 'partial' ? 'Deactivate rule' : 'Activate rule'}
                         disabled={isToggling || isDeleting}
                       >
                         {isToggling ? (
                           <RefreshCw size={18} className="spinning" />
                         ) : status === 'active' || status === 'partial' ? (
-                          <><ToggleRight size={18} /> <span className="btn-label">Disattiva</span></>
+                          <><ToggleRight size={18} /> <span className="btn-label">Deactivate</span></>
                         ) : (
-                          <><ToggleLeft size={18} /> <span className="btn-label">Attiva</span></>
+                          <><ToggleLeft size={18} /> <span className="btn-label">Activate</span></>
                         )}
                       </button>
-                      {/* Visualizza */}
+                      {/* View */}
                       <button
                         onClick={() => handleViewFile(file.name)}
                         className="btn-icon"
-                        title="Visualizza"
+                        title="View"
                       >
                         <Eye size={18} />
                       </button>
@@ -466,15 +466,15 @@ end`;
                       <button
                         onClick={() => handleDownloadFile(file.name)}
                         className="btn-icon"
-                        title="Scarica file"
+                        title="Download file"
                       >
                         <Download size={18} />
                       </button>
-                      {/* Elimina */}
+                      {/* Delete */}
                       <button
                         onClick={() => handleDeleteFile(file.name)}
                         className="btn-icon btn-danger"
-                        title="Elimina file"
+                        title="Delete file"
                         disabled={isToggling || isDeleting}
                       >
                         {isDeleting ? (
@@ -491,19 +491,19 @@ end`;
           ) : (
             <div className="empty-state">
               <FileText size={48} />
-              <p>Nessun file .drl trovato</p>
-              <p className="empty-state-hint">Carica un file o crea una nuova regola</p>
+              <p>No .drl files found</p>
+              <p className="empty-state-hint">Upload a file or create a new rule</p>
             </div>
           )}
         </div>
       )}
 
-      {/* ===== TAB: REGOLE ATTIVE NEL MOTORE ===== */}
+      {/* ===== TAB: ACTIVE RULES IN ENGINE ===== */}
       {activeView === 'active' && (
         <div className="rules-list-view">
-          <h3>Regole Attive nel Motore CEP</h3>
+          <h3>Active Rules in CEP Engine</h3>
           <p className="view-description">
-            Queste regole sono attualmente caricate e in esecuzione nel motore Drools.
+            These rules are currently loaded and running in the Drools engine.
           </p>
           {rules.length > 0 ? (
             <div className="rules-grid">
@@ -512,7 +512,7 @@ end`;
                   <div className="rule-card-header">
                     <CheckCircle size={18} color="#00C49F" />
                     <span className="rule-name">{rule.name}</span>
-                    <span className="badge badge-success">Attiva</span>
+                    <span className="badge badge-success">Active</span>
                   </div>
                 </div>
               ))}
@@ -520,39 +520,39 @@ end`;
           ) : (
             <div className="empty-state">
               <AlertCircle size={48} />
-              <p>Nessuna regola attiva nel motore CEP</p>
-              <p className="empty-state-hint">Vai su "Gestione Regole" per attivare le regole</p>
+              <p>No active rules in CEP engine</p>
+              <p className="empty-state-hint">Go to "Rule Management" to activate rules</p>
             </div>
           )}
         </div>
       )}
 
-      {/* ===== TAB: EDITOR NUOVA REGOLA ===== */}
+      {/* ===== TAB: NEW RULE EDITOR ===== */}
       {activeView === 'editor' && (
         <div className="rule-editor-view">
-          <h3>Editor Regola Drools</h3>
+          <h3>Drools Rule Editor</h3>
 
           <div className="editor-form">
             <div className="form-group">
-              <label>Nome Regola</label>
+              <label>Rule Name</label>
               <input
                 type="text"
                 className="rule-input"
-                placeholder="es: MyNewRule"
+                placeholder="e.g.: MyNewRule"
                 value={ruleName}
                 onChange={(e) => setRuleName(e.target.value)}
               />
-              <small>Il nome del file sarà: {ruleName || 'MyRule'}.drl</small>
+              <small>The file name will be: {ruleName || 'MyRule'}.drl</small>
             </div>
 
             <div className="form-group">
-              <label>Contenuto Regola (.drl)</label>
+              <label>Rule Content (.drl)</label>
               <textarea
                 className="rule-textarea"
                 rows={20}
                 value={ruleContent}
                 onChange={(e) => setRuleContent(e.target.value)}
-                placeholder="Inserisci il contenuto della regola Drools..."
+                placeholder="Enter the Drools rule content..."
                 spellCheck={false}
               />
               <ValidationIndicator validation={validation} />
@@ -563,13 +563,13 @@ end`;
                 {validationResult.valid ? (
                   <>
                     <CheckCircle size={18} />
-                    <span>Regola valida!</span>
+                    <span>Rule is valid!</span>
                   </>
                 ) : (
                   <>
                     <XCircle size={18} />
                     <div>
-                      <strong>Errori di validazione:</strong>
+                      <strong>Validation errors:</strong>
                       <ul>
                         {validationResult.errors.map((err, i) => (
                           <li key={i}>{err}</li>
@@ -587,7 +587,7 @@ end`;
                 className="btn-secondary"
                 disabled={loading}
               >
-                <CheckCircle size={18} /> Valida Regola
+                <CheckCircle size={18} /> Validate Rule
               </button>
               <button
                 onClick={handleUploadRule}
@@ -595,9 +595,9 @@ end`;
                 disabled={loading || !ruleName.trim() || !ruleContent.trim()}
               >
                 {loading ? (
-                  <><RefreshCw size={18} className="spinning" /> Caricamento...</>
+                  <><RefreshCw size={18} className="spinning" /> Uploading...</>
                 ) : (
-                  <><Upload size={18} /> Carica Regola</>
+                  <><Upload size={18} /> Upload Rule</>
                 )}
               </button>
             </div>
@@ -605,7 +605,7 @@ end`;
         </div>
       )}
 
-      {/* Modal visualizzazione file */}
+      {/* File view modal */}
       {selectedFile && (
         <div className="modal-overlay" onClick={() => setSelectedFile(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -628,10 +628,10 @@ end`;
                 }}
                 className="btn-secondary"
               >
-                Modifica
+                Edit
               </button>
               <button onClick={() => setSelectedFile(null)} className="btn-primary">
-                Chiudi
+                Close
               </button>
             </div>
           </div>

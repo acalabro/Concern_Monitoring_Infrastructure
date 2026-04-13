@@ -2,14 +2,14 @@ import React from 'react';
 import './ValidationIndicator.css';
 
 /**
- * Componente per mostrare i risultati della validazione
+ * Component to display validation results
  */
 export function ValidationIndicator({ validation }) {
   if (validation.isValidating) {
     return (
       <div className="validation-indicator validating">
         <div className="validation-spinner"></div>
-        <span>Validazione in corso...</span>
+        <span>Validating...</span>
       </div>
     );
   }
@@ -25,7 +25,7 @@ export function ValidationIndicator({ validation }) {
           <circle cx="9" cy="9" r="9" fill="#10b981"/>
           <path d="M5 9l2.5 2.5L13 6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
         </svg>
-        <span>Sintassi valida</span>
+        <span>Valid syntax</span>
       </div>
     );
   }
@@ -37,7 +37,7 @@ export function ValidationIndicator({ validation }) {
         <path d="M6 6l6 6M12 6l-6 6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
       </svg>
       <div className="validation-errors">
-        <span className="error-count">{validation.errors.length} errori</span>
+        <span className="error-count">{validation.errors.length} error{validation.errors.length !== 1 ? 's' : ''}</span>
         <ul className="error-list">
           {validation.errors.map((error, i) => (
             <li key={i}>{error}</li>
