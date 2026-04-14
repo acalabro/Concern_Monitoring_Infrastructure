@@ -1,25 +1,22 @@
 package it.cnr.isti.labsedc.concern.event;
 
-import it.cnr.isti.labsedc.concern.event.ConcernEvaluationRequestEvent;
+import it.cnr.isti.labsedc.concern.event.ConcernBaseEvent;
 import it.cnr.isti.labsedc.concern.utils.KieLauncher;
 import org.json.JSONObject;
 
 dialect "java"
 
-declare ConcernEvaluationRequestEvent
+declare ConcernBaseEvent
     @role( event )
     @timestamp( timestamp )
 end
 
-// ========================================
-// REGOLA 1: Allarme Latenza Alta (> 60 secondi)
-// ========================================
 rule "satellite-high-latency"
     no-loop
     salience 10
     dialect "java"
     when
-        $event: ConcernEvaluationRequestEvent(
+        $event: ConcernBaseEvent(
             this.getName() == "SatelliteMessage",
             eval(getLatency($event) > 60.0)
         )
@@ -33,15 +30,12 @@ rule "satellite-high-latency"
         );
 end
 
-// ========================================
-// REGOLA 2: GPS CEP Alto (bassa precisione)
-// ========================================
 rule "satellite-low-gps-accuracy"
     no-loop
     salience 9
     dialect "java"
     when
-        $event: ConcernEvaluationRequestEvent(
+        $event: ConcernBaseEvent(
             this.getName() == "SatelliteMessage",
             eval(getGpsCep($event) > 10)
         )
@@ -55,15 +49,12 @@ rule "satellite-low-gps-accuracy"
         );
 end
 
-// ========================================
-// REGOLA 3: Messaggio ricevuto (log info)
-// ========================================
 rule "satellite-message-received"
     no-loop
     salience 8
     dialect "java"
     when
-        $event: ConcernEvaluationRequestEvent(
+        $event: ConcernBaseEvent(
             this.getName() == "SatelliteMessage"
         )
     then
@@ -79,20 +70,18 @@ rule "satellite-message-received"
         );
 end
 
-// ========================================
-// REGOLA 4: Latenza in miglioramento
-// ========================================
+
 rule "satellite-latency-improving"
     no-loop
     salience 7
     dialect "java"
     when
-        $e1: ConcernEvaluationRequestEvent(
+        $e1: ConcernBaseEvent(
             this.getName() == "SatelliteMessage",
             $sender: this.getSenderID(),
             $lat1: getLatency(this)
         )
-        $e2: ConcernEvaluationRequestEvent(
+        $e2: ConcernBaseEvent(
             this != $e1,
             this.getName() == "SatelliteMessage",
             this.getSenderID() == $sender,
@@ -107,21 +96,18 @@ rule "satellite-latency-improving"
         );
 end
 
-// ========================================
-// REGOLA 5: Latenza in peggioramento
-// ========================================
 rule "satellite-latency-degrading"
     no-loop
     salience 7
     dialect "java"
     when
-        $e1: ConcernEvaluationRequestEvent(
+        $e1: ConcernBaseEvent(
             this.getName() == "SatelliteMessage",
             $sender: this.getSenderID(),
             $lat1: getLatency(this),
             $lat1 < 60.0  // Prima era ok
         )
-        $e2: ConcernEvaluationRequestEvent(
+        $e2: ConcernBaseEvent(
             this != $e1,
             this.getName() == "SatelliteMessage",
             this.getSenderID() == $sender,
@@ -136,16 +122,13 @@ rule "satellite-latency-degrading"
         );
 end
 
-// ========================================
-// REGOLA 6: Burst di messaggi (più messaggi in 5 minuti)
-// ========================================
 rule "satellite-message-burst"
     no-loop
     salience 6
     dialect "java"
     when
         accumulate(
-            $e: ConcernEvaluationRequestEvent(
+            $e: ConcernBaseEvent(
                 this.getName() == "SatelliteMessage",
                 this.getTimestamp() > (System.currentTimeMillis() - 300000)  // ultimi 5 min
             );
@@ -158,11 +141,8 @@ rule "satellite-message-burst"
         );
 end
 
-// ========================================
-// FUNZIONI HELPER per parsing JSON
-// ========================================
 
-function double getLatency(ConcernEvaluationRequestEvent event) {
+function double getLatency(ConcernBaseEvent event) {
     try {
         String data = (String) event.getData();
         JSONObject json = new JSONObject(data);
@@ -172,7 +152,7 @@ function double getLatency(ConcernEvaluationRequestEvent event) {
     }
 }
 
-function String getSerial(ConcernEvaluationRequestEvent event) {
+function String getSerial(ConcernBaseEvent event) {
     try {
         String data = (String) event.getData();
         JSONObject json = new JSONObject(data);
@@ -182,7 +162,7 @@ function String getSerial(ConcernEvaluationRequestEvent event) {
     }
 }
 
-function int getMomsn(ConcernEvaluationRequestEvent event) {
+function int getMomsn(ConcernBaseEvent event) {
     try {
         String data = (String) event.getData();
         JSONObject json = new JSONObject(data);
@@ -192,7 +172,7 @@ function int getMomsn(ConcernEvaluationRequestEvent event) {
     }
 }
 
-function String getPayload(ConcernEvaluationRequestEvent event) {
+function String getPayload(ConcernBaseEvent event) {
     try {
         String data = (String) event.getData();
         JSONObject json = new JSONObject(data);
@@ -202,7 +182,7 @@ function String getPayload(ConcernEvaluationRequestEvent event) {
     }
 }
 
-function int getGpsCep(ConcernEvaluationRequestEvent event) {
+function int getGpsCep(ConcernBaseEvent event) {
     try {
         String data = (String) event.getData();
         JSONObject json = new JSONObject(data);
