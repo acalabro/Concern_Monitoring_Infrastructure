@@ -83,28 +83,31 @@ public class MySQLStorageController implements StorageController {
 
 	@Override
 	public boolean saveMessage(Event<?> message) {
-		try {
-			if (this.con != null && !this.con.isClosed()) {
-					 String query = " insert into event (senderID, timestamp, data, dataClassName  )"
-						        + " values (?, ?, ?, ?)";
-
-				      // create the mysql insert preparedstatement
-				      PreparedStatement preparedStmt = this.con.prepareStatement(query);
-				      preparedStmt.setString (1, message.getSenderID());
-				      preparedStmt.setLong (2, message.getTimestamp());
-				      preparedStmt.setObject(3, message.getData());
-				      preparedStmt.setString(4, message.getData().getClass().getCanonicalName());
-				      // execute the preparedstatement
-				      preparedStmt.execute();
-				      //logger.info("Event: " + message.toString() + " stored.");
-				      return true;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			logger.error("Failure on storing event on db");
-			return false;
-		}
-		return false;
+	    try {
+	        if (this.con != null && !this.con.isClosed()) {
+	            String query = "INSERT INTO event (senderID, timestamp, data, dataClassName) VALUES (?, ?, ?, ?)";
+	            PreparedStatement preparedStmt = this.con.prepareStatement(query);
+	            preparedStmt.setString(1, message.getSenderID());
+	            preparedStmt.setLong(2, message.getTimestamp());
+	 
+	            Object dataObj = message.getData();
+	            if (dataObj != null) {
+	                preparedStmt.setString(3, dataObj.toString());
+	                preparedStmt.setString(4, dataObj.getClass().getCanonicalName());
+	            } else {
+	                // data is null: store empty string and java.lang.String as class name
+	                // This prevents NPE and keeps the row insertable.
+	                preparedStmt.setString(3, "");
+	                preparedStmt.setString(4, "java.lang.String");
+	            }
+	 
+	            preparedStmt.execute();
+	            return true;
+	        }
+	    } catch (SQLException e) {
+	        logger.error("Failure on storing event on db: " + e.getMessage());
+	    }
+	    return false;
 	}
 	
 	public boolean saveViolation(String eventTriggeredBy, String violationMessage, String ruleViolated,

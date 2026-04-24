@@ -1,33 +1,33 @@
 version: '3.8'
 
 services:
-  # Database MySQL
+
+  # ── Database MySQL ─────────────────────────────────────────────────────────
   mysql:
     image: mysql:8.0
     container_name: concern-mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: eventdb
-      MYSQL_USER: concern
-      MYSQL_PASSWORD: un53cur3!!
+      MYSQL_DATABASE:      eventdb
+      MYSQL_USER:          concern
+      MYSQL_PASSWORD:      "un53cur3!!"
     ports:
       - "3306:3306"
     volumes:
-      # Monta lo script di inizializzazione
       - ./docker/init-db:/docker-entrypoint-initdb.d:ro
-      # Volume persistente per i dati
       - mysql-data:/var/lib/mysql
     networks:
       - concern-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "concern", "-pun53cur3!!"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost",
+             "-u", "concern", "-pun53cur3!!"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 30s
 
-  # Backend Java
+  # ── Backend Java ───────────────────────────────────────────────────────────
   backend:
     build:
       context: .
@@ -38,15 +38,16 @@ services:
       mysql:
         condition: service_healthy
     environment:
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
+      # "mysql" è il nome del service sopra — raggiungibile sulla concern-network
+      MYSQL_HOST:     mysql
+      MYSQL_PORT:     3306
       MYSQL_DATABASE: eventdb
-      MYSQL_USER: concern
-      MYSQL_PASSWORD: un53cur3!!
-      JAVA_OPTS: "-Xmx2g -Xms512m"
+      MYSQL_USER:     concern
+      MYSQL_PASSWORD: "un53cur3!!"
+      JAVA_OPTS:      "-Xmx2g -Xms512m"
     ports:
       - "8181:8181"   # REST API
-      - "61616:61616" # ActiveMQ
+      - "61616:61616" # ActiveMQ (broker embedded)
     networks:
       - concern-network
     healthcheck:
@@ -56,7 +57,7 @@ services:
       retries: 3
       start_period: 60s
 
-  # Frontend React + Nginx
+  # ── Frontend React + Nginx ─────────────────────────────────────────────────
   frontend:
     build:
       context: .
