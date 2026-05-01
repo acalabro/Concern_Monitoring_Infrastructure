@@ -7,9 +7,13 @@ import {
 } from 'recharts';
 import {
   Activity, AlertTriangle, Play, Square, RefreshCw, 
-  Database, Cpu, HardDrive, CheckCircle, XCircle, Clock
+  Database, Cpu, HardDrive, CheckCircle, XCircle, Clock,
+  ExternalLink
 } from 'lucide-react';
 import './App.css';
+
+// URL del Probes Manager — sovrascrivibile via VITE_PROBES_MANAGER_URL in .env.local
+const PROBES_MANAGER_URL = import.meta.env.VITE_PROBES_MANAGER_URL ?? 'http://localhost:8080/ui/';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
@@ -149,6 +153,13 @@ function App() {
         <div className="header-content">
           <h1><Activity /> Concern Monitoring Dashboard</h1>
           <div className="header-controls">
+            <button
+              onClick={() => window.open(PROBES_MANAGER_URL, '_blank', 'noopener,noreferrer')}
+              className="btn-probes"
+              title="Open Probes Manager"
+            >
+              <ExternalLink size={18} /> Probes Manager
+            </button>
             <button onClick={fetchData} className="btn-refresh" disabled={actionLoading}>
               <RefreshCw size={18} className={actionLoading ? 'spinning' : ''} /> Refresh
             </button>
