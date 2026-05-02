@@ -23,32 +23,25 @@ public class Main {
      * @return Grizzly HTTP server.
      */
     public static HttpServer startServer(String serverUri) {
-        // create a resource config that scans for JAX-RS resources and providers
-        // in it.cnr.isti.labsedc.concern.rest package
-        final ResourceConfig rc = new ResourceConfig().packages("it.cnr.isti.labsedc.concern.rest");
+        System.out.println("[Main] Starting Concern Monitoring REST server...");
+        System.out.println("[Main] Java version : " + System.getProperty("java.version"));
+        System.out.println("[Main] Working dir  : " + System.getProperty("user.dir"));
+        System.out.println("[Main] MYSQL_HOST   : " + System.getenv().getOrDefault("MYSQL_HOST", "localhost"));
+        System.out.println("[Main] URI          : " + serverUri);
 
-        //TODO
-//      	 String currentPath="";
-// 		try {
-// 			currentPath = new java.io.File(".").getCanonicalPath();
-// 		} catch (IOException e) {
-// 			e.printStackTrace();
-// 		}
-// 		
-//    	StaticHttpHandler staticHttpHandler = new StaticHttpHandler(currentPath);
-//        server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/images");
-        
-    	System.out.println("Current IP: " + BASE_URI );
+        final ResourceConfig rc = new ResourceConfig()
+                .packages("it.cnr.isti.labsedc.concern.rest");
 
-    	/*CLEAN logs*/
-    	Sub.cleanFile(System.getProperty("user.dir")+ "/logs/app-debug.log");
-    	Sub.cleanFile(System.getProperty("user.dir")+ "/logs/app-info.log");
-    	Sub.cleanFile(System.getProperty("user.dir")+ "/logs/notification-info.log");
-    	Sub.cleanFile(System.getProperty("user.dir")+ "/logs/storage-info.log");
+        System.out.println("[Main] JAX-RS package scan: it.cnr.isti.labsedc.concern.rest (+ sub-packages)");
 
-        // create and start a new instance of grizzly http server
-        // exposing the Jersey application at BASE_URI
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(serverUri), rc);
+        Sub.cleanFile(System.getProperty("user.dir")+ "/logs/app-debug.log");
+        Sub.cleanFile(System.getProperty("user.dir")+ "/logs/app-info.log");
+        Sub.cleanFile(System.getProperty("user.dir")+ "/logs/notification-info.log");
+        Sub.cleanFile(System.getProperty("user.dir")+ "/logs/storage-info.log");
+
+        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(serverUri), rc);
+        System.out.println("[Main] REST server started on " + serverUri);
+        return server;
     }
 
     /**

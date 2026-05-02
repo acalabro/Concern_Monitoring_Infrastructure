@@ -57,6 +57,7 @@ public class MySQLStorageController implements StorageController {
 				"jdbc:mysql://"+serverAddress+":"+serverPort+"/"+dbName,username,password);
 				logger.info("Connected successfully to "+dbName+" on "+serverAddress);
 				ConcernApp.componentStarted.put(this.getClass().getSimpleName(), true);
+				UserDAO.initDefaultUsers(con);
 				return true;
 			}
 			logger.error("Connection failed to "+dbName+" on "+serverAddress);

@@ -8,7 +8,7 @@ import {
   ToggleLeft, ToggleRight, Power
 } from 'lucide-react';
 
-function RulesManagement({ rules, onRulesChanged }) {
+function RulesManagement({ rules, onRulesChanged, isAdmin = false }) {
   const [activeView, setActiveView] = useState('files');
   const [ruleFiles, setRuleFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -353,28 +353,32 @@ end`;
           >
             <Power size={18} /> Active in Engine ({rules.length})
           </button>
-          <button
-            className={activeView === 'editor' ? 'active' : ''}
-            onClick={() => {
-              setActiveView('editor');
-              if (!ruleContent) setRuleContent(getEmptyRuleTemplate());
-            }}
-          >
-            <Plus size={18} /> New Rule
-          </button>
+          {isAdmin && (
+            <button
+              className={activeView === 'editor' ? 'active' : ''}
+              onClick={() => {
+                setActiveView('editor');
+                if (!ruleContent) setRuleContent(getEmptyRuleTemplate());
+              }}
+            >
+              <Plus size={18} /> New Rule
+            </button>
+          )}
         </div>
 
         <div className="rules-actions">
-          <label className="btn-upload">
-            <Upload size={18} />
-            <span>Upload .drl File</span>
-            <input
-              type="file"
-              accept=".drl"
-              onChange={handleFileUpload}
-              style={{ display: 'none' }}
-            />
-          </label>
+          {isAdmin && (
+            <label className="btn-upload">
+              <Upload size={18} />
+              <span>Upload .drl File</span>
+              <input
+                type="file"
+                accept=".drl"
+                onChange={handleFileUpload}
+                style={{ display: 'none' }}
+              />
+            </label>
+          )}
           <button
             onClick={() => {
               fetchRuleFiles();
@@ -439,21 +443,23 @@ end`;
                       </div>
                     </div>
                     <div className="file-actions">
-                      {/* Toggle Activate/Deactivate */}
-                      <button
-                        onClick={() => handleToggleFile(file.name)}
-                        className={`btn-toggle ${status === 'active' || status === 'partial' ? 'btn-toggle-on' : 'btn-toggle-off'}`}
-                        title={status === 'active' || status === 'partial' ? 'Deactivate rule' : 'Activate rule'}
-                        disabled={isToggling || isDeleting}
-                      >
-                        {isToggling ? (
-                          <RefreshCw size={18} className="spinning" />
-                        ) : status === 'active' || status === 'partial' ? (
-                          <><ToggleRight size={18} /> <span className="btn-label">Deactivate</span></>
-                        ) : (
-                          <><ToggleLeft size={18} /> <span className="btn-label">Activate</span></>
-                        )}
-                      </button>
+                      {/* Toggle Activate/Deactivate – admin only */}
+                      {isAdmin && (
+                        <button
+                          onClick={() => handleToggleFile(file.name)}
+                          className={`btn-toggle ${status === 'active' || status === 'partial' ? 'btn-toggle-on' : 'btn-toggle-off'}`}
+                          title={status === 'active' || status === 'partial' ? 'Deactivate rule' : 'Activate rule'}
+                          disabled={isToggling || isDeleting}
+                        >
+                          {isToggling ? (
+                            <RefreshCw size={18} className="spinning" />
+                          ) : status === 'active' || status === 'partial' ? (
+                            <><ToggleRight size={18} /> <span className="btn-label">Deactivate</span></>
+                          ) : (
+                            <><ToggleLeft size={18} /> <span className="btn-label">Activate</span></>
+                          )}
+                        </button>
+                      )}
                       {/* View */}
                       <button
                         onClick={() => handleViewFile(file.name)}
@@ -470,19 +476,21 @@ end`;
                       >
                         <Download size={18} />
                       </button>
-                      {/* Delete */}
-                      <button
-                        onClick={() => handleDeleteFile(file.name)}
-                        className="btn-icon btn-danger"
-                        title="Delete file"
-                        disabled={isToggling || isDeleting}
-                      >
-                        {isDeleting ? (
-                          <RefreshCw size={16} className="spinning" />
-                        ) : (
-                          <Trash2 size={18} />
-                        )}
-                      </button>
+                      {/* Delete – admin only */}
+                      {isAdmin && (
+                        <button
+                          onClick={() => handleDeleteFile(file.name)}
+                          className="btn-icon btn-danger"
+                          title="Delete file"
+                          disabled={isToggling || isDeleting}
+                        >
+                          {isDeleting ? (
+                            <RefreshCw size={16} className="spinning" />
+                          ) : (
+                            <Trash2 size={18} />
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                 );

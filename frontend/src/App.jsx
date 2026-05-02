@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RulesManagement from './RulesManagement';
+import LoginPage from './LoginPage';
+import { useAuth } from './context/AuthContext';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import {
-  Activity, AlertTriangle, Play, Square, RefreshCw, 
+  Activity, AlertTriangle, Play, Square, RefreshCw,
   Database, Cpu, HardDrive, CheckCircle, XCircle, Clock,
-  ExternalLink
+  ExternalLink, LogOut, Shield, User
 } from 'lucide-react';
 import './App.css';
 
@@ -18,6 +20,15 @@ const PROBES_MANAGER_URL = import.meta.env.VITE_PROBES_MANAGER_URL ?? 'http://lo
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
 function App() {
+  const { auth, logout, isAdmin } = useAuth();
+
+  // Show login page when not authenticated
+  if (!auth) return <LoginPage />;
+
+  return <Dashboard logout={logout} isAdmin={isAdmin} username={auth.username} role={auth.role} />;
+}
+
+function Dashboard({ logout, isAdmin, username, role }) {
   const [systemStatus, setSystemStatus] = useState(null);
   const [metrics, setMetrics] = useState(null);
   const [rules, setRules] = useState([]);
@@ -153,6 +164,11 @@ function App() {
         <div className="header-content">
           <h1><Activity /> Concern Monitoring Dashboard</h1>
           <div className="header-controls">
+            <div className="user-badge" title={`Logged in as ${username}`}>
+              {role === 'ADMIN' ? <Shield size={14} /> : <User size={14} />}
+              <span>{username}</span>
+              <span className={`role-pill ${role === 'ADMIN' ? 'admin' : 'user'}`}>{role}</span>
+            </div>
             <button
               onClick={() => window.open(PROBES_MANAGER_URL, '_blank', 'noopener,noreferrer')}
               className="btn-probes"
@@ -163,7 +179,7 @@ function App() {
             <button onClick={fetchData} className="btn-refresh" disabled={actionLoading}>
               <RefreshCw size={18} className={actionLoading ? 'spinning' : ''} /> Refresh
             </button>
-            {systemStatus?.running ? (
+            {isAdmin && (systemStatus?.running ? (
               <button onClick={stopMonitoring} className="btn-stop" disabled={actionLoading}>
                 <Square size={18} /> {actionLoading ? 'Stopping...' : 'Stop'}
               </button>
@@ -171,7 +187,10 @@ function App() {
               <button onClick={startMonitoring} className="btn-start" disabled={actionLoading}>
                 <Play size={18} /> {actionLoading ? 'Starting...' : 'Start'}
               </button>
-            )}
+            ))}
+            <button onClick={logout} className="btn-logout" title="Sign out">
+              <LogOut size={18} />
+            </button>
           </div>
         </div>
         {error && (
@@ -255,7 +274,7 @@ function App() {
         )}
         {activeTab === 'events' && <EventsTab stats={eventsStats} />}
         {activeTab === 'violations' && <ViolationsTab stats={violationsStats} />}
-		{activeTab === 'rules' && <RulesTab rules={rules} onRefresh={fetchData} />}
+		{activeTab === 'rules' && <RulesTab rules={rules} onRefresh={fetchData} isAdmin={isAdmin} />}
         {activeTab === 'system' && <SystemTab metrics={metrics} systemStatus={systemStatus} />}
       </div>
     </div>
@@ -474,7 +493,7 @@ function ViolationsTab({ stats }) {
 }
 
 // Rules Tab
-function RulesTab({ rules, onRefresh }) {
+function RulesTab({ rules, onRefresh, isAdmin }) {
   const handleRulesChanged = async () => {
     console.log('Rules changed, refreshing in 1.5s...');
     setTimeout(() => {
@@ -483,11 +502,12 @@ function RulesTab({ rules, onRefresh }) {
       }
     }, 1500);
   };
- 
+
   return (
-    <RulesManagement 
-      rules={rules} 
+    <RulesManagement
+      rules={rules}
       onRulesChanged={handleRulesChanged}
+      isAdmin={isAdmin}
     />
   );
 }

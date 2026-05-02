@@ -1,52 +1,88 @@
 #!/bin/bash
 # init-eventdb.sh
-# Questo script viene eseguito automaticamente da MySQL all'avvio del container
+# Eseguito automaticamente da MySQL all'avvio del container Docker.
+# Per uso manuale fuori Docker: mysql -u root -p < ../../init-db.sql
 
 set -e
 
-echo "Initializing eventdb schema..."
+echo ">>> Initializing eventdb schema..."
 
-mysql -u concern -pun53cur3!! eventdb << 'EOSQL'
+MYSQL_PWD="${MYSQL_PASSWORD:-un53cur3!!}" mysql -u concern eventdb << 'EOSQL'
 
--- Crea tabella event
+-- ---------------------------------------------------------------------------
+-- Tabella: event
+-- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `event` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `senderID` varchar(255) NOT NULL,
-  `timestamp` bigint(20) NOT NULL,
-  `data` longblob NOT NULL,
-  `dataClassName` varchar(512) NOT NULL,
+  `id`            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `senderID`      VARCHAR(255)    NOT NULL,
+  `timestamp`     BIGINT          NOT NULL,
+  `data`          LONGBLOB        NOT NULL,
+  `dataClassName` VARCHAR(512)    NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_senderID` (`senderID`),
-  KEY `idx_timestamp` (`timestamp`),
-  KEY `idx_event_sender_timestamp` (`senderID`,`timestamp`),
-  KEY `idx_event_timestamp` (`timestamp`)
+  KEY `idx_event_senderID`          (`senderID`),
+  KEY `idx_event_timestamp`         (`timestamp`),
+  KEY `idx_event_sender_timestamp`  (`senderID`, `timestamp`),
+  KEY `idx_event_dataClass`         (`dataClassName`(64))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Crea tabella violation
+-- ---------------------------------------------------------------------------
+-- Tabella: violation
+-- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `violation` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `violationMessage` text DEFAULT NULL,
-  `probeNameThatTriggersError` varchar(255) DEFAULT NULL,
-  `ruleViolatedName` varchar(255) DEFAULT NULL,
-  `violationTimestamp` bigint(20) NOT NULL,
-  `ruleMetadata` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `id`                         BIGINT NOT NULL AUTO_INCREMENT,
+  `violationMessage`           TEXT            DEFAULT NULL,
+  `probeNameThatTriggersError` VARCHAR(255)    DEFAULT NULL,
+  `ruleViolatedName`           VARCHAR(255)    DEFAULT NULL,
+  `violationTimestamp`         BIGINT          NOT NULL,
+  `ruleMetadata`               VARCHAR(255)
+      CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_violation_probe_timestamp` (`probeNameThatTriggersError`,`violationTimestamp`),
-  KEY `idx_violation_rule_timestamp` (`ruleViolatedName`,`violationTimestamp`)
+  KEY `idx_violation_probe_ts` (`probeNameThatTriggersError`, `violationTimestamp`),
+  KEY `idx_violation_rule_ts`  (`ruleViolatedName`,           `violationTimestamp`),
+  KEY `idx_violation_ts`       (`violationTimestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Crea view v_violation_ts
-CREATE OR REPLACE VIEW `v_violation_ts` AS 
-SELECT 
+-- ---------------------------------------------------------------------------
+-- Tabella: users  (account della dashboard web, password BCrypt via Java)
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `users` (
+  `id`            BIGINT UNSIGNED      NOT NULL AUTO_INCREMENT,
+  `username`      VARCHAR(100)         NOT NULL,
+  `password_hash` VARCHAR(255)         NOT NULL,
+  `role`          ENUM('ADMIN','USER') NOT NULL DEFAULT 'USER',
+  `created_at`    TIMESTAMP            NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at`    TIMESTAMP            NOT NULL DEFAULT CURRENT_TIMESTAMP
+                                                ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------------
+-- View: v_violation_ts  (timestamp leggibile)
+-- ---------------------------------------------------------------------------
+CREATE OR REPLACE VIEW `v_violation_ts` AS
+SELECT
   `id`,
   `violationMessage`,
   `probeNameThatTriggersError`,
   `ruleViolatedName`,
   `violationTimestamp`,
-  FROM_UNIXTIME(`violationTimestamp`/1000) AS `violation_time`,
+  FROM_UNIXTIME(`violationTimestamp` / 1000) AS `violation_time`,
   `ruleMetadata`
 FROM `violation`;
 
+-- ---------------------------------------------------------------------------
+-- View: v_event_ts  (timestamp leggibile)
+-- ---------------------------------------------------------------------------
+CREATE OR REPLACE VIEW `v_event_ts` AS
+SELECT
+  `id`,
+  `senderID`,
+  `timestamp`,
+  FROM_UNIXTIME(`timestamp` / 1000) AS `event_time`,
+  `dataClassName`
+FROM `event`;
+
 EOSQL
 
-echo "Database schema created successfully!"
+echo ">>> Database schema created successfully!"

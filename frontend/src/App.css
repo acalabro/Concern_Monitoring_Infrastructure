@@ -1174,11 +1174,48 @@ button:disabled {
   font-style: italic;
 }
 
+/* Auth – user badge and logout */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+.role-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+}
+
+.role-pill.admin { background: #1e3a5f; color: #60a5fa; }
+.role-pill.user  { background: #1e3a2f; color: #4ade80; }
+
+.btn-logout {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #f87171;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.btn-logout:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
 @media (max-width: 768px) {
   .btn-label {
     display: none;
   }
-  
+
   .btn-toggle {
     padding: 6px 10px;
   }

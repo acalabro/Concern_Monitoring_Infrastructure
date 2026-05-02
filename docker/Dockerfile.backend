@@ -2,7 +2,9 @@ FROM maven:3.9-eclipse-temurin-17
 
 WORKDIR /app
 
-# Crea directory logs
+# Installa curl (usato dall'healthcheck) e crea directory logs
+RUN apt-get update -qq && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /app/logs && chmod 777 /app/logs
 
 COPY pom.xml .
@@ -16,7 +18,8 @@ ENV MYSQL_HOST=mysql \
     MYSQL_PORT=3306 \
     MYSQL_DATABASE=eventdb \
     MYSQL_USER=concern \
-    MYSQL_PASSWORD=un53cur3!!
+    MYSQL_PASSWORD=un53cur3!! \
+    JWT_SECRET=change-this-secret-in-production
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
   CMD curl -f http://localhost:8181/api/health || exit 1

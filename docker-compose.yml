@@ -44,6 +44,7 @@ services:
       MYSQL_DATABASE: eventdb
       MYSQL_USER:     concern
       MYSQL_PASSWORD: "un53cur3!!"
+      JWT_SECRET:     "change-this-secret-in-production"
       JAVA_OPTS:      "-Xmx2g -Xms512m"
     ports:
       - "8181:8181"   # REST API
