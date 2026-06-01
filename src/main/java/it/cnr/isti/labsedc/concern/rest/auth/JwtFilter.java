@@ -18,6 +18,7 @@ public class JwtFilter implements ContainerRequestFilter {
     private static final String[] PUBLIC_PATHS = {
         "api/auth/login",
         "api/health",
+        "api/system-info",
         "monitoring"
     };
 

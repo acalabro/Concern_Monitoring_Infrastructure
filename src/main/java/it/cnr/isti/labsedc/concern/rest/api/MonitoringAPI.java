@@ -19,6 +19,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.util.Enumeration;
 
 /**
  * Complete REST API for monitoring and rule management
@@ -945,6 +949,124 @@ public class MonitoringAPI {
         }
         
         return Response.ok(health.toString()).build();
+    }
+
+
+    /**
+     * GET /api/system-info
+     * Returns configuration and runtime identity information about this instance.
+     * Used by the System tab in the React dashboard to show hostname, IP,
+     * ActiveMQ address/port, REST port, MQTT URL, Java runtime, OS, PID.
+     */
+    @GET
+    @Path("system-info")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSystemInfo() {
+        try {
+            JSONObject info = new JSONObject();
+
+            // ── Host & Network ────────────────────────────────────────────
+            JSONObject host = new JSONObject();
+            try {
+                host.put("hostname", InetAddress.getLocalHost().getHostName());
+                host.put("hostAddress", InetAddress.getLocalHost().getHostAddress());
+                String bestIp = "";
+                String ifaceName = "";
+                Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
+                if (ifaces != null) {
+                    outer:
+                    while (ifaces.hasMoreElements()) {
+                        NetworkInterface ni = ifaces.nextElement();
+                        if (!ni.isUp() || ni.isLoopback() || ni.isVirtual()) continue;
+                        Enumeration<InetAddress> addrs = ni.getInetAddresses();
+                        while (addrs.hasMoreElements()) {
+                            InetAddress a = addrs.nextElement();
+                            if (a instanceof java.net.Inet4Address) {
+                                bestIp = a.getHostAddress();
+                                ifaceName = ni.getDisplayName();
+                                break outer;
+                            }
+                        }
+                    }
+                }
+                host.put("localIp", bestIp.isEmpty() ? host.getString("hostAddress") : bestIp);
+                host.put("networkInterface", ifaceName);
+            } catch (Exception e) {
+                host.put("hostname", "N/A");
+                host.put("localIp", "N/A");
+                host.put("networkInterface", "N/A");
+            }
+            info.put("host", host);
+
+            // ── REST Server ───────────────────────────────────────────────
+            JSONObject rest = new JSONObject();
+            rest.put("port", ConcernApp.PortWhereTheInstanceIsRunning);
+            rest.put("configuredIp", ConcernApp.IPAddressWhereTheInstanceIsRunning);
+            rest.put("baseUrl", "http://" + ConcernApp.IPAddressWhereTheInstanceIsRunning
+                    + ":" + ConcernApp.PortWhereTheInstanceIsRunning + "/");
+            info.put("rest", rest);
+
+            // ── ActiveMQ Broker ───────────────────────────────────────────
+            JSONObject amq = new JSONObject();
+            String brokerUrl = ConcernApp.brokerUrlJMS != null
+                    ? ConcernApp.brokerUrlJMS
+                    : (System.getenv("ACTIVEMQ") != null ? System.getenv("ACTIVEMQ") : "tcp://localhost:61616");
+            amq.put("brokerUrl", brokerUrl);
+            try {
+                String stripped = brokerUrl.replaceFirst("^[a-z]+://", "");
+                String[] parts = stripped.split(":");
+                amq.put("brokerHost", parts.length > 0 ? parts[0] : "N/A");
+                amq.put("brokerPort", parts.length > 1 ? parts[1] : "61616");
+            } catch (Exception e) {
+                amq.put("brokerHost", "N/A");
+                amq.put("brokerPort", "61616");
+            }
+            amq.put("embedded", true);
+            info.put("activemq", amq);
+
+            // ── MySQL ─────────────────────────────────────────────────────
+            JSONObject mysql = new JSONObject();
+            mysql.put("host",     System.getenv().getOrDefault("MYSQL_HOST", "localhost"));
+            mysql.put("port",     System.getenv().getOrDefault("MYSQL_PORT", "3306"));
+            mysql.put("database", System.getenv().getOrDefault("MYSQL_DATABASE", "eventdb"));
+            mysql.put("user",     System.getenv().getOrDefault("MYSQL_USER", "concern"));
+            info.put("mysql", mysql);
+
+            // ── MQTT ──────────────────────────────────────────────────────
+            JSONObject mqtt = new JSONObject();
+            String mqttUrl = System.getenv("MQTT_BROKER_URL");
+            if (mqttUrl == null || mqttUrl.isBlank()) {
+                mqttUrl = "tcp://" + ConcernApp.IPAddressWhereTheInstanceIsRunning + ":1883";
+            }
+            mqtt.put("brokerUrl", mqttUrl);
+            info.put("mqtt", mqtt);
+
+            // ── Java Runtime & OS ─────────────────────────────────────────
+            JSONObject runtime = new JSONObject();
+            runtime.put("javaVersion",  System.getProperty("java.version"));
+            runtime.put("javaVendor",   System.getProperty("java.vendor"));
+            runtime.put("jvmName",      System.getProperty("java.vm.name"));
+            runtime.put("osName",       System.getProperty("os.name"));
+            runtime.put("osArch",       System.getProperty("os.arch"));
+            runtime.put("osVersion",    System.getProperty("os.version"));
+            runtime.put("pid",          ProcessHandle.current().pid());
+            runtime.put("workingDir",   System.getProperty("user.dir"));
+            info.put("runtime", runtime);
+
+            // ── Deployment environment variables ──────────────────────────
+            JSONObject env = new JSONObject();
+            env.put("JAVA_OPTS",    System.getenv().getOrDefault("JAVA_OPTS", ""));
+            env.put("JWT_SECRET",   System.getenv("JWT_SECRET") != null ? "***set***" : "not set");
+            env.put("ACTIVEMQ",     System.getenv().getOrDefault("ACTIVEMQ", "(embedded)"));
+            info.put("environment", env);
+
+            info.put("timestamp", System.currentTimeMillis());
+            return Response.ok(info.toString()).build();
+
+        } catch (Exception e) {
+            return Response.status(500)
+                .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
+        }
     }
 
     // Utility method

@@ -10,7 +10,8 @@ import {
 import {
   Activity, AlertTriangle, Play, Square, RefreshCw,
   Database, Cpu, HardDrive, CheckCircle, XCircle, Clock,
-  ExternalLink, LogOut, Shield, User
+  ExternalLink, LogOut, Shield, User,
+  Server, Network, Wifi, Terminal, Package
 } from 'lucide-react';
 import './App.css';
 
@@ -38,21 +39,22 @@ function Dashboard({ logout, isAdmin, username, role }) {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [actionLoading, setActionLoading] = useState(false);
-  
+  const [systemInfo, setSystemInfo] = useState(null);
+
   // Fetch data from backend
   const fetchData = async () => {
     try {
       setError(null);
-      
-      const [statusRes, metricsRes, rulesRes, eventsRes, violationsRes] = await Promise.allSettled([
+
+      const [statusRes, metricsRes, rulesRes, eventsRes, violationsRes, sysInfoRes] = await Promise.allSettled([
         axios.get('/api/status'),
         axios.get('/api/metrics'),
         axios.get('/api/rules'),
         axios.get('/api/stats/events'),
-        axios.get('/api/stats/violations')
+        axios.get('/api/stats/violations'),
+        axios.get('/api/system-info')
       ]);
 
-      // Status (required)
       if (statusRes.status === 'fulfilled') {
         setSystemStatus(statusRes.value.data);
       } else {
@@ -60,7 +62,6 @@ function Dashboard({ logout, isAdmin, username, role }) {
         setSystemStatus({ running: false, timestamp: Date.now() });
       }
 
-      // Metrics
       if (metricsRes.status === 'fulfilled') {
         setMetrics(metricsRes.value.data);
       } else {
@@ -68,7 +69,6 @@ function Dashboard({ logout, isAdmin, username, role }) {
         setMetrics({ totalEvents: 0, totalViolations: 0 });
       }
 
-      // Rules
       if (rulesRes.status === 'fulfilled') {
         setRules(rulesRes.value.data.rules || []);
       } else {
@@ -76,7 +76,6 @@ function Dashboard({ logout, isAdmin, username, role }) {
         setRules([]);
       }
 
-      // Events stats
       if (eventsRes.status === 'fulfilled') {
         setEventsStats(eventsRes.value.data);
       } else {
@@ -84,12 +83,17 @@ function Dashboard({ logout, isAdmin, username, role }) {
         setEventsStats({ bySender: [], byClass: [], timeline24h: [] });
       }
 
-      // Violations stats
       if (violationsRes.status === 'fulfilled') {
         setViolationsStats(violationsRes.value.data);
       } else {
         console.error('Error fetching violations stats:', violationsRes.reason);
         setViolationsStats({ byRule: [], byProbe: [], timeline24h: [], recent: [] });
+      }
+
+      if (sysInfoRes.status === 'fulfilled') {
+        setSystemInfo(sysInfoRes.value.data);
+      } else {
+        console.error('Error fetching system info:', sysInfoRes.reason);
       }
 
       setLoading(false);
@@ -102,25 +106,17 @@ function Dashboard({ logout, isAdmin, username, role }) {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 5000); // Refresh every 5 seconds
+    const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  // Control actions
   const startMonitoring = async () => {
     try {
       setActionLoading(true);
       setError(null);
-      
       const response = await axios.post('/api/start');
       console.log('Start response:', response.data);
-      
-      // Wait a bit before refreshing to give the system time to start
-      setTimeout(() => {
-        fetchData();
-        setActionLoading(false);
-      }, 2000);
-      
+      setTimeout(() => { fetchData(); setActionLoading(false); }, 2000);
     } catch (error) {
       console.error('Error starting:', error);
       setError(error.response?.data?.error || 'Error starting monitoring');
@@ -132,15 +128,9 @@ function Dashboard({ logout, isAdmin, username, role }) {
     try {
       setActionLoading(true);
       setError(null);
-      
       const response = await axios.post('/api/stop');
       console.log('Stop response:', response.data);
-      
-      setTimeout(() => {
-        fetchData();
-        setActionLoading(false);
-      }, 1000);
-      
+      setTimeout(() => { fetchData(); setActionLoading(false); }, 1000);
     } catch (error) {
       console.error('Error stopping:', error);
       setError(error.response?.data?.error || 'Error stopping monitoring');
@@ -203,85 +193,35 @@ function Dashboard({ logout, isAdmin, username, role }) {
 
       {/* Status Cards */}
       <div className="status-cards">
-        <StatusCard
-          icon={<Activity />}
-          title="System Status"
-          value={systemStatus?.running ? 'Running' : 'Stopped'}
-          status={systemStatus?.running ? 'success' : 'warning'}
-        />
-        <StatusCard
-          icon={<Database />}
-          title="Events Received Since Start"
-          value={systemStatus?.eventsReceived || 0}
-          status="info"
-        />
-        <StatusCard
-          icon={<AlertTriangle />}
-          title="Total Violations"
-          value={metrics?.totalViolations || 0}
-          status="danger"
-        />
-        <StatusCard
-          icon={<CheckCircle />}
-          title="Active Rules"
-          value={systemStatus?.rulesLoaded || 0}
-          status="success"
-        />
+        <StatusCard icon={<Activity />} title="System Status" value={systemStatus?.running ? 'Running' : 'Stopped'} status={systemStatus?.running ? 'success' : 'warning'} />
+        <StatusCard icon={<Database />} title="Events Received Since Start" value={systemStatus?.eventsReceived || 0} status="info" />
+        <StatusCard icon={<AlertTriangle />} title="Total Violations" value={metrics?.totalViolations || 0} status="danger" />
+        <StatusCard icon={<CheckCircle />} title="Active Rules" value={systemStatus?.rulesLoaded || 0} status="success" />
       </div>
 
       {/* Tabs Navigation */}
       <div className="tabs-nav">
-        <button
-          className={activeTab === 'overview' ? 'active' : ''}
-          onClick={() => setActiveTab('overview')}
-        >
-          Overview
-        </button>
-        <button
-          className={activeTab === 'events' ? 'active' : ''}
-          onClick={() => setActiveTab('events')}
-        >
-          Events
-        </button>
-        <button
-          className={activeTab === 'violations' ? 'active' : ''}
-          onClick={() => setActiveTab('violations')}
-        >
-          Violations
-        </button>
-        <button
-          className={activeTab === 'rules' ? 'active' : ''}
-          onClick={() => setActiveTab('rules')}
-        >
-          Rules
-        </button>
-        <button
-          className={activeTab === 'system' ? 'active' : ''}
-          onClick={() => setActiveTab('system')}
-        >
-          System
-        </button>
+        <button className={activeTab === 'overview'   ? 'active' : ''} onClick={() => setActiveTab('overview')}>Overview</button>
+        <button className={activeTab === 'events'     ? 'active' : ''} onClick={() => setActiveTab('events')}>Events</button>
+        <button className={activeTab === 'violations' ? 'active' : ''} onClick={() => setActiveTab('violations')}>Violations</button>
+        <button className={activeTab === 'rules'      ? 'active' : ''} onClick={() => setActiveTab('rules')}>Rules</button>
+        <button className={activeTab === 'system'     ? 'active' : ''} onClick={() => setActiveTab('system')}>System</button>
       </div>
 
       {/* Tab Content */}
       <div className="tab-content">
-        {activeTab === 'overview' && (
-          <OverviewTab
-            metrics={metrics}
-            eventsStats={eventsStats}
-            violationsStats={violationsStats}
-          />
-        )}
-        {activeTab === 'events' && <EventsTab stats={eventsStats} />}
+        {activeTab === 'overview'   && <OverviewTab metrics={metrics} eventsStats={eventsStats} violationsStats={violationsStats} />}
+        {activeTab === 'events'     && <EventsTab stats={eventsStats} />}
         {activeTab === 'violations' && <ViolationsTab stats={violationsStats} />}
-		{activeTab === 'rules' && <RulesTab rules={rules} onRefresh={fetchData} isAdmin={isAdmin} />}
-        {activeTab === 'system' && <SystemTab metrics={metrics} systemStatus={systemStatus} />}
+        {activeTab === 'rules'      && <RulesTab rules={rules} onRefresh={fetchData} isAdmin={isAdmin} />}
+        {activeTab === 'system'     && <SystemTab metrics={metrics} systemStatus={systemStatus} systemInfo={systemInfo} />}
       </div>
     </div>
   );
 }
 
-// Status Card component
+// ── Shared components ─────────────────────────────────────────────────────────
+
 function StatusCard({ icon, title, value, status }) {
   return (
     <div className={`status-card status-${status}`}>
@@ -294,188 +234,152 @@ function StatusCard({ icon, title, value, status }) {
   );
 }
 
-// Overview Tab
+function ComponentStatus({ name, running }) {
+  return (
+    <div className="component-status">
+      {running ? <CheckCircle size={20} color="#00C49F" /> : <XCircle size={20} color="#FF8042" />}
+      <span>{name}</span>
+      <span className={`status-badge ${running ? 'running' : 'stopped'}`}>
+        {running ? 'Running' : 'Stopped'}
+      </span>
+    </div>
+  );
+}
+
+function InfoRow({ label, value, mono = false }) {
+  return (
+    <div className="info-row" style={{ gap: '8px', marginBottom: '4px' }}>
+      <span style={{ fontWeight: 600, minWidth: 110, flexShrink: 0 }}>{label}:</span>
+      <span style={mono ? { fontFamily: 'monospace', fontSize: '0.85em', color: '#1a5276' } : { color: '#1a5276' }}>
+        {value ?? '—'}
+      </span>
+    </div>
+  );
+}
+
+// ── Tab components ────────────────────────────────────────────────────────────
+
 function OverviewTab({ metrics, eventsStats, violationsStats }) {
   return (
     <div className="overview-grid">
-      {/* Events last hour */}
       <div className="chart-card">
         <h3>Events Last Hour</h3>
         <div className="metric-value">{metrics?.eventsLastHour || 0}</div>
       </div>
-
-      {/* Violations last hour */}
       <div className="chart-card">
         <h3>Violations Last Hour</h3>
         <div className="metric-value danger">{metrics?.violationsLastHour || 0}</div>
       </div>
-
-      {/* Events Timeline 24h */}
       <div className="chart-card wide">
         <h3>Events Trend (24h)</h3>
-        {eventsStats?.timeline24h && eventsStats.timeline24h.length > 0 ? (
+        {eventsStats?.timeline24h?.length > 0 ? (
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={eventsStats.timeline24h}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="hour" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+              <CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="hour" /><YAxis />
+              <Tooltip /><Legend />
               <Line type="monotone" dataKey="count" stroke="#0088FE" name="Events" />
             </LineChart>
           </ResponsiveContainer>
-        ) : (
-          <div className="no-data">No data available</div>
-        )}
+        ) : <div className="no-data">No data available</div>}
       </div>
-
-      {/* Violations Timeline 24h */}
       <div className="chart-card wide">
         <h3>Violations Trend (24h)</h3>
-        {violationsStats?.timeline24h && violationsStats.timeline24h.length > 0 ? (
+        {violationsStats?.timeline24h?.length > 0 ? (
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={violationsStats.timeline24h}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="hour" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+              <CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="hour" /><YAxis />
+              <Tooltip /><Legend />
               <Line type="monotone" dataKey="count" stroke="#FF8042" name="Violations" />
             </LineChart>
           </ResponsiveContainer>
-        ) : (
-          <div className="no-data">No data available</div>
-        )}
+        ) : <div className="no-data">No data available</div>}
       </div>
     </div>
   );
 }
 
-// Events Tab
 function EventsTab({ stats }) {
   return (
     <div className="events-grid">
-      {/* Events by Sender */}
       <div className="chart-card">
         <h3>Events by Sender</h3>
-        {stats?.bySender && stats.bySender.length > 0 ? (
+        {stats?.bySender?.length > 0 ? (
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={stats.bySender}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="senderID" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#0088FE" />
+              <CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="senderID" /><YAxis />
+              <Tooltip /><Bar dataKey="count" fill="#0088FE" />
             </BarChart>
           </ResponsiveContainer>
-        ) : (
-          <div className="no-data">No events recorded</div>
-        )}
+        ) : <div className="no-data">No events recorded</div>}
       </div>
-
-      {/* Events by Class */}
       <div className="chart-card">
         <h3>Events by Class</h3>
-        {stats?.byClass && stats.byClass.length > 0 ? (
+        {stats?.byClass?.length > 0 ? (
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie
-                data={stats.byClass}
-                dataKey="count"
-                nameKey="className"
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                label
-              >
+              <Pie data={stats.byClass} dataKey="count" nameKey="className" cx="50%" cy="50%" outerRadius={100} label>
                 {stats.byClass.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip />
-              <Legend />
+              <Tooltip /><Legend />
             </PieChart>
           </ResponsiveContainer>
-        ) : (
-          <div className="no-data">No events recorded</div>
-        )}
+        ) : <div className="no-data">No events recorded</div>}
       </div>
-
-      {/* Timeline 24h */}
       <div className="chart-card wide">
         <h3>Events Timeline (24h)</h3>
-        {stats?.timeline24h && stats.timeline24h.length > 0 ? (
+        {stats?.timeline24h?.length > 0 ? (
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={stats.timeline24h}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="hour" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+              <CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="hour" /><YAxis />
+              <Tooltip /><Legend />
               <Line type="monotone" dataKey="count" stroke="#00C49F" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
-        ) : (
-          <div className="no-data">No data available</div>
-        )}
+        ) : <div className="no-data">No data available</div>}
       </div>
     </div>
   );
 }
 
-// Violations Tab
 function ViolationsTab({ stats }) {
   return (
     <div className="violations-grid">
-      {/* Violations by Rule */}
       <div className="chart-card">
         <h3>Violations by Rule</h3>
-        {stats?.byRule && stats.byRule.length > 0 ? (
+        {stats?.byRule?.length > 0 ? (
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={stats.byRule}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="ruleName" angle={-45} textAnchor="end" height={100} />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#FF8042" />
+              <XAxis dataKey="ruleName" angle={-45} textAnchor="end" height={100} /><YAxis />
+              <Tooltip /><Bar dataKey="count" fill="#FF8042" />
             </BarChart>
           </ResponsiveContainer>
-        ) : (
-          <div className="no-data">No violations recorded</div>
-        )}
+        ) : <div className="no-data">No violations recorded</div>}
       </div>
-
-      {/* Violations by Probe */}
       <div className="chart-card">
         <h3>Violations by Probe</h3>
-        {stats?.byProbe && stats.byProbe.length > 0 ? (
+        {stats?.byProbe?.length > 0 ? (
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={stats.byProbe}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="probeName" angle={-45} textAnchor="end" height={100} />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#FFBB28" />
+              <XAxis dataKey="probeName" angle={-45} textAnchor="end" height={100} /><YAxis />
+              <Tooltip /><Bar dataKey="count" fill="#FFBB28" />
             </BarChart>
           </ResponsiveContainer>
-        ) : (
-          <div className="no-data">No violations recorded</div>
-        )}
+        ) : <div className="no-data">No violations recorded</div>}
       </div>
-
-      {/* Recent Violations */}
       <div className="chart-card wide">
         <h3>Recent Violations</h3>
-        {stats?.recent && stats.recent.length > 0 ? (
+        {stats?.recent?.length > 0 ? (
           <div className="violations-list">
             {stats.recent.map((v) => (
               <div key={v.id} className="violation-item">
                 <div className="violation-header">
                   <AlertTriangle size={18} color="#FF8042" />
                   <strong>{v.rule}</strong>
-                  <span className="timestamp">
-                    <Clock size={14} /> {new Date(v.timestamp).toLocaleString('en-US')}
-                  </span>
+                  <span className="timestamp"><Clock size={14} /> {new Date(v.timestamp).toLocaleString('en-US')}</span>
                 </div>
                 <div className="violation-body">
                   <div className="violation-probe">Probe: {v.probe}</div>
@@ -484,35 +388,20 @@ function ViolationsTab({ stats }) {
               </div>
             ))}
           </div>
-        ) : (
-          <div className="no-data">No recent violations</div>
-        )}
+        ) : <div className="no-data">No recent violations</div>}
       </div>
     </div>
   );
 }
 
-// Rules Tab
 function RulesTab({ rules, onRefresh, isAdmin }) {
   const handleRulesChanged = async () => {
-    console.log('Rules changed, refreshing in 1.5s...');
-    setTimeout(() => {
-      if (onRefresh) {
-        onRefresh();
-      }
-    }, 1500);
+    setTimeout(() => { if (onRefresh) onRefresh(); }, 1500);
   };
-
-  return (
-    <RulesManagement
-      rules={rules}
-      onRulesChanged={handleRulesChanged}
-      isAdmin={isAdmin}
-    />
-  );
+  return <RulesManagement rules={rules} onRulesChanged={handleRulesChanged} isAdmin={isAdmin} />;
 }
-// System Tab
-function SystemTab({ metrics, systemStatus }) {
+
+function SystemTab({ metrics, systemStatus, systemInfo }) {
   const memoryData = metrics?.system ? [
     { name: 'Used', value: metrics.system.usedMemoryMB },
     { name: 'Free', value: metrics.system.freeMemoryMB }
@@ -520,24 +409,81 @@ function SystemTab({ metrics, systemStatus }) {
 
   return (
     <div className="system-grid">
-      {/* Memory */}
+
+      {/* ── Instance Configuration ─────────────────────────────────────── */}
+      {systemInfo ? (
+        <div className="chart-card wide">
+          <h3><Server size={18} style={{ verticalAlign: 'middle', marginRight: 6 }} />Instance Configuration</h3>
+          <div className="system-info-grid">
+
+            <div className="sysinfo-section">
+              <div className="sysinfo-section-title"><Network size={15} /> Host &amp; Network</div>
+              <InfoRow label="Hostname"      value={systemInfo.host?.hostname} />
+              <InfoRow label="Local IP"      value={`${systemInfo.host?.localIp}  [${systemInfo.host?.networkInterface}]`} />
+              <InfoRow label="Configured IP" value={systemInfo.rest?.configuredIp} />
+            </div>
+
+            <div className="sysinfo-section">
+              <div className="sysinfo-section-title"><Server size={15} /> REST API (Grizzly)</div>
+              <InfoRow label="Port"     value={systemInfo.rest?.port} />
+              <InfoRow label="Base URL" value={systemInfo.rest?.baseUrl} mono />
+            </div>
+
+            <div className="sysinfo-section">
+              <div className="sysinfo-section-title"><Package size={15} /> ActiveMQ Broker</div>
+              <InfoRow label="Broker URL" value={systemInfo.activemq?.brokerUrl} mono />
+              <InfoRow label="Host"       value={systemInfo.activemq?.brokerHost} />
+              <InfoRow label="Port"       value={systemInfo.activemq?.brokerPort} />
+              <InfoRow label="Mode"       value={systemInfo.activemq?.embedded ? 'Embedded' : 'Remote'} />
+            </div>
+
+            <div className="sysinfo-section">
+              <div className="sysinfo-section-title"><Database size={15} /> MySQL</div>
+              <InfoRow label="Host"     value={`${systemInfo.mysql?.host}:${systemInfo.mysql?.port}`} />
+              <InfoRow label="Database" value={systemInfo.mysql?.database} />
+              <InfoRow label="User"     value={systemInfo.mysql?.user} />
+            </div>
+
+            <div className="sysinfo-section">
+              <div className="sysinfo-section-title"><Wifi size={15} /> MQTT</div>
+              <InfoRow label="Broker URL" value={systemInfo.mqtt?.brokerUrl} mono />
+            </div>
+
+            <div className="sysinfo-section">
+              <div className="sysinfo-section-title"><Terminal size={15} /> Java Runtime &amp; OS</div>
+              <InfoRow label="Java"     value={`${systemInfo.runtime?.javaVersion}  (${systemInfo.runtime?.javaVendor})`} />
+              <InfoRow label="JVM"      value={systemInfo.runtime?.jvmName} />
+              <InfoRow label="OS"       value={`${systemInfo.runtime?.osName} ${systemInfo.runtime?.osVersion} (${systemInfo.runtime?.osArch})`} />
+              <InfoRow label="PID"      value={systemInfo.runtime?.pid} />
+              <InfoRow label="Work dir" value={systemInfo.runtime?.workingDir} mono />
+            </div>
+
+            <div className="sysinfo-section">
+              <div className="sysinfo-section-title"><Terminal size={15} /> Environment</div>
+              <InfoRow label="JAVA_OPTS"  value={systemInfo.environment?.JAVA_OPTS || '(none)'} />
+              <InfoRow label="JWT_SECRET" value={systemInfo.environment?.JWT_SECRET} />
+              <InfoRow label="ACTIVEMQ"   value={systemInfo.environment?.ACTIVEMQ} />
+            </div>
+
+          </div>
+        </div>
+      ) : (
+        <div className="chart-card wide">
+          <h3>Instance Configuration</h3>
+          <div className="no-data">Configuration data not available</div>
+        </div>
+      )}
+
+      {/* ── Memory ────────────────────────────────────────────────────── */}
       <div className="chart-card">
         <h3>Memory Usage</h3>
         {memoryData.length > 0 ? (
           <>
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
-                <Pie
-                  data={memoryData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  label={(entry) => `${entry.name}: ${entry.value} MB`}
-                >
-                  <Cell fill="#FF8042" />
-                  <Cell fill="#00C49F" />
+                <Pie data={memoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80}
+                  label={(entry) => `${entry.name}: ${entry.value} MB`}>
+                  <Cell fill="#FF8042" /><Cell fill="#00C49F" />
                 </Pie>
                 <Tooltip />
               </PieChart>
@@ -547,77 +493,31 @@ function SystemTab({ metrics, systemStatus }) {
               <div>Total: {metrics?.system?.totalMemoryMB} MB</div>
             </div>
           </>
-        ) : (
-          <div className="no-data">Memory data not available</div>
-        )}
+        ) : <div className="no-data">Memory data not available</div>}
       </div>
 
-      {/* Components */}
+      {/* ── Component Status ──────────────────────────────────────────── */}
       <div className="chart-card">
         <h3>Component Status</h3>
         <div className="components-list">
-          <ComponentStatus
-            name="Broker"
-            running={systemStatus?.components?.broker}
-          />
-          <ComponentStatus
-            name="CEP Engine"
-            running={systemStatus?.components?.cep}
-          />
-          <ComponentStatus
-            name="Storage"
-            running={systemStatus?.components?.storage}
-          />
-          <ComponentStatus
-            name="Notification Manager"
-            running={systemStatus?.components?.notification}
-          />
+          <ComponentStatus name="Broker"               running={systemStatus?.components?.broker} />
+          <ComponentStatus name="CEP Engine"           running={systemStatus?.components?.cep} />
+          <ComponentStatus name="Storage"              running={systemStatus?.components?.storage} />
+          <ComponentStatus name="Notification Manager" running={systemStatus?.components?.notification} />
         </div>
       </div>
 
-      {/* System Info */}
+      {/* ── Runtime Counters ──────────────────────────────────────────── */}
       <div className="chart-card wide">
-        <h3>System Information</h3>
+        <h3>Runtime Counters</h3>
         <div className="system-info">
-          <div className="info-row">
-            <Cpu size={20} />
-            <span>Events Received Since Start:</span>
-            <strong>{systemStatus?.eventsReceived || 0}</strong>
-          </div>
-          <div className="info-row">
-            <Database size={20} />
-            <span>Total Events:</span>
-            <strong>{metrics?.totalEvents || 0}</strong>
-          </div>
-          <div className="info-row">
-            <AlertTriangle size={20} />
-            <span>Total Violations:</span>
-            <strong>{metrics?.totalViolations || 0}</strong>
-          </div>
-          <div className="info-row">
-            <CheckCircle size={20} />
-            <span>Rules Loaded:</span>
-            <strong>{systemStatus?.rulesLoaded || 0}</strong>
-          </div>
+          <div className="info-row"><Cpu size={20} /><span>Events Received Since Start:</span><strong>{systemStatus?.eventsReceived || 0}</strong></div>
+          <div className="info-row"><Database size={20} /><span>Total Events:</span><strong>{metrics?.totalEvents || 0}</strong></div>
+          <div className="info-row"><AlertTriangle size={20} /><span>Total Violations:</span><strong>{metrics?.totalViolations || 0}</strong></div>
+          <div className="info-row"><CheckCircle size={20} /><span>Rules Loaded:</span><strong>{systemStatus?.rulesLoaded || 0}</strong></div>
         </div>
       </div>
-    </div>
-  );
-}
 
-// Component Status component
-function ComponentStatus({ name, running }) {
-  return (
-    <div className="component-status">
-      {running ? (
-        <CheckCircle size={20} color="#00C49F" />
-      ) : (
-        <XCircle size={20} color="#FF8042" />
-      )}
-      <span>{name}</span>
-      <span className={`status-badge ${running ? 'running' : 'stopped'}`}>
-        {running ? 'Running' : 'Stopped'}
-      </span>
     </div>
   );
 }
